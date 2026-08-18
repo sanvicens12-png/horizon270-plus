@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pujar vídeo — HORIZON270+</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="topbar">
+
+        <a href="index.html" class="logo">
+            HORIZON<span>270+</span>
+        </a>
+
+        <a href="index.html" class="login-button">
+            🏠 Inici
+        </a>
+
+    </header>
+
+    <main class="upload-page">
+
+        <h1>⬆️ Pujar un vídeo</h1>
+
+        <form>
+
+            <label for="title">
+                Títol
+            </label>
+
+            <input
+                id="title"
+                type="text"
+                placeholder="Títol del vídeo"
+                required
+            >
+
+            <label for="description">
+                Descripció
+            </label>
+
+            <textarea
+                id="description"
+                placeholder="Descriu el teu vídeo"
+            ></textarea>
+
+            <label for="video">
+                Fitxer de vídeo
+            </label>
+
+            <input
+                id="video"
+                type="file"
+                accept="video/*"
+                required
+            >
+
+            <button
+                type="submit"
+                class="primary-button"
+            >
+                Pujar vídeo
+            </button>
+
+        </form>
+
+    </main>
+
+</body>
+</html>
