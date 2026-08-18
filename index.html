@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>HORIZON270+</title>
+    <title>HORIZON270+ | Plataforma de vídeo</title>
 
     <meta
         name="description"
-        content="HORIZON270+ — Plataforma de vídeo"
+        content="HORIZON270+ — Descobreix, mira i comparteix vídeos."
     >
 
     <link rel="stylesheet" href="style.css">
@@ -18,58 +18,110 @@
 
     <header class="topbar">
 
-        <a href="index.html" class="logo">
-            HORIZON<span>270+</span>
-        </a>
+        <div class="topbar-inner">
 
-        <div class="search">
+            <a href="index.html" class="logo">
+                HORIZON<span>270+</span>
+            </a>
 
-            <input
-                type="text"
-                placeholder="Cerca a HORIZON270+"
+            <nav class="main-nav">
+                <a href="index.html" class="nav-link active">
+                    Inici
+                </a>
+
+                <a href="watch.html" class="nav-link">
+                    Explorar
+                </a>
+            </nav>
+
+            <div class="search">
+
+                <input
+                    type="search"
+                    placeholder="Cerca a HORIZON270+"
+                    aria-label="Cerca"
+                >
+
+                <button type="button" aria-label="Buscar">
+                    Cerca
+                </button>
+
+            </div>
+
+            <a
+                href="upload.html"
+                class="upload-button"
             >
-
-            <button type="button">
-                🔍
-            </button>
+                Pujar
+            </a>
 
         </div>
 
-        <a
-            href="upload.html"
-            class="login-button"
-        >
-            ⬆️ Pujar
-        </a>
-
     </header>
 
-    <main class="home">
+
+    <main>
 
         <section class="hero">
 
-            <h1>
-                Benvingut a HORIZON270+
-            </h1>
+            <div class="hero-content">
 
-            <p>
-                La teva nova plataforma de vídeo.
-            </p>
+                <span class="hero-label">
+                    HORIZON270+
+                </span>
 
-            <a
-                href="watch.html"
-                class="primary-button"
-            >
-                ▶️ Explorar vídeos
-            </a>
+                <h1>
+                    El vídeo comença aquí.
+                </h1>
+
+                <p>
+                    Descobreix nous vídeos, explora contingut
+                    i comparteix les teves pròpies creacions.
+                </p>
+
+                <div class="hero-actions">
+
+                    <a
+                        href="watch.html"
+                        class="primary-button"
+                    >
+                        Explorar vídeos
+                    </a>
+
+                    <a
+                        href="upload.html"
+                        class="secondary-button"
+                    >
+                        Pujar un vídeo
+                    </a>
+
+                </div>
+
+            </div>
 
         </section>
 
-        <section class="videos">
 
-            <h2>
-                Vídeos
-            </h2>
+        <section class="content-section">
+
+            <div class="section-header">
+
+                <div>
+                    <span class="section-label">
+                        DESCOBREIX
+                    </span>
+
+                    <h2>
+                        Tendències
+                    </h2>
+                </div>
+
+                <a href="watch.html" class="view-all">
+                    Veure-ho tot
+                </a>
+
+            </div>
+
 
             <div class="video-grid">
 
@@ -79,16 +131,116 @@
                 >
 
                     <div class="thumbnail">
-                        🎬
+
+                        <div class="thumbnail-overlay">
+
+                            <span class="play-button">
+                                ▶
+                            </span>
+
+                        </div>
+
+                        <span class="thumbnail-placeholder">
+                            HORIZON270+
+                        </span>
+
                     </div>
 
-                    <h3>
-                        El primer vídeo de HORIZON270+
-                    </h3>
+                    <div class="video-info">
 
-                    <p>
-                        HORIZON270+
-                    </p>
+                        <h3>
+                            El primer vídeo de HORIZON270+
+                        </h3>
+
+                        <p class="creator">
+                            HORIZON270+
+                        </p>
+
+                        <p class="video-meta">
+                            Vídeo destacat
+                        </p>
+
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="watch.html"
+                    class="video-card"
+                >
+
+                    <div class="thumbnail">
+
+                        <div class="thumbnail-overlay">
+
+                            <span class="play-button">
+                                ▶
+                            </span>
+
+                        </div>
+
+                        <span class="thumbnail-placeholder">
+                            PROPERAMENT
+                        </span>
+
+                    </div>
+
+                    <div class="video-info">
+
+                        <h3>
+                            Nous continguts
+                        </h3>
+
+                        <p class="creator">
+                            HORIZON270+
+                        </p>
+
+                        <p class="video-meta">
+                            Properament
+                        </p>
+
+                    </div>
+
+                </a>
+
+
+                <a
+                    href="watch.html"
+                    class="video-card"
+                >
+
+                    <div class="thumbnail">
+
+                        <div class="thumbnail-overlay">
+
+                            <span class="play-button">
+                                ▶
+                            </span>
+
+                        </div>
+
+                        <span class="thumbnail-placeholder">
+                            HORIZON270+
+                        </span>
+
+                    </div>
+
+                    <div class="video-info">
+
+                        <h3>
+                            Descobreix HORIZON270+
+                        </h3>
+
+                        <p class="creator">
+                            HORIZON270+
+                        </p>
+
+                        <p class="video-meta">
+                            Destacat
+                        </p>
+
+                    </div>
 
                 </a>
 
@@ -96,7 +248,53 @@
 
         </section>
 
+
+        <section class="creator-section">
+
+            <div class="creator-content">
+
+                <span class="section-label">
+                    CREADORS
+                </span>
+
+                <h2>
+                    Tens alguna cosa per compartir?
+                </h2>
+
+                <p>
+                    Puja els teus vídeos i comença a formar part
+                    de HORIZON270+.
+                </p>
+
+                <a
+                    href="upload.html"
+                    class="primary-button"
+                >
+                    Començar a pujar
+                </a>
+
+            </div>
+
+        </section>
+
     </main>
+
+
+    <footer class="footer">
+
+        <div class="footer-inner">
+
+            <a href="index.html" class="footer-logo">
+                HORIZON<span>270+</span>
+            </a>
+
+            <p>
+                HORIZON270+ — Plataforma de vídeo.
+            </p>
+
+        </div>
+
+    </footer>
 
 </body>
 </html>
