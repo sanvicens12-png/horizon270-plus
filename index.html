@@ -6,10 +6,7 @@
 
     <title>HORIZON270+ | Plataforma de vídeo</title>
 
-    <meta
-        name="description"
-        content="HORIZON270+ — Descobreix, mira i comparteix vídeos."
-    >
+    <meta name="description" content="HORIZON270+ — Descobreix, mira i comparteix vídeos.">
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -17,7 +14,6 @@
 <body>
 
 <header class="topbar">
-
     <div class="topbar-inner">
 
         <a href="index.html" class="logo">
@@ -25,45 +21,32 @@
         </a>
 
         <nav class="main-nav">
-            <a href="index.html" class="nav-link active">
-                Inici
-            </a>
-
-            <a href="watch.html" class="nav-link">
-                Explorar
-            </a>
+            <a href="index.html" class="nav-link active">Inici</a>
+            <a href="watch.html" class="nav-link">Explorar</a>
         </nav>
 
         <div class="search">
-
             <input
                 type="search"
                 placeholder="Cerca a HORIZON270+"
                 aria-label="Cerca"
             >
-
             <button type="button" aria-label="Buscar">
                 Cerca
             </button>
-
         </div>
 
-        <a
-            href="upload.html"
-            class="upload-button"
-        >
+        <a href="upload.html" class="upload-button">
             Pujar
         </a>
 
     </div>
-
 </header>
 
 
 <main>
 
     <section class="hero">
-
         <div class="hero-content">
 
             <span class="hero-label">
@@ -81,24 +64,17 @@
 
             <div class="hero-actions">
 
-                <a
-                    href="watch.html"
-                    class="primary-button"
-                >
+                <a href="watch.html" class="primary-button">
                     Explorar vídeos
                 </a>
 
-                <a
-                    href="upload.html"
-                    class="secondary-button"
-                >
+                <a href="upload.html" class="secondary-button">
                     Pujar un vídeo
                 </a>
 
             </div>
 
         </div>
-
     </section>
 
 
@@ -107,7 +83,6 @@
         <div class="section-header">
 
             <div>
-
                 <span class="section-label">
                     DESCOBREIX
                 </span>
@@ -115,23 +90,16 @@
                 <h2>
                     Tendències
                 </h2>
-
             </div>
 
-            <a
-                href="watch.html"
-                class="view-all"
-            >
+            <a href="watch.html" class="view-all">
                 Veure-ho tot
             </a>
 
         </div>
 
 
-        <div
-            class="video-grid"
-            id="video-grid"
-        >
+        <div class="video-grid" id="video-grid">
 
             <div class="video-loading">
                 Carregant vídeos...
@@ -159,10 +127,7 @@
                 de HORIZON270+.
             </p>
 
-            <a
-                href="upload.html"
-                class="primary-button"
-            >
+            <a href="upload.html" class="primary-button">
                 Començar a pujar
             </a>
 
@@ -177,10 +142,7 @@
 
     <div class="footer-inner">
 
-        <a
-            href="index.html"
-            class="footer-logo"
-        >
+        <a href="index.html" class="footer-logo">
             HORIZON<span>270+</span>
         </a>
 
@@ -197,167 +159,154 @@
 
 <script>
 
-    const SUPABASE_URL =
-        "https://eftxwdpdweomffgurlgm.supabase.co";
+const SUPABASE_URL =
+    "https://eftxwdpdweomffgurlgm.supabase.co";
 
-    const SUPABASE_KEY =
-        "sb_publishable_DPCJgsTp66cw2s-5S3CqNg_AdJEHKpt";
+const SUPABASE_KEY =
+    "sb_publishable_DPCJgsTp66cw2s-5S3CqNg_AdJEHKpt";
 
-
-    const supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
-        );
-
-
-    async function carregarVideos() {
-
-        const grid =
-            document.getElementById("video-grid");
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
 
-        try {
+async function carregarVideos() {
 
-            const { data, error } =
-                await supabaseClient
-                    .from("videos")
-                    .select("*")
-                    .order("creat_a_les", {
-                        ascending: false
-                    })
-                    .limit(6);
+    const grid =
+        document.getElementById("video-grid");
 
+    try {
 
-            if (error) {
-
-                console.error(
-                    "Error carregant vídeos:",
-                    error
-                );
-
-                grid.innerHTML = `
-                    <p>
-                        No s'han pogut carregar els vídeos.
-                    </p>
-                `;
-
-                return;
-            }
+        const { data, error } =
+            await supabaseClient
+                .from("videos")
+                .select("*")
+                .limit(6);
 
 
-            if (!data || data.length === 0) {
-
-                grid.innerHTML = `
-                    <p>
-                        Encara no hi ha vídeos publicats.
-                    </p>
-                `;
-
-                return;
-            }
-
-
-            grid.innerHTML = "";
-
-
-            data.forEach(video => {
-
-                const card =
-                    document.createElement("a");
-
-
-                card.href = "watch.html";
-
-                card.className =
-                    "video-card";
-
-
-                const titol =
-                    video.títol || "Vídeo sense títol";
-
-
-                const thumbnail =
-                    video.url_de_thumbnail;
-
-
-                card.innerHTML = `
-
-                    <div class="thumbnail">
-
-                        ${
-                            thumbnail
-                            ?
-                            `<img
-                                src="${thumbnail}"
-                                alt="${titol}"
-                            >`
-                            :
-                            `
-                            <span
-                                class="thumbnail-placeholder"
-                            >
-                                HORIZON270+
-                            </span>
-                            `
-                        }
-
-                        <div class="thumbnail-overlay">
-
-                            <span class="play-button">
-                                ▶
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="video-info">
-
-                        <h3>
-                            ${titol}
-                        </h3>
-
-                        <p class="creator">
-                            HORIZON270+
-                        </p>
-
-                        <p class="video-meta">
-                            Vídeo
-                        </p>
-
-                    </div>
-
-                `;
-
-
-                grid.appendChild(card);
-
-            });
-
-
-        } catch (error) {
+        if (error) {
 
             console.error(
-                "Error inesperat:",
+                "Error carregant vídeos:",
                 error
             );
 
-
             grid.innerHTML = `
                 <p>
-                    S'ha produït un error
-                    carregant els vídeos.
+                    No s'han pogut carregar els vídeos.
                 </p>
             `;
 
+            return;
         }
 
+
+        if (!data || data.length === 0) {
+
+            grid.innerHTML = `
+                <p>
+                    Encara no hi ha vídeos publicats.
+                </p>
+            `;
+
+            return;
+        }
+
+
+        grid.innerHTML = "";
+
+
+        data.forEach(video => {
+
+            const card =
+                document.createElement("a");
+
+            card.href = "watch.html";
+
+            card.className = "video-card";
+
+
+            const titol =
+                video.títol || "Vídeo sense títol";
+
+
+            const thumbnail =
+                video.url_de_thumbnail;
+
+
+            card.innerHTML = `
+
+                <div class="thumbnail">
+
+                    ${
+                        thumbnail
+                        ?
+                        `<img
+                            src="${thumbnail}"
+                            alt="${titol}"
+                        >`
+                        :
+                        `
+                        <span class="thumbnail-placeholder">
+                            HORIZON270+
+                        </span>
+                        `
+                    }
+
+                    <div class="thumbnail-overlay">
+
+                        <span class="play-button">
+                            ▶
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="video-info">
+
+                    <h3>
+                        ${titol}
+                    </h3>
+
+                    <p class="creator">
+                        HORIZON270+
+                    </p>
+
+                    <p class="video-meta">
+                        Vídeo
+                    </p>
+
+                </div>
+
+            `;
+
+
+            grid.appendChild(card);
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Error inesperat:",
+            error
+        );
+
+        grid.innerHTML = `
+            <p>
+                S'ha produït un error
+                carregant els vídeos.
+            </p>
+        `;
     }
+}
 
 
-    carregarVideos();
+carregarVideos();
 
 </script>
 
