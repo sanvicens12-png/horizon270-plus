@@ -72,6 +72,8 @@
 
             <form class="upload-form">
 
+                <!-- TÍTOL -->
+
                 <div class="form-group">
 
                     <label for="title">
@@ -83,11 +85,14 @@
                         name="title"
                         type="text"
                         placeholder="Escriu el títol del vídeo"
+                        maxlength="150"
                         required
                     >
 
                 </div>
 
+
+                <!-- DESCRIPCIÓ -->
 
                 <div class="form-group">
 
@@ -100,10 +105,13 @@
                         name="description"
                         placeholder="Explica de què tracta el teu vídeo"
                         rows="6"
+                        maxlength="5000"
                     ></textarea>
 
                 </div>
 
+
+                <!-- VÍDEO -->
 
                 <div class="form-group">
 
@@ -130,14 +138,77 @@
                             </strong>
 
                             <span>
-                                Formats de vídeo compatibles
+                                MP4, WebM o altres formats de vídeo compatibles
                             </span>
                         </label>
 
                     </div>
 
+                    <p
+                        id="video-name"
+                        class="file-name"
+                    ></p>
+
                 </div>
 
+
+                <!-- MINIATURA -->
+
+                <div class="form-group">
+
+                    <label for="thumbnail">
+                        Miniatura
+                    </label>
+
+                    <div class="thumbnail-upload">
+
+                        <input
+                            id="thumbnail"
+                            name="thumbnail"
+                            type="file"
+                            accept="image/jpeg,image/png,image/webp"
+                            required
+                        >
+
+                        <label
+                            for="thumbnail"
+                            class="thumbnail-upload-label"
+                        >
+                            <strong>
+                                Selecciona una miniatura
+                            </strong>
+
+                            <span>
+                                JPG, PNG o WEBP
+                            </span>
+                        </label>
+
+                        <div
+                            id="thumbnail-preview"
+                            class="thumbnail-preview"
+                            hidden
+                        >
+                            <img
+                                id="thumbnail-image"
+                                src=""
+                                alt="Previsualització de la miniatura"
+                            >
+
+                            <button
+                                id="remove-thumbnail"
+                                type="button"
+                                class="remove-thumbnail"
+                            >
+                                Canviar miniatura
+                            </button>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACCIONS -->
 
                 <div class="upload-actions">
 
@@ -179,6 +250,85 @@
         </div>
 
     </footer>
+
+
+    <script>
+
+        const videoInput = document.getElementById("video");
+        const videoName = document.getElementById("video-name");
+
+        const thumbnailInput = document.getElementById("thumbnail");
+        const thumbnailPreview = document.getElementById("thumbnail-preview");
+        const thumbnailImage = document.getElementById("thumbnail-image");
+        const removeThumbnail = document.getElementById("remove-thumbnail");
+
+
+        videoInput.addEventListener("change", function () {
+
+            if (videoInput.files.length > 0) {
+
+                videoName.textContent =
+                    "Vídeo seleccionat: " +
+                    videoInput.files[0].name;
+
+            } else {
+
+                videoName.textContent = "";
+
+            }
+
+        });
+
+
+        thumbnailInput.addEventListener("change", function () {
+
+            const file = thumbnailInput.files[0];
+
+            if (!file) {
+                thumbnailPreview.hidden = true;
+                thumbnailImage.src = "";
+                return;
+            }
+
+            if (!file.type.startsWith("image/")) {
+                thumbnailInput.value = "";
+                thumbnailPreview.hidden = true;
+                thumbnailImage.src = "";
+                return;
+            }
+
+            const imageURL = URL.createObjectURL(file);
+
+            thumbnailImage.src = imageURL;
+            thumbnailPreview.hidden = false;
+
+        });
+
+
+        removeThumbnail.addEventListener("click", function () {
+
+            thumbnailInput.value = "";
+            thumbnailPreview.hidden = true;
+            thumbnailImage.src = "";
+
+        });
+
+
+        document
+            .querySelector(".upload-form")
+            .addEventListener("submit", function (event) {
+
+                event.preventDefault();
+
+                alert(
+                    "La interfície de pujada està preparada. " +
+                    "La pujada real del vídeo encara necessita connectar-se " +
+                    "a un sistema d'emmagatzematge."
+                );
+
+            });
+
+    </script>
 
 </body>
 </html>
