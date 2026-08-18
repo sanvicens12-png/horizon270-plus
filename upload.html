@@ -16,319 +16,591 @@
 
 <body>
 
-    <header class="topbar">
+<header class="topbar">
 
-        <div class="topbar-inner">
+    <div class="topbar-inner">
 
-            <a href="index.html" class="logo">
-                HORIZON<span>270+</span>
+        <a href="index.html" class="logo">
+            HORIZON<span>270+</span>
+        </a>
+
+        <nav class="main-nav">
+
+            <a href="index.html" class="nav-link">
+                Inici
             </a>
 
-            <nav class="main-nav">
-
-                <a href="index.html" class="nav-link">
-                    Inici
-                </a>
-
-                <a href="watch.html" class="nav-link">
-                    Explorar
-                </a>
-
-            </nav>
-
-            <a
-                href="upload.html"
-                class="upload-button"
-            >
-                Pujar
+            <a href="watch.html" class="nav-link">
+                Explorar
             </a>
 
-        </div>
+        </nav>
 
-    </header>
+        <a href="upload.html" class="upload-button">
+            Pujar
+        </a>
 
+    </div>
 
-    <main>
-
-        <section class="upload-page">
-
-            <div class="upload-header">
-
-                <span class="section-label">
-                    CREADORS
-                </span>
-
-                <h1>
-                    Puja el teu vídeo
-                </h1>
-
-                <p>
-                    Comparteix el teu contingut amb la comunitat
-                    de HORIZON270+.
-                </p>
-
-            </div>
+</header>
 
 
-            <form class="upload-form">
+<main>
 
-                <!-- TÍTOL -->
+    <section class="upload-page">
 
-                <div class="form-group">
+        <div class="upload-header">
 
-                    <label for="title">
-                        Títol del vídeo
-                    </label>
+            <span class="section-label">
+                CREADORS
+            </span>
 
-                    <input
-                        id="title"
-                        name="title"
-                        type="text"
-                        placeholder="Escriu el títol del vídeo"
-                        maxlength="150"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- DESCRIPCIÓ -->
-
-                <div class="form-group">
-
-                    <label for="description">
-                        Descripció
-                    </label>
-
-                    <textarea
-                        id="description"
-                        name="description"
-                        placeholder="Explica de què tracta el teu vídeo"
-                        rows="6"
-                        maxlength="5000"
-                    ></textarea>
-
-                </div>
-
-
-                <!-- VÍDEO -->
-
-                <div class="form-group">
-
-                    <label for="video">
-                        Fitxer de vídeo
-                    </label>
-
-                    <div class="file-upload">
-
-                        <input
-                            id="video"
-                            name="video"
-                            type="file"
-                            accept="video/*"
-                            required
-                        >
-
-                        <label
-                            for="video"
-                            class="file-upload-label"
-                        >
-                            <strong>
-                                Selecciona un vídeo
-                            </strong>
-
-                            <span>
-                                MP4, WebM o altres formats de vídeo compatibles
-                            </span>
-                        </label>
-
-                    </div>
-
-                    <p
-                        id="video-name"
-                        class="file-name"
-                    ></p>
-
-                </div>
-
-
-                <!-- MINIATURA -->
-
-                <div class="form-group">
-
-                    <label for="thumbnail">
-                        Miniatura
-                    </label>
-
-                    <div class="thumbnail-upload">
-
-                        <input
-                            id="thumbnail"
-                            name="thumbnail"
-                            type="file"
-                            accept="image/jpeg,image/png,image/webp"
-                            required
-                        >
-
-                        <label
-                            for="thumbnail"
-                            class="thumbnail-upload-label"
-                        >
-                            <strong>
-                                Selecciona una miniatura
-                            </strong>
-
-                            <span>
-                                JPG, PNG o WEBP
-                            </span>
-                        </label>
-
-                        <div
-                            id="thumbnail-preview"
-                            class="thumbnail-preview"
-                            hidden
-                        >
-                            <img
-                                id="thumbnail-image"
-                                src=""
-                                alt="Previsualització de la miniatura"
-                            >
-
-                            <button
-                                id="remove-thumbnail"
-                                type="button"
-                                class="remove-thumbnail"
-                            >
-                                Canviar miniatura
-                            </button>
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- ACCIONS -->
-
-                <div class="upload-actions">
-
-                    <a
-                        href="index.html"
-                        class="secondary-button"
-                    >
-                        Cancel·lar
-                    </a>
-
-                    <button
-                        type="submit"
-                        class="primary-button"
-                    >
-                        Pujar vídeo
-                    </button>
-
-                </div>
-
-            </form>
-
-        </section>
-
-    </main>
-
-
-    <footer class="footer">
-
-        <div class="footer-inner">
-
-            <a href="index.html" class="footer-logo">
-                HORIZON<span>270+</span>
-            </a>
+            <h1>
+                Puja el teu vídeo
+            </h1>
 
             <p>
-                HORIZON270+ — Plataforma de vídeo.
+                Comparteix el teu contingut amb la comunitat
+                de HORIZON270+.
             </p>
 
         </div>
 
-    </footer>
+
+        <form class="upload-form" id="upload-form">
+
+            <div class="form-group">
+
+                <label for="title">
+                    Títol del vídeo
+                </label>
+
+                <input
+                    id="title"
+                    name="title"
+                    type="text"
+                    placeholder="Escriu el títol del vídeo"
+                    maxlength="150"
+                    required
+                >
+
+            </div>
 
 
-    <script>
+            <div class="form-group">
 
-        const videoInput = document.getElementById("video");
-        const videoName = document.getElementById("video-name");
+                <label for="description">
+                    Descripció
+                </label>
 
-        const thumbnailInput = document.getElementById("thumbnail");
-        const thumbnailPreview = document.getElementById("thumbnail-preview");
-        const thumbnailImage = document.getElementById("thumbnail-image");
-        const removeThumbnail = document.getElementById("remove-thumbnail");
+                <textarea
+                    id="description"
+                    name="description"
+                    placeholder="Explica de què tracta el teu vídeo"
+                    rows="6"
+                    maxlength="5000"
+                ></textarea>
 
-
-        videoInput.addEventListener("change", function () {
-
-            if (videoInput.files.length > 0) {
-
-                videoName.textContent =
-                    "Vídeo seleccionat: " +
-                    videoInput.files[0].name;
-
-            } else {
-
-                videoName.textContent = "";
-
-            }
-
-        });
+            </div>
 
 
-        thumbnailInput.addEventListener("change", function () {
+            <div class="form-group">
 
-            const file = thumbnailInput.files[0];
+                <label for="video">
+                    Fitxer de vídeo
+                </label>
 
-            if (!file) {
-                thumbnailPreview.hidden = true;
-                thumbnailImage.src = "";
-                return;
-            }
+                <div class="file-upload">
 
-            if (!file.type.startsWith("image/")) {
-                thumbnailInput.value = "";
-                thumbnailPreview.hidden = true;
-                thumbnailImage.src = "";
-                return;
-            }
+                    <input
+                        id="video"
+                        name="video"
+                        type="file"
+                        accept="video/*"
+                        required
+                    >
 
-            const imageURL = URL.createObjectURL(file);
+                    <label
+                        for="video"
+                        class="file-upload-label"
+                    >
+                        <strong>
+                            Selecciona un vídeo
+                        </strong>
 
-            thumbnailImage.src = imageURL;
-            thumbnailPreview.hidden = false;
+                        <span>
+                            MP4, WebM o altres formats compatibles
+                        </span>
+                    </label>
 
-        });
+                </div>
 
+                <p id="video-name" class="file-name"></p>
 
-        removeThumbnail.addEventListener("click", function () {
-
-            thumbnailInput.value = "";
-            thumbnailPreview.hidden = true;
-            thumbnailImage.src = "";
-
-        });
+            </div>
 
 
-        document
-            .querySelector(".upload-form")
-            .addEventListener("submit", function (event) {
+            <div class="form-group">
 
-                event.preventDefault();
+                <label for="thumbnail">
+                    Miniatura
+                </label>
 
-                alert(
-                    "La interfície de pujada està preparada. " +
-                    "La pujada real del vídeo encara necessita connectar-se " +
-                    "a un sistema d'emmagatzematge."
+                <div class="thumbnail-upload">
+
+                    <input
+                        id="thumbnail"
+                        name="thumbnail"
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp"
+                        required
+                    >
+
+                    <label
+                        for="thumbnail"
+                        class="thumbnail-upload-label"
+                    >
+                        <strong>
+                            Selecciona una miniatura
+                        </strong>
+
+                        <span>
+                            JPG, PNG o WEBP
+                        </span>
+                    </label>
+
+                    <div
+                        id="thumbnail-preview"
+                        class="thumbnail-preview"
+                        hidden
+                    >
+
+                        <img
+                            id="thumbnail-image"
+                            src=""
+                            alt="Previsualització de la miniatura"
+                        >
+
+                        <button
+                            id="remove-thumbnail"
+                            type="button"
+                            class="remove-thumbnail"
+                        >
+                            Canviar miniatura
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="upload-status"
+                class="upload-status"
+                aria-live="polite"
+            ></div>
+
+
+            <div class="upload-actions">
+
+                <a
+                    href="index.html"
+                    class="secondary-button"
+                >
+                    Cancel·lar
+                </a>
+
+                <button
+                    type="submit"
+                    class="primary-button"
+                    id="upload-button"
+                >
+                    Pujar vídeo
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</main>
+
+
+<footer class="footer">
+
+    <div class="footer-inner">
+
+        <a href="index.html" class="footer-logo">
+            HORIZON<span>270+</span>
+        </a>
+
+        <p>
+            HORIZON270+ — Plataforma de vídeo.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+    "https://eftxwdpdweomffgurlgm.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_DPCJgsTp66cw2s-5S3CqNg_AdJEHKpt";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+const videoInput =
+    document.getElementById("video");
+
+const videoName =
+    document.getElementById("video-name");
+
+const thumbnailInput =
+    document.getElementById("thumbnail");
+
+const thumbnailPreview =
+    document.getElementById("thumbnail-preview");
+
+const thumbnailImage =
+    document.getElementById("thumbnail-image");
+
+const removeThumbnail =
+    document.getElementById("remove-thumbnail");
+
+const uploadForm =
+    document.getElementById("upload-form");
+
+const uploadButton =
+    document.getElementById("upload-button");
+
+const uploadStatus =
+    document.getElementById("upload-status");
+
+
+videoInput.addEventListener("change", function () {
+
+    if (videoInput.files.length > 0) {
+
+        videoName.textContent =
+            "Vídeo seleccionat: " +
+            videoInput.files[0].name;
+
+    } else {
+
+        videoName.textContent = "";
+
+    }
+
+});
+
+
+thumbnailInput.addEventListener("change", function () {
+
+    const file =
+        thumbnailInput.files[0];
+
+    if (!file) {
+
+        thumbnailPreview.hidden = true;
+        thumbnailImage.src = "";
+
+        return;
+    }
+
+
+    if (!file.type.startsWith("image/")) {
+
+        thumbnailInput.value = "";
+        thumbnailPreview.hidden = true;
+        thumbnailImage.src = "";
+
+        return;
+    }
+
+
+    const imageURL =
+        URL.createObjectURL(file);
+
+    thumbnailImage.src =
+        imageURL;
+
+    thumbnailPreview.hidden =
+        false;
+
+});
+
+
+removeThumbnail.addEventListener("click", function () {
+
+    thumbnailInput.value = "";
+
+    thumbnailPreview.hidden =
+        true;
+
+    thumbnailImage.src = "";
+
+});
+
+
+uploadForm.addEventListener("submit", async function (event) {
+
+    event.preventDefault();
+
+
+    const title =
+        document.getElementById("title").value.trim();
+
+    const description =
+        document.getElementById("description").value.trim();
+
+    const videoFile =
+        videoInput.files[0];
+
+    const thumbnailFile =
+        thumbnailInput.files[0];
+
+
+    if (!title || !videoFile || !thumbnailFile) {
+
+        uploadStatus.textContent =
+            "Completa tots els camps obligatoris.";
+
+        return;
+    }
+
+
+    uploadButton.disabled = true;
+
+    uploadButton.textContent =
+        "Pujant...";
+
+
+    uploadStatus.textContent =
+        "Preparant la pujada...";
+
+
+    try {
+
+        const timestamp =
+            Date.now();
+
+        const safeVideoName =
+            videoFile.name
+                .replace(/[^a-zA-Z0-9._-]/g, "_");
+
+        const safeThumbnailName =
+            thumbnailFile.name
+                .replace(/[^a-zA-Z0-9._-]/g, "_");
+
+
+        const videoPath =
+            timestamp +
+            "-" +
+            safeVideoName;
+
+
+        const thumbnailPath =
+            timestamp +
+            "-" +
+            safeThumbnailName;
+
+
+        /*
+         * 1. PUJAR VÍDEO
+         */
+
+        uploadStatus.textContent =
+            "Pujant el vídeo...";
+
+
+        const { error: videoError } =
+            await supabaseClient
+                .storage
+                .from("videos")
+                .upload(
+                    videoPath,
+                    videoFile
                 );
 
-            });
 
-    </script>
+        if (videoError) {
+
+            throw new Error(
+                "Error pujant el vídeo: " +
+                videoError.message
+            );
+
+        }
+
+
+        /*
+         * 2. OBTENIR URL DEL VÍDEO
+         */
+
+        const {
+            data: videoURLData
+        } =
+            supabaseClient
+                .storage
+                .from("videos")
+                .getPublicUrl(videoPath);
+
+
+        const videoURL =
+            videoURLData.publicUrl;
+
+
+        /*
+         * 3. PUJAR MINIATURA
+         */
+
+        uploadStatus.textContent =
+            "Pujant la miniatura...";
+
+
+        const {
+            error: thumbnailError
+        } =
+            await supabaseClient
+                .storage
+                .from("thumbnails")
+                .upload(
+                    thumbnailPath,
+                    thumbnailFile
+                );
+
+
+        if (thumbnailError) {
+
+            throw new Error(
+                "Error pujant la miniatura: " +
+                thumbnailError.message
+            );
+
+        }
+
+
+        /*
+         * 4. OBTENIR URL DE LA MINIATURA
+         */
+
+        const {
+            data: thumbnailURLData
+        } =
+            supabaseClient
+                .storage
+                .from("thumbnails")
+                .getPublicUrl(thumbnailPath);
+
+
+        const thumbnailURL =
+            thumbnailURLData.publicUrl;
+
+
+        /*
+         * 5. CREAR REGISTRE A LA TAULA videos
+         */
+
+        uploadStatus.textContent =
+            "Guardant la informació del vídeo...";
+
+
+        const {
+            error: databaseError
+        } =
+            await supabaseClient
+                .from("videos")
+                .insert({
+
+                    títol: title,
+
+                    descripció: description,
+
+                    URL_de_vídeo: videoURL,
+
+                    url_de_thumbnail: thumbnailURL
+
+                });
+
+
+        if (databaseError) {
+
+            throw new Error(
+                "Error guardant el vídeo: " +
+                databaseError.message
+            );
+
+        }
+
+
+        /*
+         * 6. ÈXIT
+         */
+
+        uploadStatus.textContent =
+            "Vídeo pujat correctament! 🎉";
+
+
+        uploadButton.textContent =
+            "Vídeo pujat";
+
+
+        uploadForm.reset();
+
+        thumbnailPreview.hidden =
+            true;
+
+        thumbnailImage.src = "";
+
+        videoName.textContent = "";
+
+
+        setTimeout(function () {
+
+            window.location.href =
+                "index.html";
+
+        }, 1500);
+
+
+    } catch (error) {
+
+        console.error(
+            "Error de pujada:",
+            error
+        );
+
+
+        uploadStatus.textContent =
+            error.message;
+
+
+        uploadButton.disabled =
+            false;
+
+        uploadButton.textContent =
+            "Pujar vídeo";
+
+    }
+
+});
+
+</script>
 
 </body>
 </html>
