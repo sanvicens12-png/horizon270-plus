@@ -12,6 +12,9 @@
     >
 
     <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase.js"></script>
 </head>
 
 <body>
@@ -27,14 +30,13 @@
                 placeholder="Cerca a HORIZON270+"
             >
 
-            <button>🔍</button>
+            <button type="button">🔍</button>
         </div>
 
-        <button class="login-button">
+        <button type="button" class="login-button">
             Iniciar sessió
         </button>
     </header>
-
 
     <main class="home">
 
@@ -46,12 +48,11 @@
                 La teva nova plataforma de vídeo.
             </p>
 
-            <button class="primary-button">
+            <button type="button" class="primary-button">
                 Explorar vídeos
             </button>
 
         </section>
-
 
         <section class="videos">
 
@@ -60,6 +61,7 @@
             <div class="video-grid">
 
                 <div class="video-card">
+
                     <div class="thumbnail">
                         🎬
                     </div>
@@ -67,6 +69,7 @@
                     <h3>El primer vídeo de HORIZON270+</h3>
 
                     <p>HORIZON270+</p>
+
                 </div>
 
             </div>
