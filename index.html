@@ -78,5 +78,15 @@
 
     </main>
 
+    <script>
+        console.log("HORIZON270+ ha carregat correctament.");
+
+        if (window.supabase && typeof supabaseClient !== "undefined") {
+            console.log("Supabase està carregat correctament.");
+        } else {
+            console.error("Supabase NO s'ha pogut carregar.");
+        }
+    </script>
+
 </body>
 </html>
