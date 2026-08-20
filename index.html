@@ -28,17 +28,26 @@
         <div class="search">
             <input
                 type="search"
+                id="searchInput"
                 placeholder="Cerca a HORIZON270+"
                 aria-label="Cerca"
             >
-            <button type="button" aria-label="Buscar">
+            <button type="button" id="searchButton">
                 Cerca
             </button>
         </div>
 
-        <a href="upload.html" class="upload-button">
-            Pujar
-        </a>
+        <div id="authArea">
+
+            <button
+                type="button"
+                class="upload-button"
+                id="loginButton"
+            >
+                Iniciar sessió
+            </button>
+
+        </div>
 
     </div>
 </header>
@@ -47,6 +56,7 @@
 <main>
 
     <section class="hero">
+
         <div class="hero-content">
 
             <span class="hero-label">
@@ -64,17 +74,25 @@
 
             <div class="hero-actions">
 
-                <a href="watch.html" class="primary-button">
+                <a
+                    href="watch.html"
+                    class="primary-button"
+                >
                     Explorar vídeos
                 </a>
 
-                <a href="upload.html" class="secondary-button">
+                <a
+                    href="upload.html"
+                    class="secondary-button"
+                    id="uploadHeroButton"
+                >
                     Pujar un vídeo
                 </a>
 
             </div>
 
         </div>
+
     </section>
 
 
@@ -83,6 +101,7 @@
         <div class="section-header">
 
             <div>
+
                 <span class="section-label">
                     DESCOBREIX
                 </span>
@@ -90,16 +109,23 @@
                 <h2>
                     Tendències
                 </h2>
+
             </div>
 
-            <a href="watch.html" class="view-all">
+            <a
+                href="watch.html"
+                class="view-all"
+            >
                 Veure-ho tot
             </a>
 
         </div>
 
 
-        <div class="video-grid" id="video-grid">
+        <div
+            class="video-grid"
+            id="video-grid"
+        >
 
             <div class="video-loading">
                 Carregant vídeos...
@@ -127,7 +153,11 @@
                 de HORIZON270+.
             </p>
 
-            <a href="upload.html" class="primary-button">
+            <a
+                href="upload.html"
+                class="primary-button"
+                id="uploadCreatorButton"
+            >
                 Començar a pujar
             </a>
 
@@ -142,7 +172,10 @@
 
     <div class="footer-inner">
 
-        <a href="index.html" class="footer-logo">
+        <a
+            href="index.html"
+            class="footer-logo"
+        >
             HORIZON<span>270+</span>
         </a>
 
@@ -155,7 +188,10 @@
 </footer>
 
 
+<!-- SUPABASE -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
 <script>
 
@@ -165,12 +201,18 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "sb_publishable_DPCJgsTp66cw2s-5S3CqNg_AdJEHKpt";
 
+
 const supabaseClient =
     window.supabase.createClient(
         SUPABASE_URL,
         SUPABASE_KEY
     );
 
+
+
+/* =========================
+   CARREGAR VÍDEOS
+========================= */
 
 async function carregarVideos() {
 
@@ -179,7 +221,10 @@ async function carregarVideos() {
 
     try {
 
-        const { data, error } =
+        const {
+            data,
+            error
+        } =
             await supabaseClient
                 .from("videos")
                 .select("*")
@@ -223,13 +268,18 @@ async function carregarVideos() {
             const card =
                 document.createElement("a");
 
-            card.href = "watch.html";
 
-            card.className = "video-card";
+            card.href =
+                "watch.html";
+
+
+            card.className =
+                "video-card";
 
 
             const titol =
-                video.títol || "Vídeo sense títol";
+                video.títol ||
+                "Vídeo sense títol";
 
 
             const thumbnail =
@@ -289,7 +339,9 @@ async function carregarVideos() {
 
         });
 
-    } catch (error) {
+    }
+
+    catch (error) {
 
         console.error(
             "Error inesperat:",
@@ -302,11 +354,387 @@ async function carregarVideos() {
                 carregant els vídeos.
             </p>
         `;
+
     }
+
 }
 
 
+
+/* =========================
+   LOGIN
+========================= */
+
+async function iniciarSessio() {
+
+    const email =
+        prompt(
+            "Introdueix el teu correu electrònic:"
+        );
+
+
+    if (!email) {
+        return;
+    }
+
+
+    const password =
+        prompt(
+            "Introdueix la teva contrasenya:"
+        );
+
+
+    if (!password) {
+        return;
+    }
+
+
+    const {
+        error
+    } =
+        await supabaseClient.auth.signInWithPassword({
+            email,
+            password
+        });
+
+
+    if (error) {
+
+        alert(
+            "No s'ha pogut iniciar sessió:\n\n" +
+            error.message
+        );
+
+        return;
+    }
+
+
+    alert(
+        "Sessió iniciada correctament."
+    );
+
+
+    actualitzarAuth();
+
+}
+
+
+
+/* =========================
+   CREAR COMPTE
+========================= */
+
+async function crearCompte() {
+
+    const email =
+        prompt(
+            "Introdueix el teu correu electrònic:"
+        );
+
+
+    if (!email) {
+        return;
+    }
+
+
+    const password =
+        prompt(
+            "Crea una contrasenya:"
+        );
+
+
+    if (!password) {
+        return;
+    }
+
+
+    const {
+        error
+    } =
+        await supabaseClient.auth.signUp({
+            email,
+            password
+        });
+
+
+    if (error) {
+
+        alert(
+            "No s'ha pogut crear el compte:\n\n" +
+            error.message
+        );
+
+        return;
+    }
+
+
+    alert(
+        "Compte creat correctament."
+    );
+
+
+    actualitzarAuth();
+
+}
+
+
+
+/* =========================
+   GOOGLE
+========================= */
+
+async function iniciarAmbGoogle() {
+
+    const {
+        error
+    } =
+        await supabaseClient.auth.signInWithOAuth({
+
+            provider: "google",
+
+            options: {
+
+                redirectTo:
+                    window.location.origin +
+                    "/index.html"
+
+            }
+
+        });
+
+
+    if (error) {
+
+        alert(
+            "No s'ha pogut iniciar sessió amb Google:\n\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+async function tancarSessio() {
+
+    await supabaseClient.auth.signOut();
+
+    actualitzarAuth();
+
+}
+
+
+
+/* =========================
+   ACTUALITZAR AUTENTICACIÓ
+========================= */
+
+async function actualitzarAuth() {
+
+    const {
+        data
+    } =
+        await supabaseClient.auth.getSession();
+
+
+    const session =
+        data.session;
+
+
+    const authArea =
+        document.getElementById(
+            "authArea"
+        );
+
+
+    if (session) {
+
+        const user =
+            session.user;
+
+
+        const email =
+            user.email ||
+            "Usuari";
+
+
+        authArea.innerHTML = `
+
+            <div
+                style="
+                    display:flex;
+                    align-items:center;
+                    gap:10px;
+                "
+            >
+
+                <span>
+                    ${email}
+                </span>
+
+                <button
+                    type="button"
+                    class="upload-button"
+                    id="logoutButton"
+                >
+                    Tancar sessió
+                </button>
+
+            </div>
+
+        `;
+
+
+        document
+            .getElementById("logoutButton")
+            .addEventListener(
+                "click",
+                tancarSessio
+            );
+
+    }
+
+    else {
+
+        authArea.innerHTML = `
+
+            <button
+                type="button"
+                class="upload-button"
+                id="loginButton"
+            >
+                Iniciar sessió
+            </button>
+
+        `;
+
+
+        document
+            .getElementById("loginButton")
+            .addEventListener(
+                "click",
+                mostrarLogin
+            );
+
+    }
+
+}
+
+
+
+/* =========================
+   MENÚ LOGIN
+========================= */
+
+function mostrarLogin() {
+
+    const opcio =
+        prompt(
+            "HORIZON270+\\n\\n" +
+            "1 - Iniciar sessió\\n" +
+            "2 - Crear compte\\n" +
+            "3 - Continuar amb Google\\n\\n" +
+            "Escriu 1, 2 o 3:"
+        );
+
+
+    if (opcio === "1") {
+
+        iniciarSessio();
+
+    }
+
+    else if (opcio === "2") {
+
+        crearCompte();
+
+    }
+
+    else if (opcio === "3") {
+
+        iniciarAmbGoogle();
+
+    }
+
+}
+
+
+
+/* =========================
+   PROTEGIR PUJADA
+========================= */
+
+async function comprovarLogin(event) {
+
+    const {
+        data
+    } =
+        await supabaseClient.auth.getSession();
+
+
+    if (!data.session) {
+
+        event.preventDefault();
+
+        alert(
+            "Has d'iniciar sessió per pujar vídeos."
+        );
+
+        mostrarLogin();
+
+    }
+
+}
+
+
+
+/* =========================
+   EVENTS
+========================= */
+
+document
+    .getElementById("uploadHeroButton")
+    .addEventListener(
+        "click",
+        comprovarLogin
+    );
+
+
+document
+    .getElementById("uploadCreatorButton")
+    .addEventListener(
+        "click",
+        comprovarLogin
+    );
+
+
+
+/* =========================
+   CANVIS DE SESSIÓ
+========================= */
+
+supabaseClient.auth.onAuthStateChange(
+    function () {
+
+        actualitzarAuth();
+
+    }
+);
+
+
+
+/* =========================
+   INICI
+========================= */
+
 carregarVideos();
+
+actualitzarAuth();
 
 </script>
 
