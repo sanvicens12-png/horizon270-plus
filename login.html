@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Iniciar sessió | HORIZON270+</title>
+
+    <meta
+        name="description"
+        content="Inicia sessió o crea el teu compte a HORIZON270+."
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="auth-page">
+
+<main class="auth-container">
+
+    <a href="index.html" class="auth-logo">
+        HORIZON<span>270+</span>
+    </a>
+
+
+    <section class="auth-card">
+
+        <div class="auth-header">
+
+            <span class="section-label">
+                HORIZON270+
+            </span>
+
+            <h1 id="authTitle">
+                Inicia sessió
+            </h1>
+
+            <p id="authSubtitle">
+                Accedeix al teu compte per continuar.
+            </p>
+
+        </div>
+
+
+        <!-- MISSATGE -->
+
+        <div
+            id="authMessage"
+            class="auth-message"
+            hidden
+        ></div>
+
+
+        <!-- FORMULARI -->
+
+        <form id="authForm">
+
+            <div class="auth-field">
+
+                <label for="email">
+                    Correu electrònic
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="tu@exemple.com"
+                    autocomplete="email"
+                    required
+                >
+
+            </div>
+
+
+            <div class="auth-field">
+
+                <div class="password-label">
+
+                    <label for="password">
+                        Contrasenya
+                    </label>
+
+                    <button
+                        type="button"
+                        id="forgotPassword"
+                        class="forgot-button"
+                    >
+                        He oblidat la contrasenya
+                    </button>
+
+                </div>
+
+
+                <div class="password-input">
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="La teva contrasenya"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        id="togglePassword"
+                        class="password-toggle"
+                        aria-label="Mostrar contrasenya"
+                    >
+                        👁
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="submit"
+                id="emailButton"
+                class="auth-submit"
+            >
+                Iniciar sessió
+            </button>
+
+        </form>
+
+
+        <!-- SEPARADOR -->
+
+        <div class="auth-divider">
+            <span>o continua amb</span>
+        </div>
+
+
+        <!-- GOOGLE -->
+
+        <button
+            type="button"
+            id="googleButton"
+            class="google-button"
+        >
+
+            <span class="google-icon">
+                G
+            </span>
+
+            <span>
+                Continuar amb Google
+            </span>
+
+        </button>
+
+
+        <!-- CANVI LOGIN / REGISTRE -->
+
+        <div class="auth-switch">
+
+            <span id="switchText">
+                No tens compte?
+            </span>
+
+            <button
+                type="button"
+                id="switchMode"
+            >
+                Crear compte
+            </button>
+
+        </div>
+
+
+    </section>
+
+
+    <p class="auth-footer">
+
+        En continuar, acceptes les condicions
+        d'ús de HORIZON270+.
+
+    </p>
+
+</main>
+
+
+
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+/* =========================
+   SUPABASE
+========================= */
+
+const SUPABASE_URL =
+    "https://eftxwdpdweomffgurlgm.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_DPCJgsTp66cw2s-5S3CqNg_AdJEHKpt";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const authForm =
+    document.getElementById("authForm");
+
+const emailInput =
+    document.getElementById("email");
+
+const passwordInput =
+    document.getElementById("password");
+
+const emailButton =
+    document.getElementById("emailButton");
+
+const googleButton =
+    document.getElementById("googleButton");
+
+const togglePassword =
+    document.getElementById("togglePassword");
+
+const forgotPassword =
+    document.getElementById("forgotPassword");
+
+const switchMode =
+    document.getElementById("switchMode");
+
+const switchText =
+    document.getElementById("switchText");
+
+const authTitle =
+    document.getElementById("authTitle");
+
+const authSubtitle =
+    document.getElementById("authSubtitle");
+
+const authMessage =
+    document.getElementById("authMessage");
+
+
+let isRegisterMode = false;
+
+
+/* =========================
+   MESSAGE
+========================= */
+
+function showMessage(
+    message,
+    type = "error"
+) {
+
+    authMessage.textContent =
+        message;
+
+    authMessage.className =
+        "auth-message " + type;
+
+    authMessage.hidden =
+        false;
+
+}
+
+
+function hideMessage() {
+
+    authMessage.hidden =
+        true;
+
+    authMessage.textContent =
+        "";
+
+}
+
+
+/* =========================
+   LOGIN / REGISTER MODE
+========================= */
+
+switchMode.addEventListener(
+    "click",
+    function () {
+
+        isRegisterMode =
+            !isRegisterMode;
+
+        hideMessage();
+
+
+        if (isRegisterMode) {
+
+            authTitle.textContent =
+                "Crea el teu compte";
+
+            authSubtitle.textContent =
+                "Uneix-te a HORIZON270+ i comença a explorar.";
+
+            emailButton.textContent =
+                "Crear compte";
+
+            switchText.textContent =
+                "Ja tens un compte?";
+
+            switchMode.textContent =
+                "Iniciar sessió";
+
+            passwordInput.autocomplete =
+                "new-password";
+
+        }
+
+        else {
+
+            authTitle.textContent =
+                "Inicia sessió";
+
+            authSubtitle.textContent =
+                "Accedeix al teu compte per continuar.";
+
+            emailButton.textContent =
+                "Iniciar sessió";
+
+            switchText.textContent =
+                "No tens compte?";
+
+            switchMode.textContent =
+                "Crear compte";
+
+            passwordInput.autocomplete =
+                "current-password";
+
+        }
+
+    }
+);
+
+
+/* =========================
+   SHOW PASSWORD
+========================= */
+
+togglePassword.addEventListener(
+    "click",
+    function () {
+
+        const visible =
+            passwordInput.type === "text";
+
+
+        passwordInput.type =
+            visible
+            ? "password"
+            : "text";
+
+
+        togglePassword.textContent =
+            visible
+            ? "👁"
+            : "🙈";
+
+    }
+);
+
+
+/* =========================
+   EMAIL AUTH
+========================= */
+
+authForm.addEventListener(
+    "submit",
+    async function (event) {
+
+        event.preventDefault();
+
+        hideMessage();
+
+
+        const email =
+            emailInput.value.trim();
+
+        const password =
+            passwordInput.value;
+
+
+        if (!email || !password) {
+
+            showMessage(
+                "Introdueix el correu i la contrasenya."
+            );
+
+            return;
+
+        }
+
+
+        emailButton.disabled =
+            true;
+
+        emailButton.textContent =
+            isRegisterMode
+            ? "Creant compte..."
+            : "Iniciant sessió...";
+
+
+        try {
+
+            if (isRegisterMode) {
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabaseClient.auth.signUp({
+
+                        email,
+                        password
+
+                    });
+
+
+                if (error) {
+                    throw error;
+                }
+
+
+                if (
+                    data.user &&
+                    !data.session
+                ) {
+
+                    showMessage(
+                        "Compte creat. Revisa el teu correu per confirmar el compte.",
+                        "success"
+                    );
+
+                }
+
+                else {
+
+                    window.location.href =
+                        "index.html";
+
+                }
+
+            }
+
+            else {
+
+                const {
+                    error
+                } =
+                    await supabaseClient.auth.signInWithPassword({
+
+                        email,
+                        password
+
+                    });
+
+
+                if (error) {
+                    throw error;
+                }
+
+
+                window.location.href =
+                    "index.html";
+
+            }
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Authentication error:",
+                error
+            );
+
+
+            showMessage(
+                convertirError(error)
+            );
+
+        }
+
+        finally {
+
+            emailButton.disabled =
+                false;
+
+            emailButton.textContent =
+                isRegisterMode
+                ? "Crear compte"
+                : "Iniciar sessió";
+
+        }
+
+    }
+);
+
+
+/* =========================
+   GOOGLE
+========================= */
+
+googleButton.addEventListener(
+    "click",
+    async function () {
+
+        hideMessage();
+
+
+        googleButton.disabled =
+            true;
+
+        googleButton.classList.add(
+            "loading"
+        );
+
+
+        try {
+
+            const {
+                error
+            } =
+                await supabaseClient.auth.signInWithOAuth({
+
+                    provider: "google",
+
+                    options: {
+
+                        redirectTo:
+                            window.location.origin +
+                            "/index.html"
+
+                    }
+
+                });
+
+
+            if (error) {
+                throw error;
+            }
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Google login error:",
+                error
+            );
+
+
+            showMessage(
+                "No s'ha pogut iniciar sessió amb Google."
+            );
+
+
+            googleButton.disabled =
+                false;
+
+            googleButton.classList.remove(
+                "loading"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================
+   PASSWORD RESET
+========================= */
+
+forgotPassword.addEventListener(
+    "click",
+    async function () {
+
+        hideMessage();
+
+
+        const email =
+            emailInput.value.trim();
+
+
+        if (!email) {
+
+            showMessage(
+                "Escriu primer el teu correu electrònic."
+            );
+
+            emailInput.focus();
+
+            return;
+
+        }
+
+
+        forgotPassword.disabled =
+            true;
+
+
+        try {
+
+            const {
+                error
+            } =
+                await supabaseClient.auth
+                    .resetPasswordForEmail(
+                        email,
+                        {
+                            redirectTo:
+                                window.location.origin +
+                                "/reset-password.html"
+                        }
+                    );
+
+
+            if (error) {
+                throw error;
+            }
+
+
+            showMessage(
+                "T'hem enviat un correu per recuperar la contrasenya.",
+                "success"
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Password reset error:",
+                error
+            );
+
+
+            showMessage(
+                convertirError(error)
+            );
+
+        }
+
+        finally {
+
+            forgotPassword.disabled =
+                false;
+
+        }
+
+    }
+);
+
+
+/* =========================
+   ERRORS
+========================= */
+
+function convertirError(error) {
+
+    const message =
+        error?.message || "";
+
+
+    if (
+        message.includes(
+            "Invalid login credentials"
+        )
+    ) {
+
+        return "El correu o la contrasenya no són correctes.";
+
+    }
+
+
+    if (
+        message.includes(
+            "User already registered"
+        )
+    ) {
+
+        return "Aquest correu ja té un compte.";
+
+    }
+
+
+    if (
+        message.includes(
+            "Password should be at least"
+        )
+    ) {
+
+        return "La contrasenya és massa curta.";
+
+    }
+
+
+    if (
+        message.includes(
+            "Email not confirmed"
+        )
+    ) {
+
+        return "Has de confirmar el teu correu electrònic abans d'iniciar sessió.";
+
+    }
+
+
+    return message ||
+        "S'ha produït un error. Torna-ho a provar.";
+
+}
+
+
+/* =========================
+   CHECK SESSION
+========================= */
+
+async function comprovarSessio() {
+
+    const {
+        data
+    } =
+        await supabaseClient.auth.getSession();
+
+
+    if (data.session) {
+
+        window.location.href =
+            "index.html";
+
+    }
+
+}
+
+
+comprovarSessio();
+
+</script>
+
+</body>
+</html>
