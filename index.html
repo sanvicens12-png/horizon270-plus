@@ -6,7 +6,10 @@
 
     <title>HORIZON270+ | Plataforma de vídeo</title>
 
-    <meta name="description" content="HORIZON270+ — Descobreix, mira i comparteix vídeos.">
+    <meta
+        name="description"
+        content="HORIZON270+ — Descobreix, mira i comparteix vídeos."
+    >
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -14,46 +17,72 @@
 <body>
 
 <header class="topbar">
+
     <div class="topbar-inner">
 
         <a href="index.html" class="logo">
             HORIZON<span>270+</span>
         </a>
 
+
         <nav class="main-nav">
-            <a href="index.html" class="nav-link active">Inici</a>
-            <a href="watch.html" class="nav-link">Explorar</a>
+
+            <a
+                href="index.html"
+                class="nav-link active"
+            >
+                Inici
+            </a>
+
+            <a
+                href="watch.html"
+                class="nav-link"
+            >
+                Explorar
+            </a>
+
         </nav>
 
+
         <div class="search">
+
             <input
                 type="search"
                 id="searchInput"
                 placeholder="Cerca a HORIZON270+"
                 aria-label="Cerca"
             >
-            <button type="button" id="searchButton">
-                Cerca
-            </button>
-        </div>
-
-        <div id="authArea">
 
             <button
                 type="button"
+                id="searchButton"
+            >
+                Cerca
+            </button>
+
+        </div>
+
+
+        <div id="accountArea">
+
+            <a
+                href="login.html"
                 class="upload-button"
-                id="loginButton"
             >
                 Iniciar sessió
-            </button>
+            </a>
 
         </div>
 
     </div>
+
 </header>
 
 
+
 <main>
+
+    <!-- HERO -->
 
     <section class="hero">
 
@@ -72,6 +101,7 @@
                 i comparteix les teves pròpies creacions.
             </p>
 
+
             <div class="hero-actions">
 
                 <a
@@ -81,10 +111,11 @@
                     Explorar vídeos
                 </a>
 
+
                 <a
                     href="upload.html"
                     class="secondary-button"
-                    id="uploadHeroButton"
+                    id="heroUpload"
                 >
                     Pujar un vídeo
                 </a>
@@ -95,6 +126,9 @@
 
     </section>
 
+
+
+    <!-- VIDEOS -->
 
     <section class="content-section">
 
@@ -111,6 +145,7 @@
                 </h2>
 
             </div>
+
 
             <a
                 href="watch.html"
@@ -136,6 +171,9 @@
     </section>
 
 
+
+    <!-- CREADORS -->
+
     <section class="creator-section">
 
         <div class="creator-content">
@@ -144,19 +182,22 @@
                 CREADORS
             </span>
 
+
             <h2>
                 Tens alguna cosa per compartir?
             </h2>
+
 
             <p>
                 Puja els teus vídeos i comença a formar part
                 de HORIZON270+.
             </p>
 
+
             <a
                 href="upload.html"
                 class="primary-button"
-                id="uploadCreatorButton"
+                id="creatorUpload"
             >
                 Començar a pujar
             </a>
@@ -167,6 +208,9 @@
 
 </main>
 
+
+
+<!-- FOOTER -->
 
 <footer class="footer">
 
@@ -179,6 +223,7 @@
             HORIZON<span>270+</span>
         </a>
 
+
         <p>
             HORIZON270+ — Plataforma de vídeo.
         </p>
@@ -188,12 +233,17 @@
 </footer>
 
 
+
 <!-- SUPABASE -->
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 
 <script>
+
+/* =========================
+   SUPABASE
+========================= */
 
 const SUPABASE_URL =
     "https://eftxwdpdweomffgurlgm.supabase.co";
@@ -219,6 +269,7 @@ async function carregarVideos() {
     const grid =
         document.getElementById("video-grid");
 
+
     try {
 
         const {
@@ -238,11 +289,13 @@ async function carregarVideos() {
                 error
             );
 
+
             grid.innerHTML = `
                 <p>
                     No s'han pogut carregar els vídeos.
                 </p>
             `;
+
 
             return;
         }
@@ -255,6 +308,7 @@ async function carregarVideos() {
                     Encara no hi ha vídeos publicats.
                 </p>
             `;
+
 
             return;
         }
@@ -292,18 +346,25 @@ async function carregarVideos() {
 
                     ${
                         thumbnail
+
                         ?
-                        `<img
+
+                        `
+                        <img
                             src="${thumbnail}"
                             alt="${titol}"
-                        >`
+                        >
+                        `
+
                         :
+
                         `
                         <span class="thumbnail-placeholder">
                             HORIZON270+
                         </span>
                         `
                     }
+
 
                     <div class="thumbnail-overlay">
 
@@ -322,9 +383,11 @@ async function carregarVideos() {
                         ${titol}
                     </h3>
 
+
                     <p class="creator">
                         HORIZON270+
                     </p>
+
 
                     <p class="video-meta">
                         Vídeo
@@ -341,12 +404,14 @@ async function carregarVideos() {
 
     }
 
+
     catch (error) {
 
         console.error(
             "Error inesperat:",
             error
         );
+
 
         grid.innerHTML = `
             <p>
@@ -362,179 +427,10 @@ async function carregarVideos() {
 
 
 /* =========================
-   LOGIN
+   USUARI
 ========================= */
 
-async function iniciarSessio() {
-
-    const email =
-        prompt(
-            "Introdueix el teu correu electrònic:"
-        );
-
-
-    if (!email) {
-        return;
-    }
-
-
-    const password =
-        prompt(
-            "Introdueix la teva contrasenya:"
-        );
-
-
-    if (!password) {
-        return;
-    }
-
-
-    const {
-        error
-    } =
-        await supabaseClient.auth.signInWithPassword({
-            email,
-            password
-        });
-
-
-    if (error) {
-
-        alert(
-            "No s'ha pogut iniciar sessió:\n\n" +
-            error.message
-        );
-
-        return;
-    }
-
-
-    alert(
-        "Sessió iniciada correctament."
-    );
-
-
-    actualitzarAuth();
-
-}
-
-
-
-/* =========================
-   CREAR COMPTE
-========================= */
-
-async function crearCompte() {
-
-    const email =
-        prompt(
-            "Introdueix el teu correu electrònic:"
-        );
-
-
-    if (!email) {
-        return;
-    }
-
-
-    const password =
-        prompt(
-            "Crea una contrasenya:"
-        );
-
-
-    if (!password) {
-        return;
-    }
-
-
-    const {
-        error
-    } =
-        await supabaseClient.auth.signUp({
-            email,
-            password
-        });
-
-
-    if (error) {
-
-        alert(
-            "No s'ha pogut crear el compte:\n\n" +
-            error.message
-        );
-
-        return;
-    }
-
-
-    alert(
-        "Compte creat correctament."
-    );
-
-
-    actualitzarAuth();
-
-}
-
-
-
-/* =========================
-   GOOGLE
-========================= */
-
-async function iniciarAmbGoogle() {
-
-    const {
-        error
-    } =
-        await supabaseClient.auth.signInWithOAuth({
-
-            provider: "google",
-
-            options: {
-
-                redirectTo:
-                    window.location.origin +
-                    "/index.html"
-
-            }
-
-        });
-
-
-    if (error) {
-
-        alert(
-            "No s'ha pogut iniciar sessió amb Google:\n\n" +
-            error.message
-        );
-
-    }
-
-}
-
-
-
-/* =========================
-   LOGOUT
-========================= */
-
-async function tancarSessio() {
-
-    await supabaseClient.auth.signOut();
-
-    actualitzarAuth();
-
-}
-
-
-
-/* =========================
-   ACTUALITZAR AUTENTICACIÓ
-========================= */
-
-async function actualitzarAuth() {
+async function actualitzarCompte() {
 
     const {
         data
@@ -546,120 +442,89 @@ async function actualitzarAuth() {
         data.session;
 
 
-    const authArea =
+    const accountArea =
         document.getElementById(
-            "authArea"
+            "accountArea"
         );
 
 
-    if (session) {
+    if (!session) {
 
-        const user =
-            session.user;
+        accountArea.innerHTML = `
 
-
-        const email =
-            user.email ||
-            "Usuari";
-
-
-        authArea.innerHTML = `
-
-            <div
-                style="
-                    display:flex;
-                    align-items:center;
-                    gap:10px;
-                "
+            <a
+                href="login.html"
+                class="upload-button"
             >
-
-                <span>
-                    ${email}
-                </span>
-
-                <button
-                    type="button"
-                    class="upload-button"
-                    id="logoutButton"
-                >
-                    Tancar sessió
-                </button>
-
-            </div>
+                Iniciar sessió
+            </a>
 
         `;
 
 
-        document
-            .getElementById("logoutButton")
-            .addEventListener(
-                "click",
-                tancarSessio
-            );
+        return;
 
     }
 
-    else {
 
-        authArea.innerHTML = `
+    const user =
+        session.user;
+
+
+    const email =
+        user.email ||
+        "Compte";
+
+
+    accountArea.innerHTML = `
+
+        <div
+            style="
+                display:flex;
+                align-items:center;
+                gap:10px;
+            "
+        >
+
+            <span
+                style="
+                    color:var(--muted);
+                    font-size:13px;
+                    max-width:180px;
+                    overflow:hidden;
+                    text-overflow:ellipsis;
+                    white-space:nowrap;
+                "
+            >
+                ${email}
+            </span>
+
 
             <button
                 type="button"
                 class="upload-button"
-                id="loginButton"
+                id="logoutButton"
             >
-                Iniciar sessió
+                Tancar sessió
             </button>
 
-        `;
+        </div>
+
+    `;
 
 
-        document
-            .getElementById("loginButton")
-            .addEventListener(
-                "click",
-                mostrarLogin
-            );
+    document
+        .getElementById("logoutButton")
+        .addEventListener(
+            "click",
+            async function () {
 
-    }
+                await supabaseClient.auth.signOut();
 
-}
+                window.location.reload();
 
-
-
-/* =========================
-   MENÚ LOGIN
-========================= */
-
-function mostrarLogin() {
-
-    const opcio =
-        prompt(
-            "HORIZON270+\\n\\n" +
-            "1 - Iniciar sessió\\n" +
-            "2 - Crear compte\\n" +
-            "3 - Continuar amb Google\\n\\n" +
-            "Escriu 1, 2 o 3:"
+            }
         );
-
-
-    if (opcio === "1") {
-
-        iniciarSessio();
-
-    }
-
-    else if (opcio === "2") {
-
-        crearCompte();
-
-    }
-
-    else if (opcio === "3") {
-
-        iniciarAmbGoogle();
-
-    }
 
 }
 
@@ -669,7 +534,7 @@ function mostrarLogin() {
    PROTEGIR PUJADA
 ========================= */
 
-async function comprovarLogin(event) {
+async function comprovarAccesUpload(event) {
 
     const {
         data
@@ -677,17 +542,18 @@ async function comprovarLogin(event) {
         await supabaseClient.auth.getSession();
 
 
-    if (!data.session) {
+    if (data.session) {
 
-        event.preventDefault();
-
-        alert(
-            "Has d'iniciar sessió per pujar vídeos."
-        );
-
-        mostrarLogin();
+        return;
 
     }
+
+
+    event.preventDefault();
+
+
+    window.location.href =
+        "login.html";
 
 }
 
@@ -698,18 +564,18 @@ async function comprovarLogin(event) {
 ========================= */
 
 document
-    .getElementById("uploadHeroButton")
+    .getElementById("heroUpload")
     .addEventListener(
         "click",
-        comprovarLogin
+        comprovarAccesUpload
     );
 
 
 document
-    .getElementById("uploadCreatorButton")
+    .getElementById("creatorUpload")
     .addEventListener(
         "click",
-        comprovarLogin
+        comprovarAccesUpload
     );
 
 
@@ -721,10 +587,60 @@ document
 supabaseClient.auth.onAuthStateChange(
     function () {
 
-        actualitzarAuth();
+        actualitzarCompte();
 
     }
 );
+
+
+
+/* =========================
+   CERCA
+========================= */
+
+document
+    .getElementById("searchButton")
+    .addEventListener(
+        "click",
+        function () {
+
+            const query =
+                document
+                    .getElementById("searchInput")
+                    .value
+                    .trim();
+
+
+            if (!query) {
+                return;
+            }
+
+
+            window.location.href =
+                "watch.html?search=" +
+                encodeURIComponent(query);
+
+        }
+    );
+
+
+
+document
+    .getElementById("searchInput")
+    .addEventListener(
+        "keydown",
+        function (event) {
+
+            if (event.key === "Enter") {
+
+                document
+                    .getElementById("searchButton")
+                    .click();
+
+            }
+
+        }
+    );
 
 
 
@@ -734,7 +650,7 @@ supabaseClient.auth.onAuthStateChange(
 
 carregarVideos();
 
-actualitzarAuth();
+actualitzarCompte();
 
 </script>
 
