@@ -1,3 +1,6 @@
+# `upload.html`
+
+```html
 <!DOCTYPE html>
 <html lang="ca">
 <head>
@@ -264,14 +267,23 @@ const supabaseClient =
     );
 
 
+const uploadForm =
+    document.getElementById("upload-form");
+
+const titleInput =
+    document.getElementById("title");
+
+const descriptionInput =
+    document.getElementById("description");
+
 const videoInput =
     document.getElementById("video");
 
-const videoName =
-    document.getElementById("video-name");
-
 const thumbnailInput =
     document.getElementById("thumbnail");
+
+const videoName =
+    document.getElementById("video-name");
 
 const thumbnailPreview =
     document.getElementById("thumbnail-preview");
@@ -282,9 +294,6 @@ const thumbnailImage =
 const removeThumbnail =
     document.getElementById("remove-thumbnail");
 
-const uploadForm =
-    document.getElementById("upload-form");
-
 const uploadButton =
     document.getElementById("upload-button");
 
@@ -292,13 +301,18 @@ const uploadStatus =
     document.getElementById("upload-status");
 
 
+/* ================================
+   MOSTRAR NOM DEL VÍDEO
+================================ */
+
 videoInput.addEventListener("change", function () {
 
-    if (videoInput.files.length > 0) {
+    const file = videoInput.files[0];
+
+    if (file) {
 
         videoName.textContent =
-            "Vídeo seleccionat: " +
-            videoInput.files[0].name;
+            "Vídeo seleccionat: " + file.name;
 
     } else {
 
@@ -309,10 +323,13 @@ videoInput.addEventListener("change", function () {
 });
 
 
+/* ================================
+   PREVISUALITZACIÓ MINIATURA
+================================ */
+
 thumbnailInput.addEventListener("change", function () {
 
-    const file =
-        thumbnailInput.files[0];
+    const file = thumbnailInput.files[0];
 
     if (!file) {
 
@@ -320,18 +337,22 @@ thumbnailInput.addEventListener("change", function () {
         thumbnailImage.src = "";
 
         return;
-    }
 
+    }
 
     if (!file.type.startsWith("image/")) {
 
         thumbnailInput.value = "";
+
         thumbnailPreview.hidden = true;
         thumbnailImage.src = "";
 
-        return;
-    }
+        uploadStatus.textContent =
+            "Selecciona una imatge vàlida.";
 
+        return;
+
+    }
 
     const imageURL =
         URL.createObjectURL(file);
@@ -345,6 +366,10 @@ thumbnailInput.addEventListener("change", function () {
 });
 
 
+/* ================================
+   CANVIAR MINIATURA
+================================ */
+
 removeThumbnail.addEventListener("click", function () {
 
     thumbnailInput.value = "";
@@ -352,10 +377,15 @@ removeThumbnail.addEventListener("click", function () {
     thumbnailPreview.hidden =
         true;
 
-    thumbnailImage.src = "";
+    thumbnailImage.src =
+        "";
 
 });
 
+
+/* ================================
+   PUJAR CONTINGUT
+================================ */
 
 uploadForm.addEventListener("submit", async function (event) {
 
@@ -363,10 +393,10 @@ uploadForm.addEventListener("submit", async function (event) {
 
 
     const title =
-        document.getElementById("title").value.trim();
+        titleInput.value.trim();
 
     const description =
-        document.getElementById("description").value.trim();
+        descriptionInput.value.trim();
 
     const videoFile =
         videoInput.files[0];
@@ -375,33 +405,83 @@ uploadForm.addEventListener("submit", async function (event) {
         thumbnailInput.files[0];
 
 
-    if (!title || !videoFile || !thumbnailFile) {
+    /* VALIDACIÓ */
+
+    if (!title) {
 
         uploadStatus.textContent =
-            "Completa tots els camps obligatoris.";
+            "Escriu un títol.";
 
         return;
+
     }
 
 
-    uploadButton.disabled = true;
+    if (!videoFile) {
+
+        uploadStatus.textContent =
+            "Selecciona un vídeo.";
+
+        return;
+
+    }
+
+
+    if (!thumbnailFile) {
+
+        uploadStatus.textContent =
+            "Selecciona una miniatura.";
+
+        return;
+
+    }
+
+
+    /* COMPROVAR VÍDEO */
+
+    if (!videoFile.type.startsWith("video/")) {
+
+        uploadStatus.textContent =
+            "El fitxer seleccionat no és un vídeo vàlid.";
+
+        return;
+
+    }
+
+
+    /* COMPROVAR MINIATURA */
+
+    if (!thumbnailFile.type.startsWith("image/")) {
+
+        uploadStatus.textContent =
+            "La miniatura no és una imatge vàlida.";
+
+        return;
+
+    }
+
+
+    uploadButton.disabled =
+        true;
 
     uploadButton.textContent =
         "Pujant...";
 
 
-    uploadStatus.textContent =
-        "Preparant la pujada...";
-
-
     try {
 
-        const timestamp =
-            Date.now();
+        /*
+         * GENERAR NOM ÚNIC
+         */
+
+        const uniqueID =
+            crypto.randomUUID();
+
 
         const safeVideoName =
             videoFile.name
                 .replace(/[^a-zA-Z0-9._-]/g, "_");
+
 
         const safeThumbnailName =
             thumbnailFile.name
@@ -409,39 +489,47 @@ uploadForm.addEventListener("submit", async function (event) {
 
 
         const videoPath =
-            timestamp +
+            uniqueID +
             "-" +
             safeVideoName;
 
 
         const thumbnailPath =
-            timestamp +
+            uniqueID +
             "-" +
             safeThumbnailName;
 
 
         /*
+         * ================================
          * 1. PUJAR VÍDEO
+         * ================================
          */
 
         uploadStatus.textContent =
             "Pujant el vídeo...";
 
 
-        const { error: videoError } =
+        const {
+            error: videoError
+        } =
             await supabaseClient
                 .storage
                 .from("videos")
                 .upload(
                     videoPath,
-                    videoFile
+                    videoFile,
+                    {
+                        cacheControl: "3600",
+                        upsert: false
+                    }
                 );
 
 
         if (videoError) {
 
             throw new Error(
-                "Error pujant el vídeo: " +
+                "No s'ha pogut pujar el vídeo: " +
                 videoError.message
             );
 
@@ -449,7 +537,9 @@ uploadForm.addEventListener("submit", async function (event) {
 
 
         /*
-         * 2. OBTENIR URL DEL VÍDEO
+         * ================================
+         * 2. URL PÚBLICA DEL VÍDEO
+         * ================================
          */
 
         const {
@@ -458,7 +548,9 @@ uploadForm.addEventListener("submit", async function (event) {
             supabaseClient
                 .storage
                 .from("videos")
-                .getPublicUrl(videoPath);
+                .getPublicUrl(
+                    videoPath
+                );
 
 
         const videoURL =
@@ -466,7 +558,9 @@ uploadForm.addEventListener("submit", async function (event) {
 
 
         /*
+         * ================================
          * 3. PUJAR MINIATURA
+         * ================================
          */
 
         uploadStatus.textContent =
@@ -481,14 +575,18 @@ uploadForm.addEventListener("submit", async function (event) {
                 .from("thumbnails")
                 .upload(
                     thumbnailPath,
-                    thumbnailFile
+                    thumbnailFile,
+                    {
+                        cacheControl: "3600",
+                        upsert: false
+                    }
                 );
 
 
         if (thumbnailError) {
 
             throw new Error(
-                "Error pujant la miniatura: " +
+                "No s'ha pogut pujar la miniatura: " +
                 thumbnailError.message
             );
 
@@ -496,7 +594,9 @@ uploadForm.addEventListener("submit", async function (event) {
 
 
         /*
-         * 4. OBTENIR URL DE LA MINIATURA
+         * ================================
+         * 4. URL PÚBLICA DE LA MINIATURA
+         * ================================
          */
 
         const {
@@ -505,7 +605,9 @@ uploadForm.addEventListener("submit", async function (event) {
             supabaseClient
                 .storage
                 .from("thumbnails")
-                .getPublicUrl(thumbnailPath);
+                .getPublicUrl(
+                    thumbnailPath
+                );
 
 
         const thumbnailURL =
@@ -513,11 +615,13 @@ uploadForm.addEventListener("submit", async function (event) {
 
 
         /*
-         * 5. CREAR REGISTRE A LA TAULA videos
+         * ================================
+         * 5. GUARDAR A LA BASE DE DADES
+         * ================================
          */
 
         uploadStatus.textContent =
-            "Guardant la informació del vídeo...";
+            "Guardant la informació...";
 
 
         const {
@@ -541,7 +645,7 @@ uploadForm.addEventListener("submit", async function (event) {
         if (databaseError) {
 
             throw new Error(
-                "Error guardant el vídeo: " +
+                "No s'ha pogut guardar la informació: " +
                 databaseError.message
             );
 
@@ -549,7 +653,9 @@ uploadForm.addEventListener("submit", async function (event) {
 
 
         /*
+         * ================================
          * 6. ÈXIT
+         * ================================
          */
 
         uploadStatus.textContent =
@@ -557,18 +663,27 @@ uploadForm.addEventListener("submit", async function (event) {
 
 
         uploadButton.textContent =
-            "Vídeo pujat";
+            "Pujat correctament";
 
 
         uploadForm.reset();
 
+
         thumbnailPreview.hidden =
             true;
 
-        thumbnailImage.src = "";
 
-        videoName.textContent = "";
+        thumbnailImage.src =
+            "";
 
+
+        videoName.textContent =
+            "";
+
+
+        /*
+         * TORNAR A L'INICI
+         */
 
         setTimeout(function () {
 
@@ -593,6 +708,7 @@ uploadForm.addEventListener("submit", async function (event) {
         uploadButton.disabled =
             false;
 
+
         uploadButton.textContent =
             "Pujar vídeo";
 
@@ -604,3 +720,19 @@ uploadForm.addEventListener("submit", async function (event) {
 
 </body>
 </html>
+```
+
+### Ara fes exactament això
+
+1. Obre **`upload.html`** a GitHub.
+2. Clica **Edit** ✏️.
+3. **Selecciona tot el contingut** del fitxer.
+4. Esborra'l.
+5. Copia **tot el codi de dalt**.
+6. Enganxa'l.
+7. Clica **Commit changes**.
+8. Espera que GitHub Pages es torni a publicar.
+
+⚠️ **Important:** aquest codi pressuposa que també tens creat el bucket **`thumbnails`**. Si encara no l'hem configurat, la pujada del vídeo funcionarà però la miniatura donarà error. No passa res: després configurem `thumbnails`.
+
+**No facis cap altre canvi encara.** Primer substitueix `upload.html` i fes el commit.
