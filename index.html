@@ -4,655 +4,171 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>HORIZON270+ | Plataforma de vídeo</title>
+    <title>HORIZON270+</title>
 
-    <meta
-        name="description"
-        content="HORIZON270+ — Descobreix, mira i comparteix vídeos."
-    >
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-    <link rel="stylesheet" href="style.css">
+        body {
+            margin: 0;
+            background: #050505;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            background: #080808;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        nav {
+            margin-left: 40px;
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .hero {
+            min-height: 500px;
+            padding: 100px 60px;
+            display: flex;
+            align-items: center;
+            background:
+                linear-gradient(90deg, #050505 20%, transparent),
+                linear-gradient(0deg, #050505, transparent);
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 55px;
+            margin: 0 0 20px;
+        }
+
+        .hero p {
+            color: #ccc;
+            font-size: 18px;
+            line-height: 1.5;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 14px 25px;
+            background: white;
+            color: black;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        section {
+            padding: 30px 40px;
+        }
+
+        section h2 {
+            font-size: 24px;
+        }
+
+        .row {
+            display: flex;
+            gap: 18px;
+            overflow-x: auto;
+        }
+
+        .card {
+            min-width: 180px;
+            height: 260px;
+            background: #171717;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+        }
+
+        footer {
+            padding: 40px;
+            color: #777;
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
 
-<header class="topbar">
+<header>
+    <div class="logo">HORIZON270+</div>
 
-    <div class="topbar-inner">
-
-        <a href="index.html" class="logo">
-            HORIZON<span>270+</span>
-        </a>
-
-
-        <nav class="main-nav">
-
-            <a
-                href="index.html"
-                class="nav-link active"
-            >
-                Inici
-            </a>
-
-            <a
-                href="watch.html"
-                class="nav-link"
-            >
-                Explorar
-            </a>
-
-        </nav>
-
-
-        <div class="search">
-
-            <input
-                type="search"
-                id="searchInput"
-                placeholder="Cerca a HORIZON270+"
-                aria-label="Cerca"
-            >
-
-            <button
-                type="button"
-                id="searchButton"
-            >
-                Cerca
-            </button>
-
-        </div>
-
-
-        <div id="accountArea">
-
-            <a
-                href="login.html"
-                class="upload-button"
-            >
-                Iniciar sessió
-            </a>
-
-        </div>
-
-    </div>
-
+    <nav>
+        <a href="#">Inici</a>
+        <a href="#">Pel·lícules</a>
+        <a href="#">Sèries</a>
+        <a href="#">La meva llista</a>
+    </nav>
 </header>
-
-
 
 <main>
 
-    <!-- HERO -->
-
-    <section class="hero">
-
+    <div class="hero">
         <div class="hero-content">
-
-            <span class="hero-label">
-                HORIZON270+
-            </span>
-
-            <h1>
-                El vídeo comença aquí.
-            </h1>
+            <h1>HORIZON270+</h1>
 
             <p>
-                Descobreix nous vídeos, explora contingut
-                i comparteix les teves pròpies creacions.
+                Pel·lícules i sèries.
+                Una nova manera de descobrir històries d'arreu del món.
             </p>
 
-
-            <div class="hero-actions">
-
-                <a
-                    href="watch.html"
-                    class="primary-button"
-                >
-                    Explorar vídeos
-                </a>
-
-
-                <a
-                    href="upload.html"
-                    class="secondary-button"
-                    id="heroUpload"
-                >
-                    Pujar un vídeo
-                </a>
-
-            </div>
-
+            <a class="button" href="#">▶ Començar</a>
         </div>
+    </div>
 
+    <section>
+        <h2>🔥 Popular</h2>
+
+        <div class="row">
+            <div class="card">Pelicula 1</div>
+            <div class="card">Pelicula 2</div>
+            <div class="card">Pelicula 3</div>
+            <div class="card">Pelicula 4</div>
+            <div class="card">Pelicula 5</div>
+        </div>
     </section>
 
+    <section>
+        <h2>🆕 Novetats</h2>
 
-
-    <!-- VIDEOS -->
-
-    <section class="content-section">
-
-        <div class="section-header">
-
-            <div>
-
-                <span class="section-label">
-                    DESCOBREIX
-                </span>
-
-                <h2>
-                    Tendències
-                </h2>
-
-            </div>
-
-
-            <a
-                href="watch.html"
-                class="view-all"
-            >
-                Veure-ho tot
-            </a>
-
+        <div class="row">
+            <div class="card">Títol 1</div>
+            <div class="card">Títol 2</div>
+            <div class="card">Títol 3</div>
+            <div class="card">Títol 4</div>
         </div>
-
-
-        <div
-            class="video-grid"
-            id="video-grid"
-        >
-
-            <div class="video-loading">
-                Carregant vídeos...
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- CREADORS -->
-
-    <section class="creator-section">
-
-        <div class="creator-content">
-
-            <span class="section-label">
-                CREADORS
-            </span>
-
-
-            <h2>
-                Tens alguna cosa per compartir?
-            </h2>
-
-
-            <p>
-                Puja els teus vídeos i comença a formar part
-                de HORIZON270+.
-            </p>
-
-
-            <a
-                href="upload.html"
-                class="primary-button"
-                id="creatorUpload"
-            >
-                Començar a pujar
-            </a>
-
-        </div>
-
     </section>
 
 </main>
 
-
-
-<!-- FOOTER -->
-
-<footer class="footer">
-
-    <div class="footer-inner">
-
-        <a
-            href="index.html"
-            class="footer-logo"
-        >
-            HORIZON<span>270+</span>
-        </a>
-
-
-        <p>
-            HORIZON270+ — Plataforma de vídeo.
-        </p>
-
-    </div>
-
+<footer>
+    © 2026 HORIZON270+
 </footer>
-
-
-
-<!-- SUPABASE -->
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-
-<script>
-
-/* =========================
-   SUPABASE
-========================= */
-
-const SUPABASE_URL =
-    "https://eftxwdpdweomffgurlgm.supabase.co";
-
-const SUPABASE_KEY =
-    "sb_publishable_DPCJgsTp66cw2s-5S3CqNg_AdJEHKpt";
-
-
-const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
-
-
-
-/* =========================
-   CARREGAR VÍDEOS
-========================= */
-
-async function carregarVideos() {
-
-    const grid =
-        document.getElementById("video-grid");
-
-
-    try {
-
-        const {
-            data,
-            error
-        } =
-            await supabaseClient
-                .from("videos")
-                .select("*")
-                .limit(6);
-
-
-        if (error) {
-
-            console.error(
-                "Error carregant vídeos:",
-                error
-            );
-
-
-            grid.innerHTML = `
-                <p>
-                    No s'han pogut carregar els vídeos.
-                </p>
-            `;
-
-
-            return;
-        }
-
-
-        if (!data || data.length === 0) {
-
-            grid.innerHTML = `
-                <p>
-                    Encara no hi ha vídeos publicats.
-                </p>
-            `;
-
-
-            return;
-        }
-
-
-        grid.innerHTML = "";
-
-
-        data.forEach(video => {
-
-            const card =
-                document.createElement("a");
-
-
-            card.href =
-                "watch.html";
-
-
-            card.className =
-                "video-card";
-
-
-            const titol =
-                video.títol ||
-                "Vídeo sense títol";
-
-
-            const thumbnail =
-                video.url_de_thumbnail;
-
-
-            card.innerHTML = `
-
-                <div class="thumbnail">
-
-                    ${
-                        thumbnail
-
-                        ?
-
-                        `
-                        <img
-                            src="${thumbnail}"
-                            alt="${titol}"
-                        >
-                        `
-
-                        :
-
-                        `
-                        <span class="thumbnail-placeholder">
-                            HORIZON270+
-                        </span>
-                        `
-                    }
-
-
-                    <div class="thumbnail-overlay">
-
-                        <span class="play-button">
-                            ▶
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-                <div class="video-info">
-
-                    <h3>
-                        ${titol}
-                    </h3>
-
-
-                    <p class="creator">
-                        HORIZON270+
-                    </p>
-
-
-                    <p class="video-meta">
-                        Vídeo
-                    </p>
-
-                </div>
-
-            `;
-
-
-            grid.appendChild(card);
-
-        });
-
-    }
-
-
-    catch (error) {
-
-        console.error(
-            "Error inesperat:",
-            error
-        );
-
-
-        grid.innerHTML = `
-            <p>
-                S'ha produït un error
-                carregant els vídeos.
-            </p>
-        `;
-
-    }
-
-}
-
-
-
-/* =========================
-   USUARI
-========================= */
-
-async function actualitzarCompte() {
-
-    const {
-        data
-    } =
-        await supabaseClient.auth.getSession();
-
-
-    const session =
-        data.session;
-
-
-    const accountArea =
-        document.getElementById(
-            "accountArea"
-        );
-
-
-    if (!session) {
-
-        accountArea.innerHTML = `
-
-            <a
-                href="login.html"
-                class="upload-button"
-            >
-                Iniciar sessió
-            </a>
-
-        `;
-
-
-        return;
-
-    }
-
-
-    const user =
-        session.user;
-
-
-    const email =
-        user.email ||
-        "Compte";
-
-
-    accountArea.innerHTML = `
-
-        <div
-            style="
-                display:flex;
-                align-items:center;
-                gap:10px;
-            "
-        >
-
-            <span
-                style="
-                    color:var(--muted);
-                    font-size:13px;
-                    max-width:180px;
-                    overflow:hidden;
-                    text-overflow:ellipsis;
-                    white-space:nowrap;
-                "
-            >
-                ${email}
-            </span>
-
-
-            <button
-                type="button"
-                class="upload-button"
-                id="logoutButton"
-            >
-                Tancar sessió
-            </button>
-
-        </div>
-
-    `;
-
-
-    document
-        .getElementById("logoutButton")
-        .addEventListener(
-            "click",
-            async function () {
-
-                await supabaseClient.auth.signOut();
-
-                window.location.reload();
-
-            }
-        );
-
-}
-
-
-
-/* =========================
-   PROTEGIR PUJADA
-========================= */
-
-async function comprovarAccesUpload(event) {
-
-    const {
-        data
-    } =
-        await supabaseClient.auth.getSession();
-
-
-    if (data.session) {
-
-        return;
-
-    }
-
-
-    event.preventDefault();
-
-
-    window.location.href =
-        "login.html";
-
-}
-
-
-
-/* =========================
-   EVENTS
-========================= */
-
-document
-    .getElementById("heroUpload")
-    .addEventListener(
-        "click",
-        comprovarAccesUpload
-    );
-
-
-document
-    .getElementById("creatorUpload")
-    .addEventListener(
-        "click",
-        comprovarAccesUpload
-    );
-
-
-
-/* =========================
-   CANVIS DE SESSIÓ
-========================= */
-
-supabaseClient.auth.onAuthStateChange(
-    function () {
-
-        actualitzarCompte();
-
-    }
-);
-
-
-
-/* =========================
-   CERCA
-========================= */
-
-document
-    .getElementById("searchButton")
-    .addEventListener(
-        "click",
-        function () {
-
-            const query =
-                document
-                    .getElementById("searchInput")
-                    .value
-                    .trim();
-
-
-            if (!query) {
-                return;
-            }
-
-
-            window.location.href =
-                "watch.html?search=" +
-                encodeURIComponent(query);
-
-        }
-    );
-
-
-
-document
-    .getElementById("searchInput")
-    .addEventListener(
-        "keydown",
-        function (event) {
-
-            if (event.key === "Enter") {
-
-                document
-                    .getElementById("searchButton")
-                    .click();
-
-            }
-
-        }
-    );
-
-
-
-/* =========================
-   INICI
-========================= */
-
-carregarVideos();
-
-actualitzarCompte();
-
-</script>
 
 </body>
 </html>
