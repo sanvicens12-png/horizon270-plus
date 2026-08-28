@@ -45,11 +45,13 @@
 
     </div>
 
+
     <div
         id="authMessage"
         class="auth-message"
         hidden
     ></div>
+
 
     <form id="authForm">
 
@@ -69,6 +71,7 @@
 
         </div>
 
+
         <div class="auth-field">
 
             <div class="password-label">
@@ -86,6 +89,7 @@
                 </button>
 
             </div>
+
 
             <div class="password-input">
 
@@ -110,6 +114,7 @@
 
         </div>
 
+
         <button
             type="submit"
             id="emailButton"
@@ -120,9 +125,11 @@
 
     </form>
 
+
     <div class="auth-divider">
         <span>o continua amb</span>
     </div>
+
 
     <button
         type="button"
@@ -139,6 +146,7 @@
         </span>
 
     </button>
+
 
     <div class="auth-switch">
 
@@ -157,11 +165,10 @@
 
 </section>
 
-<p class="auth-footer">
 
+<p class="auth-footer">
     En continuar, acceptes les condicions
     d'ús de HORIZON270+.
-
 </p>
 ```
 
@@ -171,11 +178,16 @@
 
 <script>
 
+/* =========================
+   SUPABASE
+========================= */
+
 const SUPABASE_URL =
     "https://eftxwdpdweomffgurlgm.supabase.co";
 
 const SUPABASE_KEY =
     "sb_publishable_DPCJgsTp66cw2s-5S3CqNg_AdJEHKpt";
+
 
 const supabaseClient =
     window.supabase.createClient(
@@ -183,6 +195,36 @@ const supabaseClient =
         SUPABASE_KEY
     );
 
+
+/* =========================
+   GITHUB PAGES
+========================= */
+
+const BASE_PATH =
+    "/horizon270-plus/";
+
+
+const INDEX_URL =
+    window.location.origin +
+    BASE_PATH +
+    "index.html";
+
+
+const ADMIN_URL =
+    window.location.origin +
+    BASE_PATH +
+    "admin.html";
+
+
+const RESET_URL =
+    window.location.origin +
+    BASE_PATH +
+    "reset-password.html";
+
+
+/* =========================
+   ELEMENTS
+========================= */
 
 const authForm =
     document.getElementById("authForm");
@@ -225,30 +267,88 @@ let isRegisterMode = false;
 
 
 /* =========================
-   MISSATGES
+   MESSAGE
 ========================= */
 
-function showMessage(message, type = "error") {
+function showMessage(
+    message,
+    type = "error"
+) {
 
-    authMessage.textContent = message;
+    authMessage.textContent =
+        message;
 
     authMessage.className =
         "auth-message " + type;
 
-    authMessage.hidden = false;
+    authMessage.hidden =
+        false;
+
 }
 
 
 function hideMessage() {
 
-    authMessage.hidden = true;
+    authMessage.hidden =
+        true;
 
-    authMessage.textContent = "";
+    authMessage.textContent =
+        "";
+
 }
 
 
 /* =========================
-   LOGIN / REGISTRE
+   DESTINACIÓ DESPRÉS DEL LOGIN
+========================= */
+
+async function anarDespresLogin() {
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("Profiles")
+            .select("account_type")
+            .eq("id", (await supabaseClient.auth.getUser()).data.user.id)
+            .maybeSingle();
+
+
+    if (error) {
+
+        console.error(
+            "Profile error:",
+            error
+        );
+
+        window.location.href =
+            INDEX_URL;
+
+        return;
+    }
+
+
+    if (
+        data &&
+        data.account_type === "admin"
+    ) {
+
+        window.location.href =
+            ADMIN_URL;
+
+        return;
+    }
+
+
+    window.location.href =
+        INDEX_URL;
+
+}
+
+
+/* =========================
+   LOGIN / REGISTER
 ========================= */
 
 switchMode.addEventListener(
@@ -259,6 +359,7 @@ switchMode.addEventListener(
             !isRegisterMode;
 
         hideMessage();
+
 
         if (isRegisterMode) {
 
@@ -280,7 +381,9 @@ switchMode.addEventListener(
             passwordInput.autocomplete =
                 "new-password";
 
-        } else {
+        }
+
+        else {
 
             authTitle.textContent =
                 "Inicia sessió";
@@ -299,7 +402,9 @@ switchMode.addEventListener(
 
             passwordInput.autocomplete =
                 "current-password";
+
         }
+
     }
 );
 
@@ -315,92 +420,20 @@ togglePassword.addEventListener(
         const visible =
             passwordInput.type === "text";
 
+
         passwordInput.type =
             visible
             ? "password"
             : "text";
 
+
         togglePassword.textContent =
             visible
             ? "👁"
             : "🙈";
+
     }
 );
-
-
-/* =========================
-   OBTENIR PERFIL
-========================= */
-
-async function obtenirPerfil(userId) {
-
-    const {
-        data,
-        error
-    } =
-        await supabaseClient
-            .from("Profiles")
-            .select("account_type")
-            .eq("id", userId)
-            .maybeSingle();
-
-    if (error) {
-
-        console.error(
-            "Profile error:",
-            error
-        );
-
-        return null;
-    }
-
-    return data;
-}
-
-
-/* =========================
-   REDIRECCIÓ SEGONS COMPTE
-========================= */
-
-async function redirigirSegonsCompte(userId) {
-
-    const profile =
-        await obtenirPerfil(userId);
-
-    if (!profile) {
-
-        window.location.href =
-            "index.html";
-
-        return;
-    }
-
-
-    const accountType =
-        profile.account_type;
-
-
-    if (accountType === "admin") {
-
-        window.location.href =
-            "admin.html";
-
-        return;
-    }
-
-
-    if (accountType === "creator") {
-
-        window.location.href =
-            "creator.html";
-
-        return;
-    }
-
-
-    window.location.href =
-        "index.html";
-}
 
 
 /* =========================
@@ -414,6 +447,7 @@ authForm.addEventListener(
         event.preventDefault();
 
         hideMessage();
+
 
         const email =
             emailInput.value.trim();
@@ -432,7 +466,8 @@ authForm.addEventListener(
         }
 
 
-        emailButton.disabled = true;
+        emailButton.disabled =
+            true;
 
         emailButton.textContent =
             isRegisterMode
@@ -471,16 +506,19 @@ authForm.addEventListener(
                         "success"
                     );
 
-                } else if (data.user) {
-
-                    window.location.href =
-                        "index.html";
                 }
 
-            } else {
+                else {
+
+                    await anarDespresLogin();
+
+                }
+
+            }
+
+            else {
 
                 const {
-                    data,
                     error
                 } =
                     await supabaseClient.auth.signInWithPassword({
@@ -496,12 +534,8 @@ authForm.addEventListener(
                 }
 
 
-                if (data.user) {
+                await anarDespresLogin();
 
-                    await redirigirSegonsCompte(
-                        data.user.id
-                    );
-                }
             }
 
         }
@@ -512,6 +546,7 @@ authForm.addEventListener(
                 "Authentication error:",
                 error
             );
+
 
             showMessage(
                 convertirError(error)
@@ -528,7 +563,9 @@ authForm.addEventListener(
                 isRegisterMode
                 ? "Crear compte"
                 : "Iniciar sessió";
+
         }
+
     }
 );
 
@@ -542,6 +579,7 @@ googleButton.addEventListener(
     async function () {
 
         hideMessage();
+
 
         googleButton.disabled =
             true;
@@ -564,7 +602,8 @@ googleButton.addEventListener(
 
                         redirectTo:
                             window.location.origin +
-                            "/login.html"
+                            BASE_PATH +
+                            "login.html"
 
                     }
 
@@ -584,9 +623,11 @@ googleButton.addEventListener(
                 error
             );
 
+
             showMessage(
                 "No s'ha pogut iniciar sessió amb Google."
             );
+
 
             googleButton.disabled =
                 false;
@@ -594,13 +635,15 @@ googleButton.addEventListener(
             googleButton.classList.remove(
                 "loading"
             );
+
         }
+
     }
 );
 
 
 /* =========================
-   RECUPERAR CONTRASENYA
+   PASSWORD RESET
 ========================= */
 
 forgotPassword.addEventListener(
@@ -608,6 +651,7 @@ forgotPassword.addEventListener(
     async function () {
 
         hideMessage();
+
 
         const email =
             emailInput.value.trim();
@@ -622,6 +666,7 @@ forgotPassword.addEventListener(
             emailInput.focus();
 
             return;
+
         }
 
 
@@ -639,8 +684,7 @@ forgotPassword.addEventListener(
                         email,
                         {
                             redirectTo:
-                                window.location.origin +
-                                "/reset-password.html"
+                                RESET_URL
                         }
                     );
 
@@ -664,6 +708,7 @@ forgotPassword.addEventListener(
                 error
             );
 
+
             showMessage(
                 convertirError(error)
             );
@@ -674,7 +719,9 @@ forgotPassword.addEventListener(
 
             forgotPassword.disabled =
                 false;
+
         }
+
     }
 );
 
@@ -696,6 +743,7 @@ function convertirError(error) {
     ) {
 
         return "El correu o la contrasenya no són correctes.";
+
     }
 
 
@@ -706,6 +754,7 @@ function convertirError(error) {
     ) {
 
         return "Aquest correu ja té un compte.";
+
     }
 
 
@@ -716,6 +765,7 @@ function convertirError(error) {
     ) {
 
         return "La contrasenya és massa curta.";
+
     }
 
 
@@ -726,11 +776,13 @@ function convertirError(error) {
     ) {
 
         return "Has de confirmar el teu correu electrònic abans d'iniciar sessió.";
+
     }
 
 
     return message ||
         "S'ha produït un error. Torna-ho a provar.";
+
 }
 
 
@@ -746,12 +798,13 @@ async function comprovarSessio() {
         await supabaseClient.auth.getSession();
 
 
-    if (data.session) {
-
-        await redirigirSegonsCompte(
-            data.session.user.id
-        );
+    if (!data.session) {
+        return;
     }
+
+
+    await anarDespresLogin();
+
 }
 
 
