@@ -36,6 +36,7 @@
         font-family: Arial, Helvetica, sans-serif;
     }
 
+
     /* =========================
        HEADER
     ========================= */
@@ -55,7 +56,7 @@
 
         padding: 0 5%;
 
-        z-index: 10;
+        z-index: 20;
 
     }
 
@@ -88,7 +89,7 @@
 
     .language {
 
-        background: rgba(0,0,0,.7);
+        background: rgba(0,0,0,.75);
 
         border: 1px solid #777;
 
@@ -135,7 +136,7 @@
 
     .hero {
 
-        min-height: 720px;
+        min-height: 760px;
 
         position: relative;
 
@@ -147,45 +148,44 @@
 
         text-align: center;
 
-        padding: 120px 20px 80px;
+        padding: 130px 20px 100px;
 
         overflow: hidden;
 
-        background:
+        background-color: #080808;
 
-            linear-gradient(
-                to bottom,
-                rgba(0,0,0,.45),
-                rgba(0,0,0,.7)
-            ),
+        background-position: center;
 
-            radial-gradient(
-                circle at center,
-                #303030 0%,
-                #111 40%,
-                #000 80%
-            );
+        background-size: cover;
+
+        background-repeat: no-repeat;
 
     }
 
 
-    .hero::after {
+    /*
+       Degradat fosc sobre la imatge
+    */
+
+    .hero::before {
 
         content: "";
 
         position: absolute;
 
-        left: 0;
-        right: 0;
-        bottom: 0;
-
-        height: 180px;
+        inset: 0;
 
         background:
+
             linear-gradient(
-                transparent,
-                #000
+                to bottom,
+                rgba(0,0,0,.60) 0%,
+                rgba(0,0,0,.42) 35%,
+                rgba(0,0,0,.78) 75%,
+                #000 100%
             );
+
+        z-index: 1;
 
     }
 
@@ -196,7 +196,7 @@
 
         z-index: 2;
 
-        max-width: 850px;
+        max-width: 900px;
 
     }
 
@@ -206,7 +206,7 @@
         font-size: clamp(
             42px,
             6vw,
-            72px
+            76px
         );
 
         line-height: 1.05;
@@ -215,29 +215,40 @@
 
         font-weight: 900;
 
+        text-shadow:
+            0 3px 25px rgba(0,0,0,.8);
+
     }
 
 
     .hero-subtitle {
 
-        font-size: 24px;
+        font-size: 25px;
 
         font-weight: bold;
 
-        margin-bottom: 15px;
+        margin-bottom: 18px;
+
+        text-shadow:
+            0 2px 15px rgba(0,0,0,.9);
 
     }
 
 
     .hero-text {
 
-        color: #ddd;
+        color: #eee;
 
-        font-size: 17px;
+        font-size: 18px;
 
-        line-height: 1.5;
+        line-height: 1.6;
 
-        margin-bottom: 25px;
+        max-width: 750px;
+
+        margin: 0 auto 30px;
+
+        text-shadow:
+            0 2px 12px rgba(0,0,0,.9);
 
     }
 
@@ -246,7 +257,7 @@
 
         display: flex;
 
-        max-width: 650px;
+        max-width: 680px;
 
         margin: auto;
 
@@ -261,24 +272,33 @@
 
         min-width: 0;
 
-        padding: 18px;
+        padding: 19px;
 
         border-radius: 4px;
 
-        border: 1px solid #777;
+        border: 1px solid #888;
 
-        background: rgba(20,20,20,.9);
+        background: rgba(10,10,10,.88);
 
         color: white;
 
         font-size: 16px;
+
+        outline: none;
+
+    }
+
+
+    .signup-form input:focus {
+
+        border-color: white;
 
     }
 
 
     .signup-form button {
 
-        padding: 0 28px;
+        padding: 0 30px;
 
         border: none;
 
@@ -310,9 +330,11 @@
 
     .section {
 
-        padding: 75px 6%;
+        padding: 80px 6%;
 
         border-top: 8px solid #111;
+
+        background: #000;
 
     }
 
@@ -352,13 +374,20 @@
 
         text-align: center;
 
-        background: #111;
+        background:
+            linear-gradient(
+                145deg,
+                #181818,
+                #0b0b0b
+            );
 
         border-radius: 10px;
 
-        padding: 35px 25px;
+        padding: 38px 25px;
 
-        min-height: 230px;
+        min-height: 235px;
+
+        border: 1px solid #222;
 
     }
 
@@ -433,7 +462,7 @@
             linear-gradient(
                 145deg,
                 #292929,
-                #111
+                #101010
             );
 
         display: flex;
@@ -587,9 +616,11 @@
 
         text-align: center;
 
-        padding: 80px 20px;
+        padding: 90px 20px;
 
         border-top: 8px solid #111;
+
+        background: #000;
 
     }
 
@@ -614,6 +645,8 @@
         padding: 55px 6%;
 
         color: #777;
+
+        background: #000;
 
     }
 
@@ -712,7 +745,19 @@
 
         .hero {
 
-            min-height: 650px;
+            min-height: 700px;
+
+            padding:
+                120px
+                20px
+                100px;
+
+        }
+
+
+        .hero h1 {
+
+            font-size: 43px;
 
         }
 
@@ -827,7 +872,9 @@
 <main>
 
 ```
-<!-- HERO -->
+<!-- =========================
+     HERO
+========================= -->
 
 <section class="hero">
 
@@ -840,8 +887,10 @@
 
 
         <div class="hero-subtitle">
+
             Històries per descobrir.
             Un univers per explorar.
+
         </div>
 
 
@@ -881,12 +930,15 @@
 </section>
 
 
-<!-- MOTIUS -->
+<!-- =========================
+     MOTIUS
+========================= -->
 
 <section class="section">
 
     <h2>
-        Tot el que vols veure, en un sol lloc
+        Tot el que vols veure,
+        en un sol lloc
     </h2>
 
 
@@ -961,9 +1013,9 @@
             </h3>
 
             <p>
-                Crea perfils diferents
-                perquè cada persona tingui
-                la seva pròpia experiència.
+                Cada persona podrà tenir
+                el seu propi perfil
+                i les seves recomanacions.
             </p>
 
         </div>
@@ -973,7 +1025,9 @@
 </section>
 
 
-<!-- TENDÈNCIES -->
+<!-- =========================
+     TENDÈNCIES
+========================= -->
 
 <section class="section">
 
@@ -1058,12 +1112,14 @@
 </section>
 
 
-<!-- PLANS -->
+<!-- =========================
+     PLANS
+========================= -->
 
 <section class="section">
 
     <h2>
-        Tria com gaudir de HORIZON270+
+        HORIZON270+
     </h2>
 
 
@@ -1128,7 +1184,9 @@
 </section>
 
 
-<!-- FAQ -->
+<!-- =========================
+     FAQ
+========================= -->
 
 <section class="section">
 
@@ -1179,8 +1237,7 @@
 
             <p>
                 Sí. Cada compte podrà tenir
-                diferents perfils perquè
-                cadascú tingui la seva experiència.
+                diferents perfils.
             </p>
 
         </details>
@@ -1209,7 +1266,6 @@
 
             <p>
                 Sí. Per entrar al catàleg
-                i utilitzar els perfils
                 hauràs d'iniciar sessió.
             </p>
 
@@ -1220,7 +1276,9 @@
 </section>
 
 
-<!-- CTA FINAL -->
+<!-- =========================
+     CTA FINAL
+========================= -->
 
 <section class="final-cta">
 
@@ -1309,11 +1367,11 @@
     <div>
 
         <a href="#">
-            Idioma
+            Accessibilitat
         </a>
 
         <a href="#">
-            Accessibilitat
+            Idioma
         </a>
 
     </div>
@@ -1331,6 +1389,50 @@
 </footer>
 
 <script>
+
+
+/* =====================================================
+   🎬 IMATGE DE FONS PRINCIPAL DE HORIZON270+
+
+   👉 CANVIA NOMÉS AQUESTA URL
+
+   Exemple:
+
+   const HERO_BACKGROUND_URL =
+       "https://exemple.com/pelicula.jpg";
+
+   La imatge hauria de ser horitzontal,
+   preferiblement 1920x1080 o similar.
+===================================================== */
+
+
+const HERO_BACKGROUND_URL =
+    "POSA_AQUI_L_URL_DE_LA_IMATGE";
+
+
+/* =====================================================
+   APLICAR IMATGE DE FONS
+===================================================== */
+
+const hero =
+    document.querySelector(".hero");
+
+
+if (
+    HERO_BACKGROUND_URL &&
+    HERO_BACKGROUND_URL !==
+    "https://raw.githubusercontent.com/sanvicens12-png/horizon270-plus/refs/heads/main/fons-home.jpg"
+) {
+
+    hero.style.backgroundImage =
+        `url("${HERO_BACKGROUND_URL}")`;
+
+}
+
+
+/* =====================================================
+   FORMULARI DE REGISTRE
+===================================================== */
 
 const signupForm =
     document.getElementById(
@@ -1361,6 +1463,7 @@ function anarARegistre(email) {
     const encodedEmail =
         encodeURIComponent(email);
 
+
     window.location.href =
         "login.html?email=" +
         encodedEmail +
@@ -1375,12 +1478,15 @@ signupForm.addEventListener(
 
         event.preventDefault();
 
+
         const email =
             signupEmail.value.trim();
+
 
         if (!email) {
             return;
         }
+
 
         anarARegistre(email);
 
@@ -1394,17 +1500,21 @@ signupFormBottom.addEventListener(
 
         event.preventDefault();
 
+
         const email =
             signupEmailBottom.value.trim();
+
 
         if (!email) {
             return;
         }
 
+
         anarARegistre(email);
 
     }
 );
+
 
 </script>
 
