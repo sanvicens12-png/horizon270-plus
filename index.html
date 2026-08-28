@@ -24,10 +24,6 @@
         font-family: Arial, sans-serif;
     }
 
-    /* =========================
-       HEADER
-    ========================= */
-
     header {
         height: 76px;
         display: flex;
@@ -61,35 +57,49 @@
         border-radius: 4px;
     }
 
-    nav a:hover,
-    nav a:focus {
+    nav a:hover {
         color: white;
-        outline: 2px solid white;
-        outline-offset: 4px;
     }
 
     .account {
         margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 10px;
     }
 
-    .account a {
+    .account a,
+    .account button {
         color: white;
         text-decoration: none;
         border: 1px solid #555;
         padding: 10px 18px;
         border-radius: 5px;
+        background: transparent;
+        cursor: pointer;
+        font-size: 14px;
     }
 
     .account a:hover,
-    .account a:focus {
+    .account button:hover {
         background: white;
         color: black;
-        outline: none;
     }
 
-    /* =========================
-       HERO
-    ========================= */
+    #adminLink {
+        display: none;
+    }
+
+    #userArea {
+        display: none;
+        align-items: center;
+        gap: 10px;
+    }
+
+    #userEmail {
+        color: #aaa;
+        font-size: 13px;
+    }
 
     .hero {
         min-height: 540px;
@@ -137,17 +147,6 @@
         font-size: 16px;
     }
 
-    .button:hover,
-    .button:focus {
-        background: #ddd;
-        outline: 3px solid white;
-        outline-offset: 4px;
-    }
-
-    /* =========================
-       SECTIONS
-    ========================= */
-
     section {
         padding: 35px 50px;
     }
@@ -164,10 +163,6 @@
         padding: 8px 4px 18px;
         scrollbar-width: thin;
     }
-
-    /* =========================
-       CARDS
-    ========================= */
 
     .card {
         flex: 0 0 190px;
@@ -205,12 +200,6 @@
         border-color: #555;
     }
 
-    .card:focus {
-        outline: none;
-        border-color: white;
-        transform: scale(1.06);
-    }
-
     .card-title {
         background: rgba(0, 0, 0, 0.65);
         padding: 7px 9px;
@@ -218,20 +207,12 @@
         width: 100%;
     }
 
-    /* =========================
-       FOOTER
-    ========================= */
-
     footer {
         padding: 50px;
         color: #777;
         text-align: center;
         border-top: 1px solid #151515;
     }
-
-    /* =========================
-       TV / LARGE SCREEN
-    ========================= */
 
     @media (min-width: 1200px) {
 
@@ -258,17 +239,7 @@
             flex-basis: 220px;
             height: 315px;
         }
-
-        nav a,
-        .account a,
-        .button {
-            font-size: 18px;
-        }
     }
-
-    /* =========================
-       MOBILE
-    ========================= */
 
     @media (max-width: 700px) {
 
@@ -295,6 +266,10 @@
 
         .account {
             margin-left: auto;
+        }
+
+        #userEmail {
+            display: none;
         }
 
         .hero {
@@ -354,9 +329,34 @@
 </nav>
 
 <div class="account">
-    <a href="login.html">
+
+    <a
+        id="loginLink"
+        href="login.html"
+    >
         Iniciar sessió
     </a>
+
+    <div id="userArea">
+
+        <span id="userEmail"></span>
+
+        <a
+            id="adminLink"
+            href="admin.html"
+        >
+            Administració
+        </a>
+
+        <button
+            id="logoutButton"
+            type="button"
+        >
+            Tancar sessió
+        </button>
+
+    </div>
+
 </div>
 ```
 
@@ -365,8 +365,6 @@
 <main>
 
 ```
-<!-- HERO -->
-
 <div class="hero" id="inici">
 
     <div class="hero-content">
@@ -381,7 +379,10 @@
             d'arreu del món.
         </p>
 
-        <a class="button" href="#pellicules">
+        <a
+            class="button"
+            href="#pellicules"
+        >
             ▶ Començar
         </a>
 
@@ -389,8 +390,6 @@
 
 </div>
 
-
-<!-- POPULAR -->
 
 <section id="pellicules">
 
@@ -400,31 +399,31 @@
 
     <div class="row">
 
-        <div class="card" tabindex="0">
+        <div class="card">
             <div class="card-title">
                 Pel·lícula 1
             </div>
         </div>
 
-        <div class="card" tabindex="0">
+        <div class="card">
             <div class="card-title">
                 Pel·lícula 2
             </div>
         </div>
 
-        <div class="card" tabindex="0">
+        <div class="card">
             <div class="card-title">
                 Pel·lícula 3
             </div>
         </div>
 
-        <div class="card" tabindex="0">
+        <div class="card">
             <div class="card-title">
                 Pel·lícula 4
             </div>
         </div>
 
-        <div class="card" tabindex="0">
+        <div class="card">
             <div class="card-title">
                 Pel·lícula 5
             </div>
@@ -435,8 +434,6 @@
 </section>
 
 
-<!-- NOVETATS -->
-
 <section>
 
     <h2>
@@ -445,25 +442,25 @@
 
     <div class="row">
 
-        <div class="card" tabindex="0">
+        <div class="card">
             <div class="card-title">
                 Títol 1
             </div>
         </div>
 
-        <div class="card" tabindex="0">
+        <div class="card">
             <div class="card-title">
                 Títol 2
             </div>
         </div>
 
-        <div class="card" tabindex="0">
+        <div class="card">
             <div class="card-title">
                 Títol 3
             </div>
         </div>
 
-        <div class="card" tabindex="0">
+        <div class="card">
             <div class="card-title">
                 Títol 4
             </div>
@@ -474,8 +471,6 @@
 </section>
 
 
-<!-- SÈRIES -->
-
 <section id="series">
 
     <h2>
@@ -484,19 +479,19 @@
 
     <div class="row">
 
-        <div class="card" tabindex="0">
+        <div class="card">
             <div class="card-title">
                 Sèrie 1
             </div>
         </div>
 
-        <div class="card" tabindex="0">
+        <div class="card">
             <div class="card-title">
                 Sèrie 2
             </div>
         </div>
 
-        <div class="card" tabindex="0">
+        <div class="card">
             <div class="card-title">
                 Sèrie 3
             </div>
@@ -507,8 +502,6 @@
 </section>
 
 
-<!-- LA MEVA LLISTA -->
-
 <section id="llista">
 
     <h2>
@@ -517,7 +510,7 @@
 
     <div class="row">
 
-        <div class="card" tabindex="0">
+        <div class="card">
             <div class="card-title">
                 La teva llista
             </div>
@@ -531,12 +524,132 @@
 </main>
 
 <footer>
-
-```
-© 2026 HORIZON270+
-```
-
+    © 2026 HORIZON270+
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+    "https://eftxwdpdweomffgurlgm.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_DPCJgsTp66cw2s-5S3CqNg_AdJEHKpt";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+const loginLink =
+    document.getElementById("loginLink");
+
+const userArea =
+    document.getElementById("userArea");
+
+const userEmail =
+    document.getElementById("userEmail");
+
+const adminLink =
+    document.getElementById("adminLink");
+
+const logoutButton =
+    document.getElementById("logoutButton");
+
+
+async function actualitzarCompte() {
+
+    const {
+        data: sessionData
+    } =
+        await supabaseClient.auth.getSession();
+
+
+    const session =
+        sessionData.session;
+
+
+    if (!session) {
+
+        loginLink.style.display =
+            "inline-block";
+
+        userArea.style.display =
+            "none";
+
+        return;
+
+    }
+
+
+    loginLink.style.display =
+        "none";
+
+    userArea.style.display =
+        "flex";
+
+
+    userEmail.textContent =
+        session.user.email;
+
+
+    const {
+        data: profile
+    } =
+        await supabaseClient
+            .from("Profiles")
+            .select("account_type")
+            .eq("id", session.user.id)
+            .maybeSingle();
+
+
+    if (
+        profile &&
+        profile.account_type === "admin"
+    ) {
+
+        adminLink.style.display =
+            "inline-block";
+
+    }
+
+    else {
+
+        adminLink.style.display =
+            "none";
+
+    }
+
+}
+
+
+logoutButton.addEventListener(
+    "click",
+    async function () {
+
+        await supabaseClient.auth.signOut();
+
+        window.location.reload();
+
+    }
+);
+
+
+supabaseClient.auth.onAuthStateChange(
+    function () {
+
+        actualitzarCompte();
+
+    }
+);
+
+
+actualitzarCompte();
+
+</script>
 
 </body>
 </html>
