@@ -129,7 +129,7 @@ button:disabled {
     cursor: not-allowed;
 }
 
-.delete {
+.danger {
     background: #300;
     color: white;
 }
@@ -149,11 +149,11 @@ button:disabled {
 
 .progress {
     width: 100%;
-    height: 8px;
+    height: 10px;
     background: #222;
     border-radius: 10px;
     overflow: hidden;
-    margin-top: 12px;
+    margin-top: 15px;
 }
 
 .progress-bar {
@@ -161,6 +161,13 @@ button:disabled {
     height: 100%;
     background: white;
     transition: width .2s;
+}
+
+.upload-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px;
 }
 
 .content-list {
@@ -239,6 +246,10 @@ Panell d'administració
     id="message"
     hidden
 ></div>
+
+<!-- =========================
+     CREAR CONTINGUT
+========================= -->
 
 <div class="panel">
 
@@ -384,17 +395,17 @@ placeholder="https://..."
 </div>
 
 <!-- =========================
-     PUJAR VÍDEO
+     VIDEO
 ========================= -->
 
 <div class="upload-box">
 
 <h3>
-🎬 Fitxer de vídeo
+🎬 Vídeo
 </h3>
 
 <p>
-Selecciona el vídeo de la pel·lícula o sèrie.
+Selecciona el fitxer de vídeo que vols pujar.
 </p>
 
 <input
@@ -411,15 +422,39 @@ accept="video/*"
 Cap fitxer seleccionat.
 </div>
 
+<div class="upload-controls">
+
 <button
 type="button"
 id="uploadButton"
-onclick="uploadVideo()"
+onclick="startUpload()"
 disabled
 
 >
 
 ⬆️ Pujar vídeo </button>
+
+<button
+type="button"
+id="pauseButton"
+onclick="pauseUpload()"
+disabled
+
+>
+
+⏸️ Pausar </button>
+
+<button
+type="button"
+id="resumeButton"
+onclick="resumeUpload()"
+disabled
+
+>
+
+▶️ Continuar </button>
+
+</div>
 
 <div class="progress">
 
@@ -537,7 +572,15 @@ Carregant...
 
 </main>
 
+<!-- =========================
+     SUPABASE
+========================= -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- TUS -->
+
+<script src="https://cdn.jsdelivr.net/npm/tus-js-client@4.1.0/dist/tus.min.js"></script>
 
 <script>
 
@@ -557,10 +600,9 @@ window.supabase.createClient(
 );
 
 
-const message =
-document.getElementById(
-    "message"
-);
+let upload = null;
+
+let selectedFile = null;
 
 
 /* =========================
@@ -572,7 +614,13 @@ function showMessage(
     success = false
 ) {
 
-    message.textContent = text;
+    const message =
+        document.getElementById(
+            "message"
+        );
+
+    message.textContent =
+        text;
 
     message.className =
         success
@@ -696,7 +744,7 @@ async function checkAdmin() {
 
 
 /* =========================
-   SELECCIÓ DE FITXER
+   SELECCIONAR FITXER
 ========================= */
 
 document
@@ -705,26 +753,28 @@ document
     "change",
     function() {
 
-        const file =
-            this.files[0];
+        selectedFile =
+            this.files[0] || null;
 
-        const button =
-            document.getElementById(
-                "uploadButton"
-            );
 
         const info =
             document.getElementById(
                 "fileInfo"
             );
 
+        const button =
+            document.getElementById(
+                "uploadButton"
+            );
 
-        if (!file) {
 
-            button.disabled = true;
+        if (!selectedFile) {
 
             info.textContent =
                 "Cap fitxer seleccionat.";
+
+            button.disabled =
+                true;
 
             return;
 
@@ -732,236 +782,406 @@ document
 
 
         const sizeGB =
-            file.size /
+            selectedFile.size /
             1024 /
             1024 /
             1024;
 
 
         info.textContent =
-            file.name +
+            selectedFile.name +
             " · " +
             sizeGB.toFixed(2) +
             " GB";
 
 
-        button.disabled = false;
+        button.disabled =
+            false;
+
+
+        document
+        .getElementById(
+            "uploadStatus"
+        )
+        .textContent =
+            "Preparat per pujar.";
 
     }
 );
 
 
 /* =========================
-   PUJAR VÍDEO
+   INICIAR TUS
 ========================= */
 
-async function uploadVideo() {
+async function startUpload() {
 
-    const file =
-        document
-        .getElementById("videoFile")
-        .files[0];
-
-
-    if (!file) {
+    if (!selectedFile) {
 
         return;
 
     }
 
 
+    const {
+        data,
+        error
+    } =
+    await supabaseClient.auth.getSession();
+
+
+    if (
+        error ||
+        !data.session
+    ) {
+
+        showMessage(
+            "La sessió ha caducat."
+        );
+
+        return;
+
+    }
+
+
+    const user =
+        data.session.user;
+
+
+    const uploadButton =
+        document.getElementById(
+            "uploadButton"
+        );
+
+    const pauseButton =
+        document.getElementById(
+            "pauseButton"
+        );
+
+    const resumeButton =
+        document.getElementById(
+            "resumeButton"
+        );
+
     const status =
         document.getElementById(
             "uploadStatus"
         );
 
-
-    const progress =
+    const progressBar =
         document.getElementById(
             "progressBar"
         );
 
 
-    const button =
-        document.getElementById(
-            "uploadButton"
+    uploadButton.disabled =
+        true;
+
+    pauseButton.disabled =
+        false;
+
+    resumeButton.disabled =
+        true;
+
+
+    const safeName =
+        selectedFile.name
+        .replace(
+            /[^a-zA-Z0-9._-]/g,
+            "_"
         );
 
 
-    button.disabled = true;
+    const filePath =
+        user.id +
+        "/" +
+        Date.now() +
+        "-" +
+        safeName;
+
+
+    const {
+        data: sessionData
+    } =
+    await supabaseClient.auth.getSession();
+
+
+    const accessToken =
+        sessionData
+        .session
+        .access_token;
 
 
     status.textContent =
-        "Preparant la pujada...";
+        "Iniciant pujada resumible...";
 
 
-    progress.style.width =
-        "10%";
-
-
-    try {
-
-        const {
-            data,
-            error
-        } =
-        await supabaseClient.auth.getUser();
-
-
-        if (
-            error ||
-            !data.user
-        ) {
-
-            throw new Error(
-                "La sessió ha caducat."
-            );
-
-        }
-
-
-        /*
-         * Nom únic del fitxer
-         */
-
-        const extension =
-            file.name.includes(".")
-            ? file.name
-                .split(".")
-                .pop()
-                .toLowerCase()
-            : "mp4";
-
-
-        const safeName =
-            file.name
-                .replace(
-                    /[^a-zA-Z0-9._-]/g,
-                    "_"
-                );
-
-
-        const filePath =
-            data.user.id +
-            "/" +
-            Date.now() +
-            "-" +
-            safeName;
-
-
-        status.textContent =
-            "Pujant vídeo...";
-
-
-        progress.style.width =
-            "30%";
-
-
-        const {
-            error: uploadError
-        } =
-        await supabaseClient
-
-        .storage
-
-        .from("videos")
-
-        .upload(
-            filePath,
-            file,
+    upload =
+        new tus.Upload(
+            selectedFile,
             {
-                cacheControl:
-                    "3600",
 
-                upsert:
-                    false,
+                endpoint:
+                    SUPABASE_URL +
+                    "/storage/v1/upload/resumable",
 
-                contentType:
-                    file.type
+                retryDelays:
+                    [
+                        0,
+                        3000,
+                        5000,
+                        10000,
+                        20000
+                    ],
+
+                headers: {
+
+                    authorization:
+                        "Bearer " +
+                        accessToken,
+
+                    "x-upsert":
+                        "false"
+
+                },
+
+                uploadDataDuringCreation:
+                    true,
+
+                removeFingerprintOnSuccess:
+                    true,
+
+                metadata: {
+
+                    bucketName:
+                        "videos",
+
+                    objectName:
+                        filePath,
+
+                    contentType:
+                        selectedFile.type ||
+                        "video/mp4",
+
+                    cacheControl:
+                        "3600"
+
+                },
+
+                chunkSize:
+                    6 * 1024 * 1024,
+
+
+                onError:
+                    function(error) {
+
+                        console.error(
+                            error
+                        );
+
+                        status.textContent =
+                            "❌ Error: " +
+                            error.message;
+
+                        pauseButton.disabled =
+                            true;
+
+                        resumeButton.disabled =
+                            false;
+
+                    },
+
+
+                onProgress:
+                    function(
+                        bytesUploaded,
+                        bytesTotal
+                    ) {
+
+                        const percentage =
+                            (
+                                bytesUploaded /
+                                bytesTotal
+                            ) * 100;
+
+
+                        progressBar.style.width =
+                            percentage +
+                            "%";
+
+
+                        const uploadedGB =
+                            bytesUploaded /
+                            1024 /
+                            1024 /
+                            1024;
+
+
+                        const totalGB =
+                            bytesTotal /
+                            1024 /
+                            1024 /
+                            1024;
+
+
+                        status.textContent =
+                            percentage.toFixed(1) +
+                            "% · " +
+                            uploadedGB.toFixed(2) +
+                            " GB / " +
+                            totalGB.toFixed(2) +
+                            " GB";
+
+                    },
+
+
+                onSuccess:
+                    function() {
+
+                        const videoUrl =
+                            SUPABASE_URL +
+                            "/storage/v1/object/public/videos/" +
+                            filePath;
+
+
+                        document
+                        .getElementById(
+                            "video_url"
+                        )
+                        .value =
+                            videoUrl;
+
+
+                        status.textContent =
+                            "✅ Vídeo pujat correctament.";
+
+                        showMessage(
+                            "Vídeo pujat. Ara pots guardar el contingut.",
+                            true
+                        );
+
+
+                        pauseButton.disabled =
+                            true;
+
+                        resumeButton.disabled =
+                            true;
+
+                        uploadButton.disabled =
+                            true;
+
+                    }
+
             }
         );
 
 
-        if (uploadError) {
+    /*
+     * Intentar reprendre una pujada
+     * anterior del mateix fitxer.
+     */
 
-            throw uploadError;
-
-        }
-
-
-        progress.style.width =
-            "80%";
+    const previousUploads =
+        await upload.findPreviousUploads();
 
 
-        /*
-         * Obtenir URL pública
-         */
+    if (
+        previousUploads &&
+        previousUploads.length
+    ) {
 
-        const {
-            data: publicData
-        } =
-        supabaseClient
-
-        .storage
-
-        .from("videos")
-
-        .getPublicUrl(
-            filePath
-        );
-
-
-        const videoUrl =
-            publicData.publicUrl;
-
-
-        document
-        .getElementById(
-            "video_url"
-        )
-        .value =
-            videoUrl;
-
-
-        progress.style.width =
-            "100%";
-
-
-        status.textContent =
-            "✅ Vídeo pujat correctament.";
-
-
-        showMessage(
-            "Vídeo pujat. Ara pots guardar el contingut.",
-            true
-        );
-
-
-    }
-
-    catch (error) {
-
-        console.error(error);
-
-
-        progress.style.width =
-            "0%";
-
-
-        status.textContent =
-            "❌ Error: " +
-            error.message;
-
-
-        showMessage(
-            "No s'ha pogut pujar el vídeo: " +
-            error.message
+        upload.resumeFromPreviousUpload(
+            previousUploads[0]
         );
 
     }
 
 
-    button.disabled = false;
+    upload.start();
+
+}
+
+
+/* =========================
+   PAUSAR
+========================= */
+
+function pauseUpload() {
+
+    if (!upload) {
+
+        return;
+
+    }
+
+
+    upload.abort();
+
+
+    document
+    .getElementById(
+        "uploadStatus"
+    )
+    .textContent =
+        "⏸️ Pujada pausada.";
+
+
+    document
+    .getElementById(
+        "pauseButton"
+    )
+    .disabled =
+        true;
+
+
+    document
+    .getElementById(
+        "resumeButton"
+    )
+    .disabled =
+        false;
+
+}
+
+
+/* =========================
+   CONTINUAR
+========================= */
+
+function resumeUpload() {
+
+    if (!upload) {
+
+        return;
+
+    }
+
+
+    document
+    .getElementById(
+        "pauseButton"
+    )
+    .disabled =
+        false;
+
+
+    document
+    .getElementById(
+        "resumeButton"
+    )
+    .disabled =
+        true;
+
+
+    document
+    .getElementById(
+        "uploadStatus"
+    )
+    .textContent =
+        "▶️ Continuant la pujada...";
+
+
+    upload.start();
 
 }
 
@@ -981,14 +1201,16 @@ document
 
         const videoUrl =
             document
-            .getElementById("video_url")
+            .getElementById(
+                "video_url"
+            )
             .value;
 
 
         if (!videoUrl) {
 
             showMessage(
-                "Primer has de seleccionar i pujar el vídeo."
+                "Primer has de pujar el vídeo."
             );
 
             return;
@@ -1026,7 +1248,9 @@ document
             release_year:
                 Number(
                     document
-                    .getElementById("release_year")
+                    .getElementById(
+                        "release_year"
+                    )
                     .value
                 )
                 || null,
@@ -1034,21 +1258,27 @@ document
             duration_minutes:
                 Number(
                     document
-                    .getElementById("duration_minutes")
+                    .getElementById(
+                        "duration_minutes"
+                    )
                     .value
                 )
                 || null,
 
             thumbnail_url:
                 document
-                .getElementById("thumbnail_url")
+                .getElementById(
+                    "thumbnail_url"
+                )
                 .value
                 .trim()
                 || null,
 
             trailer_url:
                 document
-                .getElementById("trailer_url")
+                .getElementById(
+                    "trailer_url"
+                )
                 .value
                 .trim()
                 || null,
@@ -1058,24 +1288,32 @@ document
 
             available_from:
                 document
-                .getElementById("available_from")
+                .getElementById(
+                    "available_from"
+                )
                 .value
                 || null,
 
             available_until:
                 document
-                .getElementById("available_until")
+                .getElementById(
+                    "available_until"
+                )
                 .value
                 || null,
 
             is_featured:
                 document
-                .getElementById("is_featured")
+                .getElementById(
+                    "is_featured"
+                )
                 .checked,
 
             is_published:
                 document
-                .getElementById("is_published")
+                .getElementById(
+                    "is_published"
+                )
                 .checked
 
         };
@@ -1088,12 +1326,16 @@ document
 
         .from("Content")
 
-        .insert(content);
+        .insert(
+            content
+        );
 
 
         if (error) {
 
-            console.error(error);
+            console.error(
+                error
+            );
 
             showMessage(
                 "Error guardant el contingut: " +
@@ -1112,30 +1354,44 @@ document
 
 
         document
-        .getElementById("contentForm")
+        .getElementById(
+            "contentForm"
+        )
         .reset();
 
 
         document
-        .getElementById("video_url")
+        .getElementById(
+            "video_url"
+        )
         .value =
             "";
 
 
+        selectedFile =
+            null;
+
+
         document
-        .getElementById("fileInfo")
+        .getElementById(
+            "fileInfo"
+        )
         .textContent =
             "Cap fitxer seleccionat.";
 
 
         document
-        .getElementById("uploadStatus")
+        .getElementById(
+            "uploadStatus"
+        )
         .textContent =
             "";
 
 
         document
-        .getElementById("progressBar")
+        .getElementById(
+            "progressBar"
+        )
         .style.width =
             "0%";
 
@@ -1181,7 +1437,9 @@ async function loadContent() {
         list.textContent =
             "No s'ha pogut carregar el contingut.";
 
-        console.error(error);
+        console.error(
+            error
+        );
 
         return;
 
@@ -1198,7 +1456,8 @@ async function loadContent() {
     }
 
 
-    list.innerHTML = "";
+    list.innerHTML =
+        "";
 
 
     data.forEach(
@@ -1245,7 +1504,7 @@ async function loadContent() {
                 </div>
 
                 <button
-                    class="delete"
+                    class="danger"
                     onclick="deleteContent('${item.id}')"
                 >
                     🗑️
@@ -1265,18 +1524,16 @@ async function loadContent() {
 
 
 /* =========================
-   ELIMINAR CONTINGUT
+   ELIMINAR
 ========================= */
 
 async function deleteContent(id) {
 
-    const confirmDelete =
-        confirm(
+    if (
+        !confirm(
             "Vols eliminar aquest contingut?"
-        );
-
-
-    if (!confirmDelete) {
+        )
+    ) {
 
         return;
 
@@ -1322,7 +1579,7 @@ async function deleteContent(id) {
 
 
 /* =========================
-   SEGURETAT HTML
+   ESCAPAR HTML
 ========================= */
 
 function escapeHtml(text) {
