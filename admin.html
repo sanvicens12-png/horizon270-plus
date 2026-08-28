@@ -6,11 +6,7 @@
 
 <meta charset="UTF-8">
 
-<meta
-name="viewport"
-content="width=device-width, initial-scale=1.0"
-
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>HORIZON270+ | Administració</title>
 
@@ -21,252 +17,194 @@ content="width=device-width, initial-scale=1.0"
 }
 
 body {
-
     margin: 0;
-
     background: #050505;
-
     color: white;
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 header {
-
     height: 70px;
-
     display: flex;
-
     align-items: center;
-
     padding: 0 5%;
-
     background: #080808;
-
     border-bottom: 1px solid #222;
-
 }
 
 .logo {
-
     font-size: 25px;
-
     font-weight: 900;
-
 }
 
 .logo span {
-
     color: #aaa;
-
 }
 
 .back {
-
     margin-left: auto;
-
     color: white;
-
     text-decoration: none;
-
     border: 1px solid #555;
-
     padding: 10px 16px;
-
     border-radius: 5px;
-
 }
 
 main {
-
     max-width: 1100px;
-
     margin: auto;
-
     padding: 40px 25px;
-
 }
 
 h1 {
-
     font-size: 38px;
-
 }
 
 .panel {
-
     background: #111;
-
     border: 1px solid #292929;
-
     border-radius: 8px;
-
     padding: 25px;
-
     margin-bottom: 25px;
-
 }
 
 .grid {
-
     display: grid;
-
-    grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(220px, 1fr)
-        );
-
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(220px, 1fr)
+    );
     gap: 18px;
-
 }
 
 label {
-
     display: block;
-
     margin-bottom: 7px;
-
     color: #bbb;
-
 }
 
 input,
 textarea,
 select {
-
     width: 100%;
-
     padding: 13px;
-
     margin-bottom: 18px;
-
     background: #080808;
-
     color: white;
-
     border: 1px solid #444;
-
     border-radius: 5px;
-
     font-size: 15px;
+}
 
+input[type="checkbox"] {
+    width: auto;
+    margin-right: 8px;
+}
+
+input[type="file"] {
+    padding: 10px;
 }
 
 textarea {
-
     min-height: 120px;
-
     resize: vertical;
-
 }
 
 button {
-
     padding: 13px 20px;
-
     background: white;
-
     color: black;
-
     border: 0;
-
     border-radius: 5px;
-
     cursor: pointer;
-
     font-weight: bold;
-
 }
 
 button:hover {
-
     background: #ddd;
+}
 
+button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
 }
 
 .delete {
-
     background: #300;
-
     color: white;
+}
 
+.upload-box {
+    border: 1px dashed #555;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: #090909;
+}
+
+.upload-status {
+    margin-top: 10px;
+    color: #aaa;
+}
+
+.progress {
+    width: 100%;
+    height: 8px;
+    background: #222;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 12px;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background: white;
+    transition: width .2s;
 }
 
 .content-list {
-
     display: grid;
-
     gap: 12px;
-
 }
 
 .content-item {
-
     background: #080808;
-
     border: 1px solid #292929;
-
     border-radius: 6px;
-
     padding: 18px;
-
     display: flex;
-
     align-items: center;
-
     gap: 15px;
-
 }
 
 .content-info {
-
     flex: 1;
-
 }
 
 .content-title {
-
     font-weight: bold;
-
     font-size: 18px;
-
 }
 
 .content-type {
-
     color: #888;
-
     margin-top: 5px;
-
 }
 
 #message {
-
     padding: 15px;
-
     border-radius: 5px;
-
     background: #181818;
-
     margin-bottom: 20px;
-
-}
-
-#error {
-
-    color: #ff9999;
-
 }
 
 .success {
-
     color: #9cffb0;
+}
 
+.error {
+    color: #ff9999;
 }
 
 </style>
@@ -278,9 +216,7 @@ button:hover {
 <header>
 
 <div class="logo">
-
 HORIZON<span>270+</span>
-
 </div>
 
 <a
@@ -302,12 +238,7 @@ Panell d'administració
 <div
     id="message"
     hidden
->
-</div>
-
-<!-- =========================
-     CREAR CONTINGUT
-========================= -->
+></div>
 
 <div class="panel">
 
@@ -450,20 +381,67 @@ placeholder="https://..."
 
 </div>
 
-<div>
+</div>
 
-<label>
-URL del vídeo
-</label>
+<!-- =========================
+     PUJAR VÍDEO
+========================= -->
+
+<div class="upload-box">
+
+<h3>
+🎬 Fitxer de vídeo
+</h3>
+
+<p>
+Selecciona el vídeo de la pel·lícula o sèrie.
+</p>
 
 <input
-id="video_url"
-type="url"
-placeholder="https://..."
+id="videoFile"
+type="file"
+accept="video/*"
 
 >
 
+<div
+    id="fileInfo"
+    class="upload-status"
+>
+Cap fitxer seleccionat.
 </div>
+
+<button
+type="button"
+id="uploadButton"
+onclick="uploadVideo()"
+disabled
+
+>
+
+⬆️ Pujar vídeo </button>
+
+<div class="progress">
+
+<div
+    id="progressBar"
+    class="progress-bar"
+>
+</div>
+
+</div>
+
+<div
+    id="uploadStatus"
+    class="upload-status"
+>
+</div>
+
+<input
+id="video_url"
+type="hidden"
+
+>
 
 </div>
 
@@ -499,8 +477,6 @@ type="datetime-local"
 
 </div>
 
-<div>
-
 <label>
 
 <input
@@ -524,8 +500,6 @@ type="checkbox"
 Publicar immediatament
 
 </label>
-
-</div>
 
 <br>
 
@@ -603,7 +577,7 @@ function showMessage(
     message.className =
         success
         ? "success"
-        : "";
+        : "error";
 
     message.hidden = false;
 
@@ -668,7 +642,8 @@ async function checkAdmin() {
         );
 
         showMessage(
-            "No s'ha pogut comprovar el compte."
+            "No s'ha pogut comprovar el compte: " +
+            profileError.message
         );
 
         return false;
@@ -701,9 +676,7 @@ async function checkAdmin() {
 
                 <a
                     href="profiles.html"
-                    style="
-                        color:white;
-                    "
+                    style="color:white;"
                 >
                     Tornar als perfils
                 </a>
@@ -723,6 +696,277 @@ async function checkAdmin() {
 
 
 /* =========================
+   SELECCIÓ DE FITXER
+========================= */
+
+document
+.getElementById("videoFile")
+.addEventListener(
+    "change",
+    function() {
+
+        const file =
+            this.files[0];
+
+        const button =
+            document.getElementById(
+                "uploadButton"
+            );
+
+        const info =
+            document.getElementById(
+                "fileInfo"
+            );
+
+
+        if (!file) {
+
+            button.disabled = true;
+
+            info.textContent =
+                "Cap fitxer seleccionat.";
+
+            return;
+
+        }
+
+
+        const sizeGB =
+            file.size /
+            1024 /
+            1024 /
+            1024;
+
+
+        info.textContent =
+            file.name +
+            " · " +
+            sizeGB.toFixed(2) +
+            " GB";
+
+
+        button.disabled = false;
+
+    }
+);
+
+
+/* =========================
+   PUJAR VÍDEO
+========================= */
+
+async function uploadVideo() {
+
+    const file =
+        document
+        .getElementById("videoFile")
+        .files[0];
+
+
+    if (!file) {
+
+        return;
+
+    }
+
+
+    const status =
+        document.getElementById(
+            "uploadStatus"
+        );
+
+
+    const progress =
+        document.getElementById(
+            "progressBar"
+        );
+
+
+    const button =
+        document.getElementById(
+            "uploadButton"
+        );
+
+
+    button.disabled = true;
+
+
+    status.textContent =
+        "Preparant la pujada...";
+
+
+    progress.style.width =
+        "10%";
+
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient.auth.getUser();
+
+
+        if (
+            error ||
+            !data.user
+        ) {
+
+            throw new Error(
+                "La sessió ha caducat."
+            );
+
+        }
+
+
+        /*
+         * Nom únic del fitxer
+         */
+
+        const extension =
+            file.name.includes(".")
+            ? file.name
+                .split(".")
+                .pop()
+                .toLowerCase()
+            : "mp4";
+
+
+        const safeName =
+            file.name
+                .replace(
+                    /[^a-zA-Z0-9._-]/g,
+                    "_"
+                );
+
+
+        const filePath =
+            data.user.id +
+            "/" +
+            Date.now() +
+            "-" +
+            safeName;
+
+
+        status.textContent =
+            "Pujant vídeo...";
+
+
+        progress.style.width =
+            "30%";
+
+
+        const {
+            error: uploadError
+        } =
+        await supabaseClient
+
+        .storage
+
+        .from("videos")
+
+        .upload(
+            filePath,
+            file,
+            {
+                cacheControl:
+                    "3600",
+
+                upsert:
+                    false,
+
+                contentType:
+                    file.type
+            }
+        );
+
+
+        if (uploadError) {
+
+            throw uploadError;
+
+        }
+
+
+        progress.style.width =
+            "80%";
+
+
+        /*
+         * Obtenir URL pública
+         */
+
+        const {
+            data: publicData
+        } =
+        supabaseClient
+
+        .storage
+
+        .from("videos")
+
+        .getPublicUrl(
+            filePath
+        );
+
+
+        const videoUrl =
+            publicData.publicUrl;
+
+
+        document
+        .getElementById(
+            "video_url"
+        )
+        .value =
+            videoUrl;
+
+
+        progress.style.width =
+            "100%";
+
+
+        status.textContent =
+            "✅ Vídeo pujat correctament.";
+
+
+        showMessage(
+            "Vídeo pujat. Ara pots guardar el contingut.",
+            true
+        );
+
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+
+        progress.style.width =
+            "0%";
+
+
+        status.textContent =
+            "❌ Error: " +
+            error.message;
+
+
+        showMessage(
+            "No s'ha pogut pujar el vídeo: " +
+            error.message
+        );
+
+    }
+
+
+    button.disabled = false;
+
+}
+
+
+/* =========================
    CREAR CONTINGUT
 ========================= */
 
@@ -733,6 +977,23 @@ document
     async function(event) {
 
         event.preventDefault();
+
+
+        const videoUrl =
+            document
+            .getElementById("video_url")
+            .value;
+
+
+        if (!videoUrl) {
+
+            showMessage(
+                "Primer has de seleccionar i pujar el vídeo."
+            );
+
+            return;
+
+        }
 
 
         const content = {
@@ -793,11 +1054,7 @@ document
                 || null,
 
             video_url:
-                document
-                .getElementById("video_url")
-                .value
-                .trim()
-                || null,
+                videoUrl,
 
             available_from:
                 document
@@ -839,7 +1096,7 @@ document
             console.error(error);
 
             showMessage(
-                "Error: " +
+                "Error guardant el contingut: " +
                 error.message
             );
 
@@ -849,7 +1106,7 @@ document
 
 
         showMessage(
-            "Contingut creat correctament.",
+            "🎬 Contingut creat correctament.",
             true
         );
 
@@ -857,6 +1114,30 @@ document
         document
         .getElementById("contentForm")
         .reset();
+
+
+        document
+        .getElementById("video_url")
+        .value =
+            "";
+
+
+        document
+        .getElementById("fileInfo")
+        .textContent =
+            "Cap fitxer seleccionat.";
+
+
+        document
+        .getElementById("uploadStatus")
+        .textContent =
+            "";
+
+
+        document
+        .getElementById("progressBar")
+        .style.width =
+            "0%";
 
 
         loadContent();
@@ -984,7 +1265,7 @@ async function loadContent() {
 
 
 /* =========================
-   ELIMINAR
+   ELIMINAR CONTINGUT
 ========================= */
 
 async function deleteContent(id) {
@@ -1047,10 +1328,22 @@ async function deleteContent(id) {
 function escapeHtml(text) {
 
     return String(text)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
         .replaceAll(
             "'",
             "&#039;"
