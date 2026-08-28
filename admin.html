@@ -1,80 +1,272 @@
 <!DOCTYPE html>
 
 <html lang="ca">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+
+>
 
 <title>HORIZON270+ | Administració</title>
 
 <style>
 
-*{box-sizing:border-box}
-
-body{
-    margin:0;
-    background:#050505;
-    color:white;
-    font-family:Arial,Helvetica,sans-serif;
+* {
+    box-sizing: border-box;
 }
 
-header{
-    height:70px;
-    display:flex;
-    align-items:center;
-    padding:0 5%;
-    background:#080808;
-    border-bottom:1px solid #222;
+body {
+
+    margin: 0;
+
+    background: #050505;
+
+    color: white;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
 }
 
-.logo{
-    font-size:25px;
-    font-weight:900;
+header {
+
+    height: 70px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 5%;
+
+    background: #080808;
+
+    border-bottom: 1px solid #222;
+
 }
 
-.logo span{color:#aaa}
+.logo {
 
-main{
-    padding:40px 5%;
-    max-width:1200px;
-    margin:auto;
+    font-size: 25px;
+
+    font-weight: 900;
+
 }
 
-.panel{
-    background:#111;
-    border:1px solid #292929;
-    border-radius:8px;
-    padding:25px;
-    margin-bottom:20px;
+.logo span {
+
+    color: #aaa;
+
 }
 
-.grid{
-    display:grid;
+.back {
+
+    margin-left: auto;
+
+    color: white;
+
+    text-decoration: none;
+
+    border: 1px solid #555;
+
+    padding: 10px 16px;
+
+    border-radius: 5px;
+
+}
+
+main {
+
+    max-width: 1100px;
+
+    margin: auto;
+
+    padding: 40px 25px;
+
+}
+
+h1 {
+
+    font-size: 38px;
+
+}
+
+.panel {
+
+    background: #111;
+
+    border: 1px solid #292929;
+
+    border-radius: 8px;
+
+    padding: 25px;
+
+    margin-bottom: 25px;
+
+}
+
+.grid {
+
+    display: grid;
+
     grid-template-columns:
-        repeat(auto-fit,minmax(220px,1fr));
-    gap:18px;
+        repeat(
+            auto-fit,
+            minmax(220px, 1fr)
+        );
+
+    gap: 18px;
+
 }
 
-button{
-    width:100%;
-    padding:18px;
-    background:#181818;
-    color:white;
-    border:1px solid #444;
-    border-radius:6px;
-    cursor:pointer;
-    font-size:15px;
+label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #bbb;
+
 }
 
-button:hover{
-    background:#242424;
+input,
+textarea,
+select {
+
+    width: 100%;
+
+    padding: 13px;
+
+    margin-bottom: 18px;
+
+    background: #080808;
+
+    color: white;
+
+    border: 1px solid #444;
+
+    border-radius: 5px;
+
+    font-size: 15px;
+
 }
 
-.logout{
-    margin-left:auto;
-    width:auto;
-    padding:10px 16px;
+textarea {
+
+    min-height: 120px;
+
+    resize: vertical;
+
+}
+
+button {
+
+    padding: 13px 20px;
+
+    background: white;
+
+    color: black;
+
+    border: 0;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+}
+
+button:hover {
+
+    background: #ddd;
+
+}
+
+.delete {
+
+    background: #300;
+
+    color: white;
+
+}
+
+.content-list {
+
+    display: grid;
+
+    gap: 12px;
+
+}
+
+.content-item {
+
+    background: #080808;
+
+    border: 1px solid #292929;
+
+    border-radius: 6px;
+
+    padding: 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+}
+
+.content-info {
+
+    flex: 1;
+
+}
+
+.content-title {
+
+    font-weight: bold;
+
+    font-size: 18px;
+
+}
+
+.content-type {
+
+    color: #888;
+
+    margin-top: 5px;
+
+}
+
+#message {
+
+    padding: 15px;
+
+    border-radius: 5px;
+
+    background: #181818;
+
+    margin-bottom: 20px;
+
+}
+
+#error {
+
+    color: #ff9999;
+
+}
+
+.success {
+
+    color: #9cffb0;
+
 }
 
 </style>
@@ -86,107 +278,284 @@ button:hover{
 <header>
 
 <div class="logo">
+
 HORIZON<span>270+</span>
+
 </div>
 
-<button
-class="logout"
-onclick="logout()"
+<a
+class="back"
+href="profiles.html"
 
 >
 
-Tancar sessió </button>
+← Perfils </a>
 
 </header>
 
 <main>
 
-<h1>Panell d'administració</h1>
-
-<p>
-Gestiona tot el contingut de HORIZON270+.
-</p>
+<h1>
+Panell d'administració
+</h1>
 
 <div
-    id="error"
-    class="panel"
+    id="message"
     hidden
 >
-No tens permisos d'administrador.
 </div>
+
+<!-- =========================
+     CREAR CONTINGUT
+========================= -->
+
+<div class="panel">
+
+<h2>
+➕ Crear contingut
+</h2>
+
+<form id="contentForm">
+
+<div class="grid">
+
+<div>
+
+<label>
+Tipus
+</label>
+
+<select
+id="content_type"
+required
+
+>
+
+<option value="movie">
+Pel·lícula
+</option>
+
+<option value="series">
+Sèrie
+</option>
+
+</select>
+
+</div>
+
+<div>
+
+<label>
+Títol
+</label>
+
+<input
+id="title"
+type="text"
+required
+placeholder="Nom de la pel·lícula o sèrie"
+
+>
+
+</div>
+
+<div>
+
+<label>
+Gènere
+</label>
+
+<input
+id="genre"
+type="text"
+placeholder="Drama, acció, comèdia..."
+
+>
+
+</div>
+
+<div>
+
+<label>
+Any
+</label>
+
+<input
+id="release_year"
+type="number"
+min="1800"
+max="2100"
+placeholder="2026"
+
+>
+
+</div>
+
+<div>
+
+<label>
+Durada (minuts)
+</label>
+
+<input
+id="duration_minutes"
+type="number"
+min="1"
+placeholder="120"
+
+>
+
+</div>
+
+</div>
+
+<label>
+Descripció
+</label>
+
+<textarea
+    id="description"
+    placeholder="Descripció del contingut..."
+></textarea>
+
+<div class="grid">
+
+<div>
+
+<label>
+URL de la portada
+</label>
+
+<input
+id="thumbnail_url"
+type="url"
+placeholder="https://..."
+
+>
+
+</div>
+
+<div>
+
+<label>
+URL del tràiler
+</label>
+
+<input
+id="trailer_url"
+type="url"
+placeholder="https://..."
+
+>
+
+</div>
+
+<div>
+
+<label>
+URL del vídeo
+</label>
+
+<input
+id="video_url"
+type="url"
+placeholder="https://..."
+
+>
+
+</div>
+
+</div>
+
+<div class="grid">
+
+<div>
+
+<label>
+Data/hora d'estrena
+</label>
+
+<input
+id="available_from"
+type="datetime-local"
+
+>
+
+</div>
+
+<div>
+
+<label>
+Disponible fins
+</label>
+
+<input
+id="available_until"
+type="datetime-local"
+
+>
+
+</div>
+
+</div>
+
+<div>
+
+<label>
+
+<input
+id="is_featured"
+type="checkbox"
+
+>
+
+Destacar a la portada
+
+</label>
+
+<label>
+
+<input
+id="is_published"
+type="checkbox"
+
+>
+
+Publicar immediatament
+
+</label>
+
+</div>
+
+<br>
+
+<button
+type="submit"
+
+>
+
+💾 Guardar contingut </button>
+
+</form>
+
+</div>
+
+<!-- =========================
+     CONTINGUT EXISTENT
+========================= -->
+
+<div class="panel">
+
+<h2>
+📚 Contingut existent
+</h2>
 
 <div
-    id="admin"
-    hidden
+    id="contentList"
+    class="content-list"
 >
 
-<div class="panel">
-
-<h2>🎬 Contingut</h2>
-
-<div class="grid">
-
-<button>
-➕ Crear pel·lícula
-</button>
-
-<button>
-➕ Crear sèrie
-</button>
-
-<button>
-📺 Crear temporada
-</button>
-
-<button>
-▶️ Crear episodi
-</button>
-
-</div>
-
-</div>
-
-<div class="panel">
-
-<h2>👥 Informació</h2>
-
-<div class="grid">
-
-<button>
-🎭 Gestionar actors
-</button>
-
-<button>
-🎞️ Gestionar tràilers
-</button>
-
-<button>
-🔗 Contingut relacionat
-</button>
-
-<button>
-⭐ Contingut similar
-</button>
-
-</div>
-
-</div>
-
-<div class="panel">
-
-<h2>📅 Llançaments</h2>
-
-<div class="grid">
-
-<button>
-Programar estrena
-</button>
-
-<button>
-Gestionar estrenes
-</button>
-
-</div>
+Carregant...
 
 </div>
 
@@ -198,67 +567,524 @@ Gestionar estrenes
 
 <script>
 
+
+const SUPABASE_URL =
+"https://eftxwdpdweomffgurlgm.supabase.co";
+
+
+const SUPABASE_KEY =
+"sb_publishable_DPCJgsTp66cw2s-5S3CqNg_AdJEHKpt";
+
+
 const supabaseClient =
 window.supabase.createClient(
-    "https://eftxwdpdweomffgurlgm.supabase.co",
-    "sb_publishable_DPCJgsTp66cw2s-5S3CqNg_AdJEHKpt"
+    SUPABASE_URL,
+    SUPABASE_KEY
 );
 
-async function start(){
 
-    const {data}=
+const message =
+document.getElementById(
+    "message"
+);
+
+
+/* =========================
+   MISSATGES
+========================= */
+
+function showMessage(
+    text,
+    success = false
+) {
+
+    message.textContent = text;
+
+    message.className =
+        success
+        ? "success"
+        : "";
+
+    message.hidden = false;
+
+}
+
+
+/* =========================
+   COMPROVAR ADMIN
+========================= */
+
+async function checkAdmin() {
+
+    const {
+        data,
+        error
+    } =
     await supabaseClient.auth.getSession();
 
-    if(!data.session){
+
+    if (
+        error ||
+        !data.session
+    ) {
 
         window.location.replace(
             "login.html"
+        );
+
+        return false;
+
+    }
+
+
+    const user =
+        data.session.user;
+
+
+    const {
+        data: profile,
+        error: profileError
+    } =
+    await supabaseClient
+
+    .from("Profiles")
+
+    .select(
+        "id, account_type"
+    )
+
+    .eq(
+        "id",
+        user.id
+    )
+
+    .maybeSingle();
+
+
+    if (profileError) {
+
+        console.error(
+            profileError
+        );
+
+        showMessage(
+            "No s'ha pogut comprovar el compte."
+        );
+
+        return false;
+
+    }
+
+
+    if (
+        !profile ||
+        profile.account_type !== "admin"
+    ) {
+
+        document.body.innerHTML = `
+
+            <main style="
+                max-width:700px;
+                margin:100px auto;
+                padding:30px;
+                text-align:center;
+            ">
+
+                <h1>
+                    Accés restringit
+                </h1>
+
+                <p>
+                    Aquest panell només està
+                    disponible per a administradors.
+                </p>
+
+                <a
+                    href="profiles.html"
+                    style="
+                        color:white;
+                    "
+                >
+                    Tornar als perfils
+                </a>
+
+            </main>
+
+        `;
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =========================
+   CREAR CONTINGUT
+========================= */
+
+document
+.getElementById("contentForm")
+.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        const content = {
+
+            title:
+                document
+                .getElementById("title")
+                .value
+                .trim(),
+
+            description:
+                document
+                .getElementById("description")
+                .value
+                .trim()
+                || null,
+
+            content_type:
+                document
+                .getElementById("content_type")
+                .value,
+
+            genre:
+                document
+                .getElementById("genre")
+                .value
+                .trim()
+                || null,
+
+            release_year:
+                Number(
+                    document
+                    .getElementById("release_year")
+                    .value
+                )
+                || null,
+
+            duration_minutes:
+                Number(
+                    document
+                    .getElementById("duration_minutes")
+                    .value
+                )
+                || null,
+
+            thumbnail_url:
+                document
+                .getElementById("thumbnail_url")
+                .value
+                .trim()
+                || null,
+
+            trailer_url:
+                document
+                .getElementById("trailer_url")
+                .value
+                .trim()
+                || null,
+
+            video_url:
+                document
+                .getElementById("video_url")
+                .value
+                .trim()
+                || null,
+
+            available_from:
+                document
+                .getElementById("available_from")
+                .value
+                || null,
+
+            available_until:
+                document
+                .getElementById("available_until")
+                .value
+                || null,
+
+            is_featured:
+                document
+                .getElementById("is_featured")
+                .checked,
+
+            is_published:
+                document
+                .getElementById("is_published")
+                .checked
+
+        };
+
+
+        const {
+            error
+        } =
+        await supabaseClient
+
+        .from("Content")
+
+        .insert(content);
+
+
+        if (error) {
+
+            console.error(error);
+
+            showMessage(
+                "Error: " +
+                error.message
+            );
+
+            return;
+
+        }
+
+
+        showMessage(
+            "Contingut creat correctament.",
+            true
+        );
+
+
+        document
+        .getElementById("contentForm")
+        .reset();
+
+
+        loadContent();
+
+    }
+);
+
+
+/* =========================
+   CARREGAR CONTINGUT
+========================= */
+
+async function loadContent() {
+
+    const list =
+        document.getElementById(
+            "contentList"
+        );
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+
+    .from("Content")
+
+    .select("*")
+
+    .order(
+        "created_at",
+        {
+            ascending: false
+        }
+    );
+
+
+    if (error) {
+
+        list.textContent =
+            "No s'ha pogut carregar el contingut.";
+
+        console.error(error);
+
+        return;
+
+    }
+
+
+    if (!data.length) {
+
+        list.textContent =
+            "Encara no hi ha contingut.";
+
+        return;
+
+    }
+
+
+    list.innerHTML = "";
+
+
+    data.forEach(
+        item => {
+
+            const element =
+                document.createElement(
+                    "div"
+                );
+
+
+            element.className =
+                "content-item";
+
+
+            element.innerHTML = `
+
+                <div class="content-info">
+
+                    <div class="content-title">
+                        ${escapeHtml(
+                            item.title
+                        )}
+                    </div>
+
+                    <div class="content-type">
+
+                        ${
+                            item.content_type === "movie"
+                            ? "🎬 Pel·lícula"
+                            : "📺 Sèrie"
+                        }
+
+                        ·
+
+                        ${
+                            item.is_published
+                            ? "Publicat"
+                            : "No publicat"
+                        }
+
+                    </div>
+
+                </div>
+
+                <button
+                    class="delete"
+                    onclick="deleteContent('${item.id}')"
+                >
+                    🗑️
+                </button>
+
+            `;
+
+
+            list.appendChild(
+                element
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================
+   ELIMINAR
+========================= */
+
+async function deleteContent(id) {
+
+    const confirmDelete =
+        confirm(
+            "Vols eliminar aquest contingut?"
+        );
+
+
+    if (!confirmDelete) {
+
+        return;
+
+    }
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+
+    .from("Content")
+
+    .delete()
+
+    .eq(
+        "id",
+        id
+    );
+
+
+    if (error) {
+
+        showMessage(
+            "No s'ha pogut eliminar: " +
+            error.message
         );
 
         return;
 
     }
 
-    /*
-      Aquesta comprovació és només
-      la protecció visual inicial.
-      Després farem la protecció
-      real amb RLS a Supabase.
-    */
 
-    const type =
-        data.session.user.user_metadata
-        ?.account_type;
+    showMessage(
+        "Contingut eliminat.",
+        true
+    );
 
-    if(type === "admin"){
 
-        document.getElementById(
-            "admin"
-        ).hidden=false;
+    loadContent();
 
-    }else{
+}
 
-        document.getElementById(
-            "error"
-        ).hidden=false;
+
+/* =========================
+   SEGURETAT HTML
+========================= */
+
+function escapeHtml(text) {
+
+    return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+
+/* =========================
+   INICI
+========================= */
+
+async function start() {
+
+    const isAdmin =
+        await checkAdmin();
+
+
+    if (!isAdmin) {
+
+        return;
 
     }
 
-}
 
-async function logout(){
-
-    await supabaseClient.auth.signOut();
-
-    window.location.replace(
-        "index.html"
-    );
+    loadContent();
 
 }
+
 
 start();
 
 </script>
 
 </body>
+
 </html>
