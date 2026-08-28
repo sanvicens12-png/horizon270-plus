@@ -8,9 +8,11 @@
 ```
 <title>Administració | HORIZON270+</title>
 
-<link rel="stylesheet" href="style.css">
-
 <style>
+    * {
+        box-sizing: border-box;
+    }
+
     body {
         margin: 0;
         background: #050505;
@@ -18,111 +20,156 @@
         font-family: Arial, sans-serif;
     }
 
+    #loading {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #aaa;
+        font-size: 16px;
+    }
+
+    #adminContent {
+        display: none;
+    }
+
     .admin-layout {
         min-height: 100vh;
         display: flex;
     }
 
-    .admin-sidebar {
+    /* SIDEBAR */
+
+    .sidebar {
         width: 250px;
+        min-height: 100vh;
         background: #0b0b0b;
         border-right: 1px solid #222;
         padding: 25px 18px;
         position: fixed;
+        left: 0;
         top: 0;
         bottom: 0;
     }
 
-    .admin-logo {
+    .logo {
         display: block;
         color: white;
         text-decoration: none;
-        font-size: 22px;
+        font-size: 23px;
         font-weight: bold;
         margin-bottom: 35px;
     }
 
-    .admin-logo span {
-        color: #aaa;
+    .logo span {
+        color: #888;
     }
 
-    .admin-label {
-        color: #777;
+    .label {
+        color: #666;
         font-size: 11px;
         text-transform: uppercase;
         letter-spacing: 1px;
         margin: 20px 10px 10px;
     }
 
-    .admin-nav {
+    .nav {
         display: flex;
         flex-direction: column;
         gap: 5px;
     }
 
-    .admin-nav a {
-        color: #bbb;
+    .nav a {
+        color: #aaa;
         text-decoration: none;
         padding: 12px 10px;
         border-radius: 6px;
         font-size: 14px;
     }
 
-    .admin-nav a:hover,
-    .admin-nav a.active {
+    .nav a:hover,
+    .nav a.active {
         background: #1b1b1b;
         color: white;
     }
 
-    .admin-main {
-        margin-left: 250px;
-        width: calc(100% - 250px);
-        padding: 35px;
+    .logout {
+        width: 100%;
+        margin-top: 30px;
+        padding: 11px;
+        background: transparent;
+        border: 1px solid #333;
+        color: #aaa;
+        border-radius: 6px;
+        cursor: pointer;
     }
 
-    .admin-top {
+    .logout:hover {
+        color: white;
+        border-color: #666;
+    }
+
+    /* MAIN */
+
+    .main {
+        margin-left: 250px;
+        width: calc(100% - 250px);
+        padding: 40px;
+    }
+
+    .topbar {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 35px;
     }
 
-    .admin-top h1 {
+    .topbar h1 {
         margin: 0;
-        font-size: 32px;
+        font-size: 34px;
     }
 
-    .admin-user {
+    .topbar p {
+        margin: 8px 0 0;
+        color: #777;
+    }
+
+    .user-email {
         color: #999;
         font-size: 14px;
     }
 
-    .dashboard-grid {
+    /* STATS */
+
+    .stats {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 18px;
-        margin-bottom: 35px;
+        margin-bottom: 30px;
     }
 
-    .stat-card {
-        background: #111;
+    .stat {
+        background: #101010;
         border: 1px solid #222;
         border-radius: 10px;
         padding: 22px;
     }
 
-    .stat-card span {
-        color: #888;
+    .stat-title {
+        color: #777;
         font-size: 13px;
     }
 
-    .stat-card strong {
+    .stat-number {
         display: block;
         margin-top: 10px;
         font-size: 30px;
+        font-weight: bold;
     }
 
-    .admin-section {
+    /* SECTIONS */
+
+    .section {
         background: #0d0d0d;
         border: 1px solid #222;
         border-radius: 10px;
@@ -130,19 +177,20 @@
         margin-bottom: 25px;
     }
 
-    .admin-section h2 {
+    .section h2 {
         margin-top: 0;
+        font-size: 21px;
     }
 
-    .quick-actions {
+    .actions {
         display: flex;
-        gap: 12px;
         flex-wrap: wrap;
+        gap: 12px;
     }
 
-    .admin-button {
+    .button {
         display: inline-block;
-        padding: 12px 18px;
+        padding: 13px 19px;
         background: white;
         color: black;
         text-decoration: none;
@@ -152,70 +200,60 @@
         cursor: pointer;
     }
 
-    .admin-button.secondary {
+    .button.secondary {
         background: #222;
         color: white;
     }
 
-    .logout-button {
-        margin-top: 30px;
-        width: 100%;
-        padding: 11px;
-        background: transparent;
-        border: 1px solid #333;
-        color: #aaa;
-        border-radius: 6px;
-        cursor: pointer;
+    .scheduled {
+        color: #999;
     }
 
-    .logout-button:hover {
-        color: white;
-        border-color: #666;
-    }
-
-    #loading {
-        padding: 50px;
-        text-align: center;
-        color: #aaa;
-    }
-
-    #adminContent {
-        display: none;
-    }
+    /* MOBILE */
 
     @media (max-width: 900px) {
 
-        .admin-sidebar {
-            width: 200px;
+        .sidebar {
+            width: 210px;
         }
 
-        .admin-main {
-            margin-left: 200px;
-            width: calc(100% - 200px);
+        .main {
+            margin-left: 210px;
+            width: calc(100% - 210px);
         }
 
-        .dashboard-grid {
+        .stats {
             grid-template-columns: repeat(2, 1fr);
         }
     }
 
     @media (max-width: 650px) {
 
-        .admin-sidebar {
-            position: static;
-            width: auto;
-        }
-
         .admin-layout {
             display: block;
         }
 
-        .admin-main {
-            margin-left: 0;
-            width: auto;
+        .sidebar {
+            position: static;
+            width: 100%;
+            min-height: auto;
         }
 
-        .dashboard-grid {
+        .main {
+            margin-left: 0;
+            width: 100%;
+            padding: 25px 20px;
+        }
+
+        .topbar {
+            display: block;
+        }
+
+        .user-email {
+            margin-top: 15px;
+        }
+
+        .stats {
             grid-template-columns: 1fr;
         }
     }
@@ -235,23 +273,33 @@
 ```
 <div class="admin-layout">
 
-    <aside class="admin-sidebar">
+    <!-- SIDEBAR -->
 
-        <a href="index.html" class="admin-logo">
+    <aside class="sidebar">
+
+        <a
+            href="index.html"
+            class="logo"
+        >
             HORIZON<span>270+</span>
         </a>
 
-        <div class="admin-label">
+
+        <div class="label">
             Administració
         </div>
 
-        <nav class="admin-nav">
 
-            <a href="admin.html" class="active">
+        <nav class="nav">
+
+            <a
+                href="admin.html"
+                class="active"
+            >
                 🏠 Dashboard
             </a>
 
-            <a href="#">
+            <a href="admin-movie.html">
                 🎬 Pel·lícules
             </a>
 
@@ -281,11 +329,13 @@
 
         </nav>
 
-        <div class="admin-label">
+
+        <div class="label">
             Sistema
         </div>
 
-        <nav class="admin-nav">
+
+        <nav class="nav">
 
             <a href="#">
                 ⚙️ Configuració
@@ -297,9 +347,10 @@
 
         </nav>
 
+
         <button
             id="logoutButton"
-            class="logout-button"
+            class="logout"
         >
             Tancar sessió
         </button>
@@ -307,73 +358,133 @@
     </aside>
 
 
-    <main class="admin-main">
+    <!-- MAIN -->
 
-        <div class="admin-top">
+    <main class="main">
+
+        <div class="topbar">
 
             <div>
-                <h1>Dashboard</h1>
+
+                <h1>
+                    Dashboard
+                </h1>
+
                 <p>
                     Centre de control de HORIZON270+.
                 </p>
+
             </div>
 
+
             <div
-                id="adminUser"
-                class="admin-user"
+                id="userEmail"
+                class="user-email"
             ></div>
 
         </div>
 
 
-        <section class="dashboard-grid">
+        <!-- ESTADÍSTIQUES -->
 
-            <div class="stat-card">
-                <span>Pel·lícules</span>
-                <strong id="moviesCount">—</strong>
+        <div class="stats">
+
+            <div class="stat">
+
+                <span class="stat-title">
+                    Pel·lícules
+                </span>
+
+                <strong
+                    id="moviesCount"
+                    class="stat-number"
+                >
+                    —
+                </strong>
+
             </div>
 
-            <div class="stat-card">
-                <span>Sèries</span>
-                <strong id="seriesCount">—</strong>
+
+            <div class="stat">
+
+                <span class="stat-title">
+                    Sèries
+                </span>
+
+                <strong
+                    id="seriesCount"
+                    class="stat-number"
+                >
+                    —
+                </strong>
+
             </div>
 
-            <div class="stat-card">
-                <span>Episodis</span>
-                <strong id="episodesCount">—</strong>
+
+            <div class="stat">
+
+                <span class="stat-title">
+                    Episodis
+                </span>
+
+                <strong
+                    id="episodesCount"
+                    class="stat-number"
+                >
+                    —
+                </strong>
+
             </div>
 
-            <div class="stat-card">
-                <span>Usuaris</span>
-                <strong id="usersCount">—</strong>
+
+            <div class="stat">
+
+                <span class="stat-title">
+                    Contingut publicat
+                </span>
+
+                <strong
+                    id="publishedCount"
+                    class="stat-number"
+                >
+                    —
+                </strong>
+
             </div>
 
-        </section>
+        </div>
 
 
-        <section class="admin-section">
+        <!-- ACCIONS -->
 
-            <h2>Accions ràpides</h2>
+        <section class="section">
 
-            <div class="quick-actions">
+            <h2>
+                Accions ràpides
+            </h2>
 
-                <button
-                    class="admin-button"
-                    onclick="alert('El creador de pel·lícules el farem al següent pas.')"
+
+            <div class="actions">
+
+                <a
+                    href="admin-movie.html"
+                    class="button"
                 >
                     ＋ Nova pel·lícula
-                </button>
+                </a>
+
 
                 <button
-                    class="admin-button"
-                    onclick="alert('El creador de sèries el farem al següent pas.')"
+                    class="button secondary"
+                    onclick="alert('El creador de sèries el prepararem a continuació.')"
                 >
                     ＋ Nova sèrie
                 </button>
 
+
                 <button
-                    class="admin-button secondary"
-                    onclick="alert('El gestor de trailers el farem al següent pas.')"
+                    class="button secondary"
+                    onclick="alert('El gestor de trailers el prepararem després.')"
                 >
                     ＋ Nou trailer
                 </button>
@@ -383,11 +494,18 @@
         </section>
 
 
-        <section class="admin-section">
+        <!-- LLANÇAMENTS -->
 
-            <h2>Pròxims llançaments</h2>
+        <section class="section">
 
-            <p id="scheduledMessage">
+            <h2>
+                📅 Pròxims llançaments
+            </h2>
+
+            <p
+                id="scheduledMessage"
+                class="scheduled"
+            >
                 Carregant...
             </p>
 
@@ -400,9 +518,15 @@
 
 </div>
 
+<!-- SUPABASE -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
+
+/* =========================
+   SUPABASE
+========================= */
 
 const SUPABASE_URL =
     "https://eftxwdpdweomffgurlgm.supabase.co";
@@ -418,25 +542,34 @@ const supabaseClient =
     );
 
 
+/* =========================
+   COMPROVAR ADMIN
+========================= */
+
 async function iniciarAdmin() {
 
     const {
-        data: sessionData
+        data: sessionData,
+        error: sessionError
     } =
         await supabaseClient.auth.getSession();
 
 
-    const session =
-        sessionData.session;
-
-
-    if (!session) {
+    if (
+        sessionError ||
+        !sessionData.session
+    ) {
 
         window.location.href =
             "login.html";
 
         return;
+
     }
+
+
+    const user =
+        sessionData.session.user;
 
 
     const {
@@ -446,7 +579,7 @@ async function iniciarAdmin() {
         await supabaseClient
             .from("Profiles")
             .select("account_type")
-            .eq("id", session.user.id)
+            .eq("id", user.id)
             .maybeSingle();
 
 
@@ -462,13 +595,14 @@ async function iniciarAdmin() {
             "login.html";
 
         return;
+
     }
 
 
     document.getElementById(
-        "adminUser"
+        "userEmail"
     ).textContent =
-        session.user.email;
+        user.email;
 
 
     document.getElementById(
@@ -483,12 +617,16 @@ async function iniciarAdmin() {
         "block";
 
 
-    await carregarEstadistiques();
+    await carregarDades();
 
 }
 
 
-async function carregarEstadistiques() {
+/* =========================
+   DADES DEL DASHBOARD
+========================= */
+
+async function carregarDades() {
 
     const movies =
         await supabaseClient
@@ -519,6 +657,16 @@ async function carregarEstadistiques() {
             });
 
 
+    const published =
+        await supabaseClient
+            .from("content")
+            .select("id", {
+                count: "exact",
+                head: true
+            })
+            .eq("status", "published");
+
+
     document.getElementById(
         "moviesCount"
     ).textContent =
@@ -538,15 +686,15 @@ async function carregarEstadistiques() {
 
 
     document.getElementById(
-        "usersCount"
+        "publishedCount"
     ).textContent =
-        "—";
+        published.count ?? 0;
 
 
     const scheduled =
         await supabaseClient
             .from("content")
-            .select("id")
+            .select("id, title, release_at")
             .eq("status", "scheduled")
             .order("release_at", {
                 ascending: true
@@ -565,7 +713,9 @@ async function carregarEstadistiques() {
             scheduled.data.length +
             " contingut(s) programat(s).";
 
-    } else {
+    }
+
+    else {
 
         document.getElementById(
             "scheduledMessage"
@@ -576,6 +726,10 @@ async function carregarEstadistiques() {
 
 }
 
+
+/* =========================
+   TANCAR SESSIÓ
+========================= */
 
 document.getElementById(
     "logoutButton"
@@ -591,6 +745,10 @@ document.getElementById(
     }
 );
 
+
+/* =========================
+   INICIAR
+========================= */
 
 iniciarAdmin();
 
