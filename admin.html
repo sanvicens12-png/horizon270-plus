@@ -2,755 +2,261 @@
 
 <html lang="ca">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-```
-<title>Administració | HORIZON270+</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>HORIZON270+ | Administració</title>
 
 <style>
-    * {
-        box-sizing: border-box;
-    }
 
-    body {
-        margin: 0;
-        background: #050505;
-        color: white;
-        font-family: Arial, sans-serif;
-    }
+*{box-sizing:border-box}
 
-    #loading {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #aaa;
-        font-size: 16px;
-    }
+body{
+    margin:0;
+    background:#050505;
+    color:white;
+    font-family:Arial,Helvetica,sans-serif;
+}
 
-    #adminContent {
-        display: none;
-    }
+header{
+    height:70px;
+    display:flex;
+    align-items:center;
+    padding:0 5%;
+    background:#080808;
+    border-bottom:1px solid #222;
+}
 
-    .admin-layout {
-        min-height: 100vh;
-        display: flex;
-    }
+.logo{
+    font-size:25px;
+    font-weight:900;
+}
 
-    /* SIDEBAR */
+.logo span{color:#aaa}
 
-    .sidebar {
-        width: 250px;
-        min-height: 100vh;
-        background: #0b0b0b;
-        border-right: 1px solid #222;
-        padding: 25px 18px;
-        position: fixed;
-        left: 0;
-        top: 0;
-        bottom: 0;
-    }
+main{
+    padding:40px 5%;
+    max-width:1200px;
+    margin:auto;
+}
 
-    .logo {
-        display: block;
-        color: white;
-        text-decoration: none;
-        font-size: 23px;
-        font-weight: bold;
-        margin-bottom: 35px;
-    }
+.panel{
+    background:#111;
+    border:1px solid #292929;
+    border-radius:8px;
+    padding:25px;
+    margin-bottom:20px;
+}
 
-    .logo span {
-        color: #888;
-    }
+.grid{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(220px,1fr));
+    gap:18px;
+}
 
-    .label {
-        color: #666;
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin: 20px 10px 10px;
-    }
+button{
+    width:100%;
+    padding:18px;
+    background:#181818;
+    color:white;
+    border:1px solid #444;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:15px;
+}
 
-    .nav {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-    }
+button:hover{
+    background:#242424;
+}
 
-    .nav a {
-        color: #aaa;
-        text-decoration: none;
-        padding: 12px 10px;
-        border-radius: 6px;
-        font-size: 14px;
-    }
+.logout{
+    margin-left:auto;
+    width:auto;
+    padding:10px 16px;
+}
 
-    .nav a:hover,
-    .nav a.active {
-        background: #1b1b1b;
-        color: white;
-    }
-
-    .logout {
-        width: 100%;
-        margin-top: 30px;
-        padding: 11px;
-        background: transparent;
-        border: 1px solid #333;
-        color: #aaa;
-        border-radius: 6px;
-        cursor: pointer;
-    }
-
-    .logout:hover {
-        color: white;
-        border-color: #666;
-    }
-
-    /* MAIN */
-
-    .main {
-        margin-left: 250px;
-        width: calc(100% - 250px);
-        padding: 40px;
-    }
-
-    .topbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 35px;
-    }
-
-    .topbar h1 {
-        margin: 0;
-        font-size: 34px;
-    }
-
-    .topbar p {
-        margin: 8px 0 0;
-        color: #777;
-    }
-
-    .user-email {
-        color: #999;
-        font-size: 14px;
-    }
-
-    /* STATS */
-
-    .stats {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 18px;
-        margin-bottom: 30px;
-    }
-
-    .stat {
-        background: #101010;
-        border: 1px solid #222;
-        border-radius: 10px;
-        padding: 22px;
-    }
-
-    .stat-title {
-        color: #777;
-        font-size: 13px;
-    }
-
-    .stat-number {
-        display: block;
-        margin-top: 10px;
-        font-size: 30px;
-        font-weight: bold;
-    }
-
-    /* SECTIONS */
-
-    .section {
-        background: #0d0d0d;
-        border: 1px solid #222;
-        border-radius: 10px;
-        padding: 25px;
-        margin-bottom: 25px;
-    }
-
-    .section h2 {
-        margin-top: 0;
-        font-size: 21px;
-    }
-
-    .actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-    }
-
-    .button {
-        display: inline-block;
-        padding: 13px 19px;
-        background: white;
-        color: black;
-        text-decoration: none;
-        border-radius: 6px;
-        font-weight: bold;
-        border: 0;
-        cursor: pointer;
-    }
-
-    .button.secondary {
-        background: #222;
-        color: white;
-    }
-
-    .scheduled {
-        color: #999;
-    }
-
-    /* MOBILE */
-
-    @media (max-width: 900px) {
-
-        .sidebar {
-            width: 210px;
-        }
-
-        .main {
-            margin-left: 210px;
-            width: calc(100% - 210px);
-        }
-
-        .stats {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    @media (max-width: 650px) {
-
-        .admin-layout {
-            display: block;
-        }
-
-        .sidebar {
-            position: static;
-            width: 100%;
-            min-height: auto;
-        }
-
-        .main {
-            margin-left: 0;
-            width: 100%;
-            padding: 25px 20px;
-        }
-
-        .topbar {
-            display: block;
-        }
-
-        .user-email {
-            margin-top: 15px;
-        }
-
-        .stats {
-            grid-template-columns: 1fr;
-        }
-    }
 </style>
-```
 
 </head>
 
 <body>
 
-<div id="loading">
-    Comprovant permisos d'administrador...
+<header>
+
+<div class="logo">
+HORIZON<span>270+</span>
 </div>
 
-<div id="adminContent">
+<button
+class="logout"
+onclick="logout()"
 
-```
-<div class="admin-layout">
+>
 
-    <!-- SIDEBAR -->
+Tancar sessió </button>
 
-    <aside class="sidebar">
+</header>
 
-        <a
-            href="index.html"
-            class="logo"
-        >
-            HORIZON<span>270+</span>
-        </a>
+<main>
 
+<h1>Panell d'administració</h1>
 
-        <div class="label">
-            Administració
-        </div>
+<p>
+Gestiona tot el contingut de HORIZON270+.
+</p>
 
-
-        <nav class="nav">
-
-            <a
-                href="admin.html"
-                class="active"
-            >
-                🏠 Dashboard
-            </a>
-
-            <a href="admin-movie.html">
-                🎬 Pel·lícules
-            </a>
-
-            <a href="#">
-                📺 Sèries
-            </a>
-
-            <a href="#">
-                🎭 Actors
-            </a>
-
-            <a href="#">
-                🎞️ Trailers
-            </a>
-
-            <a href="#">
-                🏷️ Gèneres
-            </a>
-
-            <a href="#">
-                🔗 Relacions
-            </a>
-
-            <a href="#">
-                📅 Llançaments
-            </a>
-
-        </nav>
-
-
-        <div class="label">
-            Sistema
-        </div>
-
-
-        <nav class="nav">
-
-            <a href="#">
-                ⚙️ Configuració
-            </a>
-
-            <a href="index.html">
-                🌐 Veure HORIZON270+
-            </a>
-
-        </nav>
-
-
-        <button
-            id="logoutButton"
-            class="logout"
-        >
-            Tancar sessió
-        </button>
-
-    </aside>
-
-
-    <!-- MAIN -->
-
-    <main class="main">
-
-        <div class="topbar">
-
-            <div>
-
-                <h1>
-                    Dashboard
-                </h1>
-
-                <p>
-                    Centre de control de HORIZON270+.
-                </p>
-
-            </div>
-
-
-            <div
-                id="userEmail"
-                class="user-email"
-            ></div>
-
-        </div>
-
-
-        <!-- ESTADÍSTIQUES -->
-
-        <div class="stats">
-
-            <div class="stat">
-
-                <span class="stat-title">
-                    Pel·lícules
-                </span>
-
-                <strong
-                    id="moviesCount"
-                    class="stat-number"
-                >
-                    —
-                </strong>
-
-            </div>
-
-
-            <div class="stat">
-
-                <span class="stat-title">
-                    Sèries
-                </span>
-
-                <strong
-                    id="seriesCount"
-                    class="stat-number"
-                >
-                    —
-                </strong>
-
-            </div>
-
-
-            <div class="stat">
-
-                <span class="stat-title">
-                    Episodis
-                </span>
-
-                <strong
-                    id="episodesCount"
-                    class="stat-number"
-                >
-                    —
-                </strong>
-
-            </div>
-
-
-            <div class="stat">
-
-                <span class="stat-title">
-                    Contingut publicat
-                </span>
-
-                <strong
-                    id="publishedCount"
-                    class="stat-number"
-                >
-                    —
-                </strong>
-
-            </div>
-
-        </div>
-
-
-        <!-- ACCIONS -->
-
-        <section class="section">
-
-            <h2>
-                Accions ràpides
-            </h2>
-
-
-            <div class="actions">
-
-                <a
-                    href="admin-movie.html"
-                    class="button"
-                >
-                    ＋ Nova pel·lícula
-                </a>
-
-
-                <button
-                    class="button secondary"
-                    onclick="alert('El creador de sèries el prepararem a continuació.')"
-                >
-                    ＋ Nova sèrie
-                </button>
-
-
-                <button
-                    class="button secondary"
-                    onclick="alert('El gestor de trailers el prepararem després.')"
-                >
-                    ＋ Nou trailer
-                </button>
-
-            </div>
-
-        </section>
-
-
-        <!-- LLANÇAMENTS -->
-
-        <section class="section">
-
-            <h2>
-                📅 Pròxims llançaments
-            </h2>
-
-            <p
-                id="scheduledMessage"
-                class="scheduled"
-            >
-                Carregant...
-            </p>
-
-        </section>
-
-    </main>
-
+<div
+    id="error"
+    class="panel"
+    hidden
+>
+No tens permisos d'administrador.
 </div>
-```
+
+<div
+    id="admin"
+    hidden
+>
+
+<div class="panel">
+
+<h2>🎬 Contingut</h2>
+
+<div class="grid">
+
+<button>
+➕ Crear pel·lícula
+</button>
+
+<button>
+➕ Crear sèrie
+</button>
+
+<button>
+📺 Crear temporada
+</button>
+
+<button>
+▶️ Crear episodi
+</button>
 
 </div>
 
-<!-- SUPABASE -->
+</div>
+
+<div class="panel">
+
+<h2>👥 Informació</h2>
+
+<div class="grid">
+
+<button>
+🎭 Gestionar actors
+</button>
+
+<button>
+🎞️ Gestionar tràilers
+</button>
+
+<button>
+🔗 Contingut relacionat
+</button>
+
+<button>
+⭐ Contingut similar
+</button>
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h2>📅 Llançaments</h2>
+
+<div class="grid">
+
+<button>
+Programar estrena
+</button>
+
+<button>
+Gestionar estrenes
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</main>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 
-/* =========================
-   SUPABASE
-========================= */
-
-const SUPABASE_URL =
-    "https://eftxwdpdweomffgurlgm.supabase.co";
-
-const SUPABASE_KEY =
-    "sb_publishable_DPCJgsTp66cw2s-5S3CqNg_AdJEHKpt";
-
-
 const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
-    );
-
-
-/* =========================
-   COMPROVAR ADMIN
-========================= */
-
-async function iniciarAdmin() {
-
-    const {
-        data: sessionData,
-        error: sessionError
-    } =
-        await supabaseClient.auth.getSession();
-
-
-    if (
-        sessionError ||
-        !sessionData.session
-    ) {
-
-        window.location.href =
-            "login.html";
-
-        return;
-
-    }
-
-
-    const user =
-        sessionData.session.user;
-
-
-    const {
-        data: profile,
-        error: profileError
-    } =
-        await supabaseClient
-            .from("Profiles")
-            .select("account_type")
-            .eq("id", user.id)
-            .maybeSingle();
-
-
-    if (
-        profileError ||
-        !profile ||
-        profile.account_type !== "admin"
-    ) {
-
-        await supabaseClient.auth.signOut();
-
-        window.location.href =
-            "login.html";
-
-        return;
-
-    }
-
-
-    document.getElementById(
-        "userEmail"
-    ).textContent =
-        user.email;
-
-
-    document.getElementById(
-        "loading"
-    ).style.display =
-        "none";
-
-
-    document.getElementById(
-        "adminContent"
-    ).style.display =
-        "block";
-
-
-    await carregarDades();
-
-}
-
-
-/* =========================
-   DADES DEL DASHBOARD
-========================= */
-
-async function carregarDades() {
-
-    const movies =
-        await supabaseClient
-            .from("content")
-            .select("id", {
-                count: "exact",
-                head: true
-            })
-            .eq("content_type", "movie");
-
-
-    const series =
-        await supabaseClient
-            .from("content")
-            .select("id", {
-                count: "exact",
-                head: true
-            })
-            .eq("content_type", "series");
-
-
-    const episodes =
-        await supabaseClient
-            .from("episodes")
-            .select("id", {
-                count: "exact",
-                head: true
-            });
-
-
-    const published =
-        await supabaseClient
-            .from("content")
-            .select("id", {
-                count: "exact",
-                head: true
-            })
-            .eq("status", "published");
-
-
-    document.getElementById(
-        "moviesCount"
-    ).textContent =
-        movies.count ?? 0;
-
-
-    document.getElementById(
-        "seriesCount"
-    ).textContent =
-        series.count ?? 0;
-
-
-    document.getElementById(
-        "episodesCount"
-    ).textContent =
-        episodes.count ?? 0;
-
-
-    document.getElementById(
-        "publishedCount"
-    ).textContent =
-        published.count ?? 0;
-
-
-    const scheduled =
-        await supabaseClient
-            .from("content")
-            .select("id, title, release_at")
-            .eq("status", "scheduled")
-            .order("release_at", {
-                ascending: true
-            })
-            .limit(5);
-
-
-    if (
-        scheduled.data &&
-        scheduled.data.length > 0
-    ) {
-
-        document.getElementById(
-            "scheduledMessage"
-        ).textContent =
-            scheduled.data.length +
-            " contingut(s) programat(s).";
-
-    }
-
-    else {
-
-        document.getElementById(
-            "scheduledMessage"
-        ).textContent =
-            "No hi ha llançaments programats.";
-
-    }
-
-}
-
-
-/* =========================
-   TANCAR SESSIÓ
-========================= */
-
-document.getElementById(
-    "logoutButton"
-).addEventListener(
-    "click",
-    async function () {
-
-        await supabaseClient.auth.signOut();
-
-        window.location.href =
-            "login.html";
-
-    }
+window.supabase.createClient(
+    "https://eftxwdpdweomffgurlgm.supabase.co",
+    "sb_publishable_DPCJgsTp66cw2s-5S3CqNg_AdJEHKpt"
 );
 
+async function start(){
 
-/* =========================
-   INICIAR
-========================= */
+    const {data}=
+    await supabaseClient.auth.getSession();
 
-iniciarAdmin();
+    if(!data.session){
+
+        window.location.replace(
+            "login.html"
+        );
+
+        return;
+
+    }
+
+    /*
+      Aquesta comprovació és només
+      la protecció visual inicial.
+      Després farem la protecció
+      real amb RLS a Supabase.
+    */
+
+    const type =
+        data.session.user.user_metadata
+        ?.account_type;
+
+    if(type === "admin"){
+
+        document.getElementById(
+            "admin"
+        ).hidden=false;
+
+    }else{
+
+        document.getElementById(
+            "error"
+        ).hidden=false;
+
+    }
+
+}
+
+async function logout(){
+
+    await supabaseClient.auth.signOut();
+
+    window.location.replace(
+        "index.html"
+    );
+
+}
+
+start();
 
 </script>
 
