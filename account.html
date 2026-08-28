@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+
+<html lang="ca">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+
+>
+
+<title>HORIZON270+ | El meu compte</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+
+    margin: 0;
+
+    background: #050505;
+
+    color: white;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
+header {
+
+    height: 70px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 5%;
+
+    background: #080808;
+
+    border-bottom: 1px solid #222;
+
+}
+
+.logo {
+
+    font-size: 25px;
+
+    font-weight: 900;
+
+}
+
+.logo span {
+
+    color: #aaa;
+
+}
+
+main {
+
+    max-width: 900px;
+
+    margin: auto;
+
+    padding: 45px 25px;
+
+}
+
+.panel {
+
+    background: #111;
+
+    border: 1px solid #292929;
+
+    border-radius: 8px;
+
+    padding: 25px;
+
+    margin-bottom: 20px;
+
+}
+
+.info {
+
+    display: grid;
+
+    gap: 15px;
+
+}
+
+.item {
+
+    background: #080808;
+
+    border: 1px solid #252525;
+
+    padding: 15px;
+
+    border-radius: 5px;
+
+}
+
+.label {
+
+    color: #888;
+
+    font-size: 13px;
+
+    margin-bottom: 5px;
+
+}
+
+.value {
+
+    word-break: break-word;
+
+}
+
+button,
+a {
+
+    display: inline-block;
+
+    padding: 12px 18px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    text-decoration: none;
+
+}
+
+.back {
+
+    background: #111;
+
+    color: white;
+
+    border: 1px solid #555;
+
+}
+
+.admin {
+
+    background: white;
+
+    color: black;
+
+    border: 0;
+
+}
+
+.danger {
+
+    background: #300;
+
+    color: white;
+
+    border: 1px solid #700;
+
+}
+
+.actions {
+
+    display: flex;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+}
+
+#message {
+
+    padding: 15px;
+
+    background: #191919;
+
+    border-radius: 5px;
+
+    margin-bottom: 20px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+HORIZON<span>270+</span>
+</div>
+
+</header>
+
+<main>
+
+<h1>
+El meu compte
+</h1>
+
+<div
+    id="message"
+    hidden
+></div>
+
+<div class="panel">
+
+<h2>
+Informació del compte
+</h2>
+
+<div class="info">
+
+<div class="item">
+
+<div class="label">
+Correu electrònic
+</div>
+
+<div
+    id="email"
+    class="value"
+>
+Carregant...
+</div>
+
+</div>
+
+<div class="item">
+
+<div class="label">
+ID del compte
+</div>
+
+<div
+    id="userId"
+    class="value"
+>
+Carregant...
+</div>
+
+</div>
+
+<div class="item">
+
+<div class="label">
+Proveïdor d'inici de sessió
+</div>
+
+<div
+    id="provider"
+    class="value"
+>
+Carregant...
+</div>
+
+</div>
+
+<div class="item">
+
+<div class="label">
+Compte creat
+</div>
+
+<div
+    id="created"
+    class="value"
+>
+Carregant...
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h2>
+Configuració
+</h2>
+
+<div class="actions">
+
+<a
+class="back"
+href="profiles.html"
+
+>
+
+← Tornar als perfils </a>
+
+<a
+id="adminButton"
+class="admin"
+href="admin.html"
+hidden
+
+>
+
+⚙️ Administració </a>
+
+</div>
+
+</div>
+
+<div class="panel">
+
+<h2>
+Zona de compte
+</h2>
+
+<p>
+Aquí podràs gestionar les opcions del teu compte.
+</p>
+
+<button
+class="danger"
+onclick="deleteAccount()"
+
+>
+
+Eliminar el meu compte </button>
+
+</div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+"https://eftxwdpdweomffgurlgm.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_DPCJgsTp66cw2s-5S3CqNg_AdJEHKpt";
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/* =========================
+   CARREGAR COMPTE
+========================= */
+
+async function start() {
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient.auth
+    .getSession();
+
+
+    if (
+        error ||
+        !data.session
+    ) {
+
+        window.location.replace(
+            "login.html"
+        );
+
+        return;
+
+    }
+
+
+    const user =
+        data.session.user;
+
+
+    document.getElementById(
+        "email"
+    ).textContent =
+        user.email || "Sense correu";
+
+
+    document.getElementById(
+        "userId"
+    ).textContent =
+        user.id;
+
+
+    const provider =
+        user.app_metadata?.provider
+        ||
+        "correu electrònic";
+
+
+    document.getElementById(
+        "provider"
+    ).textContent =
+        provider;
+
+
+    document.getElementById(
+        "created"
+    ).textContent =
+        new Date(
+            user.created_at
+        ).toLocaleString(
+            "ca-ES"
+        );
+
+
+    /*
+       Per ara detectem l'admin
+       mitjançant metadata.
+       Després ho connectarem
+       amb la taula de comptes.
+    */
+
+    const accountType =
+        user.user_metadata?.account_type
+        ||
+        user.app_metadata?.account_type;
+
+
+    if (
+        accountType === "admin"
+    ) {
+
+        document.getElementById(
+            "adminButton"
+        ).hidden = false;
+
+    }
+
+}
+
+
+/* =========================
+   ELIMINAR COMPTE
+========================= */
+
+async function deleteAccount() {
+
+    const confirmation =
+        prompt(
+            "Escriu ELIMINAR per confirmar que vols eliminar el compte."
+        );
+
+
+    if (
+        confirmation !==
+        "ELIMINAR"
+    ) {
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "message"
+    ).textContent =
+        "Sol·licitant l'eliminació del compte...";
+
+
+    document.getElementById(
+        "message"
+    ).hidden = false;
+
+
+    /*
+       Per seguretat, l'eliminació
+       definitiva de l'usuari
+       d'Auth s'ha de fer amb una
+       funció server-side.
+    */
+
+    alert(
+        "La funció d'eliminació definitiva es connectarà a Supabase Edge Functions en el següent pas."
+    );
+
+}
+
+
+start();
+
+</script>
+
+</body>
+
+</html>
