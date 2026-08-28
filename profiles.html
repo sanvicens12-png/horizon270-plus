@@ -1,64 +1,204 @@
 <!DOCTYPE html>
 
 <html lang="ca">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+
+>
+
 <title>HORIZON270+ | Perfils</title>
 
 <style>
-*{box-sizing:border-box}
-body{
-    margin:0;
-    min-height:100vh;
-    background:#050505;
-    color:white;
-    font-family:Arial,Helvetica,sans-serif;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+
+* {
+    box-sizing: border-box;
 }
-.container{text-align:center}
-h1{font-size:35px}
-.profiles{
-    display:flex;
-    gap:30px;
-    justify-content:center;
-    flex-wrap:wrap;
-    margin-top:40px;
+
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    background: #050505;
+
+    color: white;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
 }
-.profile{
-    width:160px;
-    cursor:pointer;
+
+.container {
+
+    width: 100%;
+
+    max-width: 900px;
+
+    text-align: center;
+
+    padding: 30px;
+
 }
-.avatar{
-    width:140px;
-    height:140px;
-    margin:auto;
-    border-radius:8px;
-    background:linear-gradient(135deg,#333,#111);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:55px;
-    border:3px solid transparent;
+
+h1 {
+
+    font-size: 38px;
+
+    margin-bottom: 45px;
+
 }
-.profile:hover .avatar{
-    border-color:white;
+
+.profiles {
+
+    display: flex;
+
+    justify-content: center;
+
 }
-.name{
-    margin-top:12px;
-    color:#bbb;
+
+.profile {
+
+    width: 160px;
+
+    cursor: pointer;
+
 }
-button{
-    margin-top:40px;
-    padding:12px 20px;
-    background:#111;
-    border:1px solid #555;
-    color:white;
-    border-radius:5px;
-    cursor:pointer;
+
+.avatar {
+
+    width: 140px;
+
+    height: 140px;
+
+    margin: auto;
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #333,
+            #111
+        );
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 55px;
+
+    border: 3px solid transparent;
+
+    transition: .2s;
+
 }
+
+.profile:hover .avatar {
+
+    transform: scale(1.05);
+
+    border-color: white;
+
+}
+
+.name {
+
+    margin-top: 12px;
+
+    color: #ccc;
+
+}
+
+
+/* COMPTE */
+
+.account-panel {
+
+    margin-top: 55px;
+
+    padding-top: 30px;
+
+    border-top: 1px solid #292929;
+
+}
+
+.account-button {
+
+    display: inline-block;
+
+    padding: 13px 25px;
+
+    background: white;
+
+    color: black;
+
+    text-decoration: none;
+
+    border-radius: 5px;
+
+    font-weight: bold;
+
+}
+
+.account-button:hover {
+
+    background: #ddd;
+
+}
+
+
+/* SORTIR */
+
+.logout {
+
+    margin-top: 25px;
+
+    padding: 11px 20px;
+
+    background: #111;
+
+    color: white;
+
+    border: 1px solid #555;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+}
+
+.logout:hover {
+
+    background: #222;
+
+}
+
+#loading {
+
+    color: #888;
+
+}
+
+#error {
+
+    color: #ff9c9c;
+
+}
+
 </style>
 
 </head>
@@ -67,23 +207,74 @@ button{
 
 <div class="container">
 
-<h1>Qui està mirant?</h1>
+<div id="loading">
+    Carregant...
+</div>
+
+<div id="content" hidden>
+
+<h1>
+    Qui està mirant?
+</h1>
 
 <div class="profiles">
 
 <div
     class="profile"
-    onclick="enter()"
+    onclick="enterCatalog()"
 >
-<div class="avatar">👤</div>
-<div class="name">Principal</div>
+
+<div class="avatar">
+    👤
+</div>
+
+<div class="name">
+    Principal
 </div>
 
 </div>
 
-<button onclick="logout()">
+</div>
+
+<!-- =========================
+     COMPTE
+========================= -->
+
+<div class="account-panel">
+
+<a
+href="account.html"
+class="account-button"
+
+>
+
+```
+⚙️ Compte i configuració
+```
+
+</a>
+
+</div>
+
+<button
+class="logout"
+onclick="logout()"
+
+>
+
+```
 Tancar sessió
+```
+
 </button>
+
+</div>
+
+<div
+    id="error"
+    hidden
+>
+</div>
 
 </div>
 
@@ -91,27 +282,92 @@ Tancar sessió
 
 <script>
 
+const SUPABASE_URL =
+"https://eftxwdpdweomffgurlgm.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_DPCJgsTp66cw2s-5S3CqNg_AdJEHKpt";
+
 const supabaseClient =
 window.supabase.createClient(
-    "https://eftxwdpdweomffgurlgm.supabase.co",
-    "sb_publishable_DPCJgsTp66cw2s-5S3CqNg_AdJEHKpt"
+    SUPABASE_URL,
+    SUPABASE_KEY
 );
 
-async function check(){
 
-    const {data}=await supabaseClient.auth.getSession();
+/* =========================
+   COMPROVAR SESSIÓ
+========================= */
 
-    if(!data.session){
+async function start() {
 
-        window.location.replace("login.html");
+    try {
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient.auth
+        .getSession();
+
+
+        if (error) {
+
+            throw error;
+
+        }
+
+
+        if (!data.session) {
+
+            window.location.replace(
+                "login.html"
+            );
+
+            return;
+
+        }
+
+
+        document.getElementById(
+            "loading"
+        ).hidden = true;
+
+
+        document.getElementById(
+            "content"
+        ).hidden = false;
+
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "loading"
+        ).hidden = true;
+
+        document.getElementById(
+            "error"
+        ).textContent =
+            "No s'ha pogut carregar el compte.";
+
+        document.getElementById(
+            "error"
+        ).hidden = false;
 
     }
 
 }
 
-check();
 
-function enter(){
+/* =========================
+   CATÀLEG
+========================= */
+
+function enterCatalog() {
 
     window.location.replace(
         "catalog.html"
@@ -119,7 +375,12 @@ function enter(){
 
 }
 
-async function logout(){
+
+/* =========================
+   LOGOUT
+========================= */
+
+async function logout() {
 
     await supabaseClient.auth.signOut();
 
@@ -129,7 +390,11 @@ async function logout(){
 
 }
 
+
+start();
+
 </script>
 
 </body>
+
 </html>
