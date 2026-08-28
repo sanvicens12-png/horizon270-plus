@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 
 <html lang="ca">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 ```
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
 <title>Iniciar sessió | HORIZON270+</title>
 
 <meta
@@ -13,7 +19,610 @@
     content="Inicia sessió o crea el teu compte a HORIZON270+."
 >
 
-<link rel="stylesheet" href="style.css">
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    html,
+    body {
+        margin: 0;
+        min-height: 100%;
+    }
+
+    body {
+
+        min-height: 100vh;
+
+        background:
+            radial-gradient(
+                ellipse at center top,
+                #242424 0%,
+                #101010 45%,
+                #000 90%
+            );
+
+        color: white;
+
+        font-family:
+            Arial,
+            Helvetica,
+            sans-serif;
+
+    }
+
+
+    /* =========================
+       PAGE
+    ========================= */
+
+    .auth-page {
+
+        min-height: 100vh;
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+        padding: 30px 20px;
+
+    }
+
+
+    .auth-container {
+
+        width: 100%;
+
+        max-width: 440px;
+
+    }
+
+
+    /* =========================
+       LOGO
+    ========================= */
+
+    .auth-logo {
+
+        display: block;
+
+        text-align: center;
+
+        margin-bottom: 30px;
+
+        color: white;
+
+        text-decoration: none;
+
+        font-size: 30px;
+
+        font-weight: 900;
+
+        letter-spacing: 1px;
+
+    }
+
+
+    .auth-logo span {
+
+        color: #bbb;
+
+    }
+
+
+    /* =========================
+       CARD
+    ========================= */
+
+    .auth-card {
+
+        background:
+            rgba(18, 18, 18, .96);
+
+        border:
+            1px solid #292929;
+
+        border-radius: 10px;
+
+        padding: 35px;
+
+        box-shadow:
+            0 25px 70px
+            rgba(0, 0, 0, .6);
+
+    }
+
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .auth-header {
+
+        text-align: center;
+
+        margin-bottom: 28px;
+
+    }
+
+
+    .section-label {
+
+        display: inline-block;
+
+        color: #999;
+
+        font-size: 12px;
+
+        font-weight: bold;
+
+        letter-spacing: 2px;
+
+        margin-bottom: 12px;
+
+    }
+
+
+    .auth-header h1 {
+
+        margin: 0 0 10px;
+
+        font-size: 32px;
+
+    }
+
+
+    .auth-header p {
+
+        margin: 0;
+
+        color: #999;
+
+        line-height: 1.5;
+
+    }
+
+
+    /* =========================
+       MESSAGE
+    ========================= */
+
+    .auth-message {
+
+        padding: 13px 15px;
+
+        margin-bottom: 20px;
+
+        border-radius: 6px;
+
+        background: #181818;
+
+        border: 1px solid #444;
+
+        color: #ddd;
+
+        line-height: 1.4;
+
+    }
+
+
+    .auth-message.error {
+
+        border-color: #733;
+
+        color: #ffb0b0;
+
+    }
+
+
+    .auth-message.success {
+
+        border-color: #375f37;
+
+        color: #b9ffb9;
+
+    }
+
+
+    /* =========================
+       FIELDS
+    ========================= */
+
+    .auth-field {
+
+        margin-bottom: 20px;
+
+    }
+
+
+    .auth-field label {
+
+        display: block;
+
+        margin-bottom: 8px;
+
+        color: #ddd;
+
+        font-size: 14px;
+
+        font-weight: bold;
+
+    }
+
+
+    .auth-field input {
+
+        width: 100%;
+
+        padding: 14px;
+
+        border:
+            1px solid #555;
+
+        border-radius: 5px;
+
+        background: #080808;
+
+        color: white;
+
+        font-size: 16px;
+
+    }
+
+
+    .auth-field input:focus {
+
+        outline: none;
+
+        border-color: white;
+
+        box-shadow:
+            0 0 0 2px
+            rgba(255,255,255,.15);
+
+    }
+
+
+    /* =========================
+       PASSWORD
+    ========================= */
+
+    .password-label {
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 10px;
+
+    }
+
+
+    .forgot-button {
+
+        border: none;
+
+        background: none;
+
+        color: #aaa;
+
+        cursor: pointer;
+
+        font-size: 12px;
+
+        padding: 0;
+
+    }
+
+
+    .forgot-button:hover {
+
+        color: white;
+
+        text-decoration: underline;
+
+    }
+
+
+    .password-input {
+
+        position: relative;
+
+    }
+
+
+    .password-input input {
+
+        padding-right: 50px;
+
+    }
+
+
+    .password-toggle {
+
+        position: absolute;
+
+        right: 5px;
+
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        width: 40px;
+
+        height: 40px;
+
+        border: none;
+
+        background: transparent;
+
+        color: white;
+
+        cursor: pointer;
+
+        font-size: 18px;
+
+    }
+
+
+    /* =========================
+       SUBMIT
+    ========================= */
+
+    .auth-submit {
+
+        width: 100%;
+
+        padding: 14px;
+
+        border: none;
+
+        border-radius: 5px;
+
+        background: white;
+
+        color: black;
+
+        font-size: 16px;
+
+        font-weight: bold;
+
+        cursor: pointer;
+
+    }
+
+
+    .auth-submit:hover {
+
+        background: #ddd;
+
+    }
+
+
+    .auth-submit:disabled {
+
+        opacity: .55;
+
+        cursor: not-allowed;
+
+    }
+
+
+    /* =========================
+       DIVIDER
+    ========================= */
+
+    .auth-divider {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 12px;
+
+        margin: 25px 0;
+
+        color: #777;
+
+        font-size: 13px;
+
+    }
+
+
+    .auth-divider::before,
+    .auth-divider::after {
+
+        content: "";
+
+        flex: 1;
+
+        height: 1px;
+
+        background: #333;
+
+    }
+
+
+    /* =========================
+       GOOGLE
+    ========================= */
+
+    .google-button {
+
+        width: 100%;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 12px;
+
+        padding: 13px;
+
+        border:
+            1px solid #555;
+
+        border-radius: 5px;
+
+        background: #111;
+
+        color: white;
+
+        cursor: pointer;
+
+        font-size: 15px;
+
+        font-weight: bold;
+
+    }
+
+
+    .google-button:hover {
+
+        background: #1c1c1c;
+
+        border-color: #777;
+
+    }
+
+
+    .google-button:disabled {
+
+        opacity: .55;
+
+        cursor: not-allowed;
+
+    }
+
+
+    .google-icon {
+
+        width: 25px;
+
+        height: 25px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 50%;
+
+        background: white;
+
+        color: #4285f4;
+
+        font-weight: bold;
+
+    }
+
+
+    /* =========================
+       SWITCH
+    ========================= */
+
+    .auth-switch {
+
+        margin-top: 25px;
+
+        text-align: center;
+
+        color: #888;
+
+        font-size: 14px;
+
+    }
+
+
+    .auth-switch button {
+
+        margin-left: 5px;
+
+        border: none;
+
+        background: none;
+
+        color: white;
+
+        cursor: pointer;
+
+        font-weight: bold;
+
+        padding: 0;
+
+    }
+
+
+    .auth-switch button:hover {
+
+        text-decoration: underline;
+
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    .auth-footer {
+
+        margin: 22px 0 0;
+
+        text-align: center;
+
+        color: #666;
+
+        font-size: 12px;
+
+        line-height: 1.5;
+
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 500px) {
+
+        .auth-page {
+
+            padding: 20px 15px;
+
+        }
+
+
+        .auth-card {
+
+            padding: 25px 20px;
+
+        }
+
+
+        .auth-header h1 {
+
+            font-size: 27px;
+
+        }
+
+
+        .auth-logo {
+
+            font-size: 25px;
+
+        }
+
+    }
+
+</style>
 ```
 
 </head>
@@ -23,11 +632,16 @@
 <main class="auth-container">
 
 ```
-<a href="index.html" class="auth-logo">
+<a
+    href="index.html"
+    class="auth-logo"
+>
     HORIZON<span>270+</span>
 </a>
 
+
 <section class="auth-card">
+
 
     <div class="auth-header">
 
@@ -35,9 +649,11 @@
             HORIZON270+
         </span>
 
+
         <h1 id="authTitle">
             Inicia sessió
         </h1>
+
 
         <p id="authSubtitle">
             Accedeix al teu compte per continuar.
@@ -53,13 +669,19 @@
     ></div>
 
 
+    <!-- =========================
+         FORM
+    ========================= -->
+
     <form id="authForm">
+
 
         <div class="auth-field">
 
             <label for="email">
                 Correu electrònic
             </label>
+
 
             <input
                 type="email"
@@ -74,11 +696,13 @@
 
         <div class="auth-field">
 
+
             <div class="password-label">
 
                 <label for="password">
                     Contrasenya
                 </label>
+
 
                 <button
                     type="button"
@@ -100,6 +724,7 @@
                     autocomplete="current-password"
                     required
                 >
+
 
                 <button
                     type="button"
@@ -123,13 +748,22 @@
             Iniciar sessió
         </button>
 
+
     </form>
 
+
+    <!-- =========================
+         DIVIDER
+    ========================= -->
 
     <div class="auth-divider">
         <span>o continua amb</span>
     </div>
 
+
+    <!-- =========================
+         GOOGLE
+    ========================= -->
 
     <button
         type="button"
@@ -148,11 +782,16 @@
     </button>
 
 
+    <!-- =========================
+         SWITCH
+    ========================= -->
+
     <div class="auth-switch">
 
         <span id="switchText">
             No tens compte?
         </span>
+
 
         <button
             type="button"
@@ -163,20 +802,28 @@
 
     </div>
 
+
 </section>
 
 
 <p class="auth-footer">
+
     En continuar, acceptes les condicions
     d'ús de HORIZON270+.
+
 </p>
 ```
 
 </main>
 
+<!-- =========================
+     SUPABASE
+========================= -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
+
 
 /* =========================
    SUPABASE
@@ -184,6 +831,7 @@
 
 const SUPABASE_URL =
     "https://eftxwdpdweomffgurlgm.supabase.co";
+
 
 const SUPABASE_KEY =
     "sb_publishable_DPCJgsTp66cw2s-5S3CqNg_AdJEHKpt";
@@ -197,70 +845,79 @@ const supabaseClient =
 
 
 /* =========================
-   GITHUB PAGES
-========================= */
-
-const BASE_PATH =
-    "/horizon270-plus/";
-
-
-const INDEX_URL =
-    window.location.origin +
-    BASE_PATH +
-    "index.html";
-
-
-const ADMIN_URL =
-    window.location.origin +
-    BASE_PATH +
-    "admin.html";
-
-
-const RESET_URL =
-    window.location.origin +
-    BASE_PATH +
-    "reset-password.html";
-
-
-/* =========================
    ELEMENTS
 ========================= */
 
 const authForm =
-    document.getElementById("authForm");
+    document.getElementById(
+        "authForm"
+    );
+
 
 const emailInput =
-    document.getElementById("email");
+    document.getElementById(
+        "email"
+    );
+
 
 const passwordInput =
-    document.getElementById("password");
+    document.getElementById(
+        "password"
+    );
+
 
 const emailButton =
-    document.getElementById("emailButton");
+    document.getElementById(
+        "emailButton"
+    );
+
 
 const googleButton =
-    document.getElementById("googleButton");
+    document.getElementById(
+        "googleButton"
+    );
+
 
 const togglePassword =
-    document.getElementById("togglePassword");
+    document.getElementById(
+        "togglePassword"
+    );
+
 
 const forgotPassword =
-    document.getElementById("forgotPassword");
+    document.getElementById(
+        "forgotPassword"
+    );
+
 
 const switchMode =
-    document.getElementById("switchMode");
+    document.getElementById(
+        "switchMode"
+    );
+
 
 const switchText =
-    document.getElementById("switchText");
+    document.getElementById(
+        "switchText"
+    );
+
 
 const authTitle =
-    document.getElementById("authTitle");
+    document.getElementById(
+        "authTitle"
+    );
+
 
 const authSubtitle =
-    document.getElementById("authSubtitle");
+    document.getElementById(
+        "authSubtitle"
+    );
+
 
 const authMessage =
-    document.getElementById("authMessage");
+    document.getElementById(
+        "authMessage"
+    );
 
 
 let isRegisterMode = false;
@@ -299,61 +956,24 @@ function hideMessage() {
 
 
 /* =========================
-   DESTINACIÓ DESPRÉS DEL LOGIN
+   GO TO PROFILES
 ========================= */
 
-async function anarDespresLogin() {
-
-    const {
-        data,
-        error
-    } =
-        await supabaseClient
-            .from("Profiles")
-            .select("account_type")
-            .eq("id", (await supabaseClient.auth.getUser()).data.user.id)
-            .maybeSingle();
-
-
-    if (error) {
-
-        console.error(
-            "Profile error:",
-            error
-        );
-
-        window.location.href =
-            INDEX_URL;
-
-        return;
-    }
-
-
-    if (
-        data &&
-        data.account_type === "admin"
-    ) {
-
-        window.location.href =
-            ADMIN_URL;
-
-        return;
-    }
-
+function goToProfiles() {
 
     window.location.href =
-        INDEX_URL;
+        "profiles.html";
 
 }
 
 
 /* =========================
-   LOGIN / REGISTER
+   LOGIN / REGISTER MODE
 ========================= */
 
 switchMode.addEventListener(
     "click",
-    function () {
+    function() {
 
         isRegisterMode =
             !isRegisterMode;
@@ -366,17 +986,22 @@ switchMode.addEventListener(
             authTitle.textContent =
                 "Crea el teu compte";
 
+
             authSubtitle.textContent =
-                "Uneix-te a HORIZON270+ i comença a explorar.";
+                "Uneix-te a HORIZON270+.";
+
 
             emailButton.textContent =
                 "Crear compte";
 
+
             switchText.textContent =
                 "Ja tens un compte?";
 
+
             switchMode.textContent =
                 "Iniciar sessió";
+
 
             passwordInput.autocomplete =
                 "new-password";
@@ -388,17 +1013,22 @@ switchMode.addEventListener(
             authTitle.textContent =
                 "Inicia sessió";
 
+
             authSubtitle.textContent =
                 "Accedeix al teu compte per continuar.";
+
 
             emailButton.textContent =
                 "Iniciar sessió";
 
+
             switchText.textContent =
                 "No tens compte?";
 
+
             switchMode.textContent =
                 "Crear compte";
+
 
             passwordInput.autocomplete =
                 "current-password";
@@ -410,12 +1040,12 @@ switchMode.addEventListener(
 
 
 /* =========================
-   MOSTRAR CONTRASENYA
+   SHOW PASSWORD
 ========================= */
 
 togglePassword.addEventListener(
     "click",
-    function () {
+    function() {
 
         const visible =
             passwordInput.type === "text";
@@ -442,7 +1072,7 @@ togglePassword.addEventListener(
 
 authForm.addEventListener(
     "submit",
-    async function (event) {
+    async function(event) {
 
         event.preventDefault();
 
@@ -451,6 +1081,7 @@ authForm.addEventListener(
 
         const email =
             emailInput.value.trim();
+
 
         const password =
             passwordInput.value;
@@ -463,11 +1094,13 @@ authForm.addEventListener(
             );
 
             return;
+
         }
 
 
         emailButton.disabled =
             true;
+
 
         emailButton.textContent =
             isRegisterMode
@@ -476,6 +1109,11 @@ authForm.addEventListener(
 
 
         try {
+
+
+            /* =========================
+               REGISTER
+            ========================= */
 
             if (isRegisterMode) {
 
@@ -486,15 +1124,30 @@ authForm.addEventListener(
                     await supabaseClient.auth.signUp({
 
                         email,
-                        password
+                        password,
+
+                        options: {
+
+                            emailRedirectTo:
+                                window.location.origin +
+                                "/horizon270-plus/profiles.html"
+
+                        }
 
                     });
 
 
                 if (error) {
+
                     throw error;
+
                 }
 
+
+                /*
+                 * Si Supabase demana confirmació
+                 * de correu, no entrem encara.
+                 */
 
                 if (
                     data.user &&
@@ -510,33 +1163,50 @@ authForm.addEventListener(
 
                 else {
 
-                    await anarDespresLogin();
+                    goToProfiles();
 
                 }
 
             }
+
+
+            /* =========================
+               LOGIN
+            ========================= */
 
             else {
 
                 const {
+                    data,
                     error
                 } =
-                    await supabaseClient.auth.signInWithPassword({
+                    await supabaseClient.auth
+                        .signInWithPassword({
 
-                        email,
-                        password
+                            email,
+                            password
 
-                    });
+                        });
 
 
                 if (error) {
+
                     throw error;
+
                 }
 
 
-                await anarDespresLogin();
+                if (
+                    data &&
+                    data.session
+                ) {
+
+                    goToProfiles();
+
+                }
 
             }
+
 
         }
 
@@ -554,10 +1224,12 @@ authForm.addEventListener(
 
         }
 
+
         finally {
 
             emailButton.disabled =
                 false;
+
 
             emailButton.textContent =
                 isRegisterMode
@@ -576,13 +1248,14 @@ authForm.addEventListener(
 
 googleButton.addEventListener(
     "click",
-    async function () {
+    async function() {
 
         hideMessage();
 
 
         googleButton.disabled =
             true;
+
 
         googleButton.classList.add(
             "loading"
@@ -594,24 +1267,26 @@ googleButton.addEventListener(
             const {
                 error
             } =
-                await supabaseClient.auth.signInWithOAuth({
+                await supabaseClient.auth
+                    .signInWithOAuth({
 
-                    provider: "google",
+                        provider: "google",
 
-                    options: {
+                        options: {
 
-                        redirectTo:
-                            window.location.origin +
-                            BASE_PATH +
-                            "login.html"
+                            redirectTo:
+                                window.location.origin +
+                                "/horizon270-plus/profiles.html"
 
-                    }
+                        }
 
-                });
+                    });
 
 
             if (error) {
+
                 throw error;
+
             }
 
         }
@@ -632,6 +1307,7 @@ googleButton.addEventListener(
             googleButton.disabled =
                 false;
 
+
             googleButton.classList.remove(
                 "loading"
             );
@@ -648,7 +1324,7 @@ googleButton.addEventListener(
 
 forgotPassword.addEventListener(
     "click",
-    async function () {
+    async function() {
 
         hideMessage();
 
@@ -663,7 +1339,9 @@ forgotPassword.addEventListener(
                 "Escriu primer el teu correu electrònic."
             );
 
+
             emailInput.focus();
+
 
             return;
 
@@ -683,14 +1361,19 @@ forgotPassword.addEventListener(
                     .resetPasswordForEmail(
                         email,
                         {
+
                             redirectTo:
-                                RESET_URL
+                                window.location.origin +
+                                "/horizon270-plus/reset-password.html"
+
                         }
                     );
 
 
             if (error) {
+
                 throw error;
+
             }
 
 
@@ -787,7 +1470,7 @@ function convertirError(error) {
 
 
 /* =========================
-   COMPROVAR SESSIÓ
+   CHECK EXISTING SESSION
 ========================= */
 
 async function comprovarSessio() {
@@ -798,19 +1481,28 @@ async function comprovarSessio() {
         await supabaseClient.auth.getSession();
 
 
-    if (!data.session) {
-        return;
+    if (
+        data &&
+        data.session
+    ) {
+
+        /*
+         * Si ja està autenticat,
+         * no ha de veure el login.
+         */
+
+        goToProfiles();
+
     }
-
-
-    await anarDespresLogin();
 
 }
 
 
 comprovarSessio();
 
+
 </script>
 
 </body>
+
 </html>
