@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html lang="ca">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>HORIZON270+ | Catàleg</title>
+
+<style>
+
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    background:#050505;
+    color:white;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+header{
+    height:70px;
+    display:flex;
+    align-items:center;
+    padding:0 5%;
+    background:#080808;
+    border-bottom:1px solid #222;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:900;
+}
+
+.logo span{color:#aaa}
+
+.account{
+    margin-left:auto;
+}
+
+button{
+    background:#111;
+    border:1px solid #555;
+    color:white;
+    padding:10px 16px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+main{
+    padding:40px 5%;
+}
+
+h1{
+    font-size:35px;
+}
+
+.row{
+    display:flex;
+    gap:18px;
+    overflow-x:auto;
+}
+
+.card{
+    flex:0 0 200px;
+    height:290px;
+    background:
+        linear-gradient(
+            145deg,
+            #303030,
+            #111
+        );
+    border-radius:8px;
+    display:flex;
+    align-items:end;
+    padding:15px;
+    font-weight:bold;
+}
+
+.admin{
+    margin-top:35px;
+    padding:20px;
+    background:#111;
+    border:1px solid #292929;
+    border-radius:8px;
+}
+
+a{
+    color:white;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+HORIZON<span>270+</span>
+</div>
+
+<div class="account">
+
+<button onclick="logout()">
+Tancar sessió
+</button>
+
+</div>
+
+</header>
+
+<main>
+
+<h1>Catàleg</h1>
+
+<h2>🔥 Popular</h2>
+
+<div class="row">
+
+<div class="card">Pel·lícula 1</div>
+<div class="card">Pel·lícula 2</div>
+<div class="card">Pel·lícula 3</div>
+<div class="card">Pel·lícula 4</div>
+
+</div>
+
+<h2>🆕 Novetats</h2>
+
+<div class="row">
+
+<div class="card">Novetat 1</div>
+<div class="card">Novetat 2</div>
+<div class="card">Novetat 3</div>
+
+</div>
+
+<h2>📺 Sèries</h2>
+
+<div class="row">
+
+<div class="card">Sèrie 1</div>
+<div class="card">Sèrie 2</div>
+<div class="card">Sèrie 3</div>
+
+</div>
+
+<div
+    id="adminArea"
+    class="admin"
+    hidden
+>
+
+<h2>Administració</h2>
+
+<p>
+Tens accés a la gestió de HORIZON270+.
+</p>
+
+<a href="admin.html">
+Obrir panell d'administració →
+</a>
+
+</div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const supabaseClient =
+window.supabase.createClient(
+    "https://eftxwdpdweomffgurlgm.supabase.co",
+    "sb_publishable_DPCJgsTp66cw2s-5S3CqNg_AdJEHKpt"
+);
+
+async function start(){
+
+    const {data}=await supabaseClient.auth.getSession();
+
+    if(!data.session){
+
+        window.location.replace(
+            "login.html"
+        );
+
+        return;
+
+    }
+
+    const user=data.session.user;
+
+    /*
+       De moment mostrem l'accés
+       d'administració només si
+       el compte té el metadata
+       account_type=admin.
+    */
+
+    if(
+        user.user_metadata &&
+        user.user_metadata.account_type === "admin"
+    ){
+
+        document.getElementById(
+            "adminArea"
+        ).hidden=false;
+
+    }
+
+}
+
+async function logout(){
+
+    await supabaseClient.auth.signOut();
+
+    window.location.replace(
+        "index.html"
+    );
+
+}
+
+start();
+
+</script>
+
+</body>
+</html>
