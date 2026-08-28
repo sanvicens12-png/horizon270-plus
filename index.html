@@ -1,14 +1,26 @@
 <!DOCTYPE html>
 
 <html lang="ca">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 ```
-<title>HORIZON270+</title>
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>HORIZON270+ | Pel·lícules i sèries</title>
+
+<meta
+    name="description"
+    content="HORIZON270+ — Pel·lícules i sèries per descobrir noves històries."
+>
 
 <style>
+
     * {
         box-sizing: border-box;
     }
@@ -19,281 +31,750 @@
 
     body {
         margin: 0;
-        background: #050505;
-        color: white;
-        font-family: Arial, sans-serif;
+        background: #000;
+        color: #fff;
+        font-family: Arial, Helvetica, sans-serif;
     }
+
+    /* =========================
+       HEADER
+    ========================= */
 
     header {
-        height: 76px;
+
+        position: absolute;
+
+        top: 0;
+        left: 0;
+        right: 0;
+
+        height: 90px;
+
         display: flex;
         align-items: center;
-        padding: 0 50px;
-        background: #080808;
-        border-bottom: 1px solid #181818;
-        position: sticky;
-        top: 0;
-        z-index: 100;
+
+        padding: 0 5%;
+
+        z-index: 10;
+
     }
+
 
     .logo {
-        font-size: 27px;
-        font-weight: bold;
+
+        font-size: 30px;
+
+        font-weight: 900;
+
         letter-spacing: 1px;
+
         white-space: nowrap;
+
     }
 
-    nav {
-        margin-left: 45px;
-        display: flex;
-        gap: 28px;
-    }
 
-    nav a {
-        color: #ddd;
-        text-decoration: none;
-        font-size: 16px;
-        padding: 10px 4px;
-        border-radius: 4px;
-    }
+    .header-right {
 
-    nav a:hover {
-        color: white;
-    }
-
-    .account {
         margin-left: auto;
+
         display: flex;
+
         align-items: center;
-        gap: 10px;
+
+        gap: 18px;
+
     }
 
-    .account a,
-    .account button {
+
+    .language {
+
+        background: rgba(0,0,0,.7);
+
+        border: 1px solid #777;
+
         color: white;
-        text-decoration: none;
-        border: 1px solid #555;
-        padding: 10px 18px;
-        border-radius: 5px;
-        background: transparent;
-        cursor: pointer;
+
+        padding: 9px 13px;
+
+        border-radius: 4px;
+
         font-size: 14px;
+
     }
 
-    .account a:hover,
-    .account button:hover {
+
+    .login-button {
+
         background: white;
+
         color: black;
+
+        text-decoration: none;
+
+        padding: 10px 18px;
+
+        border-radius: 4px;
+
+        font-size: 14px;
+
+        font-weight: bold;
+
     }
 
-    #adminLink {
-        display: none;
+
+    .login-button:hover {
+
+        background: #ddd;
+
     }
 
-    #userArea {
-        display: none;
-        align-items: center;
-        gap: 10px;
-    }
 
-    #userEmail {
-        color: #aaa;
-        font-size: 13px;
-    }
+    /* =========================
+       HERO
+    ========================= */
 
     .hero {
-        min-height: 540px;
-        padding: 100px 60px;
+
+        min-height: 720px;
+
+        position: relative;
+
         display: flex;
+
         align-items: center;
 
+        justify-content: center;
+
+        text-align: center;
+
+        padding: 120px 20px 80px;
+
+        overflow: hidden;
+
         background:
+
+            linear-gradient(
+                to bottom,
+                rgba(0,0,0,.45),
+                rgba(0,0,0,.7)
+            ),
+
             radial-gradient(
-                circle at 75% 35%,
-                #242424 0%,
-                #101010 30%,
-                #050505 70%
+                circle at center,
+                #303030 0%,
+                #111 40%,
+                #000 80%
             );
 
-        border-bottom: 1px solid #111;
     }
 
-    .hero-content {
-        max-width: 650px;
-    }
 
-    .hero h1 {
-        font-size: clamp(42px, 6vw, 70px);
-        margin: 0 0 20px;
-        letter-spacing: 1px;
-    }
+    .hero::after {
 
-    .hero p {
-        color: #ccc;
-        font-size: 19px;
-        line-height: 1.6;
-        margin: 0;
-    }
+        content: "";
 
-    .button {
-        display: inline-block;
-        margin-top: 28px;
-        padding: 15px 28px;
-        background: white;
-        color: black;
-        border-radius: 5px;
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 16px;
-    }
+        position: absolute;
 
-    section {
-        padding: 35px 50px;
-    }
+        left: 0;
+        right: 0;
+        bottom: 0;
 
-    section h2 {
-        font-size: 25px;
-        margin: 0 0 20px;
-    }
-
-    .row {
-        display: flex;
-        gap: 18px;
-        overflow-x: auto;
-        padding: 8px 4px 18px;
-        scrollbar-width: thin;
-    }
-
-    .card {
-        flex: 0 0 190px;
-        height: 275px;
+        height: 180px;
 
         background:
             linear-gradient(
-                145deg,
-                #252525,
-                #111
+                transparent,
+                #000
             );
 
-        border-radius: 8px;
+    }
 
-        display: flex;
-        align-items: flex-end;
-        justify-content: flex-start;
 
-        padding: 15px;
+    .hero-content {
 
-        color: white;
+        position: relative;
+
+        z-index: 2;
+
+        max-width: 850px;
+
+    }
+
+
+    .hero h1 {
+
+        font-size: clamp(
+            42px,
+            6vw,
+            72px
+        );
+
+        line-height: 1.05;
+
+        margin: 0 0 25px;
+
+        font-weight: 900;
+
+    }
+
+
+    .hero-subtitle {
+
+        font-size: 24px;
+
         font-weight: bold;
 
-        border: 2px solid transparent;
+        margin-bottom: 15px;
+
+    }
+
+
+    .hero-text {
+
+        color: #ddd;
+
+        font-size: 17px;
+
+        line-height: 1.5;
+
+        margin-bottom: 25px;
+
+    }
+
+
+    .signup-form {
+
+        display: flex;
+
+        max-width: 650px;
+
+        margin: auto;
+
+        gap: 8px;
+
+    }
+
+
+    .signup-form input {
+
+        flex: 1;
+
+        min-width: 0;
+
+        padding: 18px;
+
+        border-radius: 4px;
+
+        border: 1px solid #777;
+
+        background: rgba(20,20,20,.9);
+
+        color: white;
+
+        font-size: 16px;
+
+    }
+
+
+    .signup-form button {
+
+        padding: 0 28px;
+
+        border: none;
+
+        border-radius: 4px;
+
+        background: white;
+
+        color: black;
+
+        font-size: 17px;
+
+        font-weight: bold;
 
         cursor: pointer;
 
-        transition:
-            transform 0.2s,
-            border-color 0.2s;
     }
 
-    .card:hover {
-        transform: scale(1.04);
-        border-color: #555;
+
+    .signup-form button:hover {
+
+        background: #ddd;
+
     }
 
-    .card-title {
-        background: rgba(0, 0, 0, 0.65);
-        padding: 7px 9px;
-        border-radius: 4px;
-        width: 100%;
+
+    /* =========================
+       SECTIONS
+    ========================= */
+
+    .section {
+
+        padding: 75px 6%;
+
+        border-top: 8px solid #111;
+
     }
+
+
+    .section h2 {
+
+        text-align: center;
+
+        font-size: 32px;
+
+        margin: 0 0 45px;
+
+    }
+
+
+    /* =========================
+       FEATURES
+    ========================= */
+
+    .features {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(4, 1fr);
+
+        gap: 20px;
+
+        max-width: 1200px;
+
+        margin: auto;
+
+    }
+
+
+    .feature {
+
+        text-align: center;
+
+        background: #111;
+
+        border-radius: 10px;
+
+        padding: 35px 25px;
+
+        min-height: 230px;
+
+    }
+
+
+    .feature-icon {
+
+        font-size: 45px;
+
+        margin-bottom: 20px;
+
+    }
+
+
+    .feature h3 {
+
+        margin: 0 0 12px;
+
+        font-size: 20px;
+
+    }
+
+
+    .feature p {
+
+        margin: 0;
+
+        color: #aaa;
+
+        line-height: 1.5;
+
+        font-size: 14px;
+
+    }
+
+
+    /* =========================
+       TRENDING
+    ========================= */
+
+    .trending {
+
+        max-width: 1200px;
+
+        margin: auto;
+
+    }
+
+
+    .trending-row {
+
+        display: flex;
+
+        gap: 18px;
+
+        overflow-x: auto;
+
+        padding: 10px 5px 25px;
+
+    }
+
+
+    .trend-card {
+
+        flex: 0 0 190px;
+
+        height: 285px;
+
+        border-radius: 7px;
+
+        background:
+
+            linear-gradient(
+                145deg,
+                #292929,
+                #111
+            );
+
+        display: flex;
+
+        align-items: flex-end;
+
+        padding: 15px;
+
+        border: 1px solid #292929;
+
+    }
+
+
+    .trend-number {
+
+        font-size: 60px;
+
+        font-weight: 900;
+
+        color: #555;
+
+        margin-right: 8px;
+
+    }
+
+
+    .trend-title {
+
+        font-weight: bold;
+
+        font-size: 15px;
+
+    }
+
+
+    /* =========================
+       PLANS
+    ========================= */
+
+    .plans {
+
+        max-width: 900px;
+
+        margin: auto;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        gap: 18px;
+
+    }
+
+
+    .plan {
+
+        background: #111;
+
+        border: 1px solid #333;
+
+        border-radius: 8px;
+
+        padding: 30px;
+
+        text-align: center;
+
+    }
+
+
+    .plan h3 {
+
+        font-size: 21px;
+
+        margin-top: 0;
+
+    }
+
+
+    .plan-price {
+
+        font-size: 28px;
+
+        font-weight: bold;
+
+        margin: 20px 0;
+
+    }
+
+
+    .plan p {
+
+        color: #999;
+
+        font-size: 14px;
+
+    }
+
+
+    /* =========================
+       FAQ
+    ========================= */
+
+    .faq {
+
+        max-width: 900px;
+
+        margin: auto;
+
+    }
+
+
+    .faq details {
+
+        background: #151515;
+
+        margin-bottom: 8px;
+
+        padding: 22px;
+
+    }
+
+
+    .faq summary {
+
+        cursor: pointer;
+
+        font-size: 18px;
+
+        font-weight: bold;
+
+    }
+
+
+    .faq p {
+
+        color: #aaa;
+
+        line-height: 1.6;
+
+        margin-bottom: 0;
+
+    }
+
+
+    /* =========================
+       FINAL CTA
+    ========================= */
+
+    .final-cta {
+
+        text-align: center;
+
+        padding: 80px 20px;
+
+        border-top: 8px solid #111;
+
+    }
+
+
+    .final-cta h2 {
+
+        font-size: 30px;
+
+        margin-bottom: 30px;
+
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
 
     footer {
-        padding: 50px;
+
+        border-top: 8px solid #111;
+
+        padding: 55px 6%;
+
         color: #777;
+
+    }
+
+
+    .footer-grid {
+
+        max-width: 1100px;
+
+        margin: auto;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(4, 1fr);
+
+        gap: 30px;
+
+    }
+
+
+    footer a {
+
+        color: #777;
+
+        text-decoration: none;
+
+        display: block;
+
+        margin-bottom: 14px;
+
+        font-size: 13px;
+
+    }
+
+
+    footer a:hover {
+
+        color: white;
+
+    }
+
+
+    .copyright {
+
         text-align: center;
-        border-top: 1px solid #151515;
+
+        margin-top: 45px;
+
+        font-size: 13px;
+
     }
 
-    @media (min-width: 1200px) {
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 800px) {
 
         header {
-            height: 82px;
-            padding: 0 65px;
+
+            height: 75px;
+
+            padding: 0 20px;
+
         }
 
-        nav {
-            gap: 35px;
-        }
-
-        .hero {
-            min-height: 620px;
-            padding-left: 80px;
-        }
-
-        section {
-            padding-left: 65px;
-            padding-right: 65px;
-        }
-
-        .card {
-            flex-basis: 220px;
-            height: 315px;
-        }
-    }
-
-    @media (max-width: 700px) {
-
-        header {
-            height: auto;
-            min-height: 65px;
-            padding: 15px 20px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
 
         .logo {
+
             font-size: 22px;
+
         }
 
-        nav {
-            order: 3;
-            width: 100%;
-            margin-left: 0;
-            overflow-x: auto;
-            gap: 20px;
-            padding-bottom: 5px;
+
+        .header-right {
+
+            gap: 8px;
+
         }
 
-        .account {
-            margin-left: auto;
+
+        .language {
+
+            padding: 8px;
+
         }
 
-        #userEmail {
-            display: none;
+
+        .login-button {
+
+            padding: 9px 12px;
+
         }
+
 
         .hero {
-            min-height: 450px;
-            padding: 70px 25px;
+
+            min-height: 650px;
+
         }
 
-        .hero h1 {
-            font-size: 42px;
+
+        .hero-subtitle {
+
+            font-size: 19px;
+
         }
 
-        .hero p {
-            font-size: 16px;
+
+        .hero-text {
+
+            font-size: 15px;
+
         }
 
-        section {
-            padding: 25px 20px;
+
+        .signup-form {
+
+            flex-direction: column;
+
         }
 
-        .card {
-            flex-basis: 150px;
-            height: 220px;
+
+        .signup-form input {
+
+            width: 100%;
+
         }
+
+
+        .signup-form button {
+
+            padding: 16px;
+
+        }
+
+
+        .features {
+
+            grid-template-columns: 1fr;
+
+        }
+
+
+        .plans {
+
+            grid-template-columns: 1fr;
+
+        }
+
+
+        .footer-grid {
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+        }
+
     }
+
 </style>
 ```
 
@@ -308,54 +789,35 @@
     HORIZON270+
 </div>
 
-<nav aria-label="Navegació principal">
 
-    <a href="#inici">
-        Inici
-    </a>
+<div class="header-right">
 
-    <a href="#pellicules">
-        Pel·lícules
-    </a>
+    <select
+        class="language"
+        aria-label="Seleccionar idioma"
+    >
 
-    <a href="#series">
-        Sèries
-    </a>
+        <option value="ca">
+            Català
+        </option>
 
-    <a href="#llista">
-        La meva llista
-    </a>
+        <option value="es">
+            Español
+        </option>
 
-</nav>
+        <option value="en">
+            English
+        </option>
 
-<div class="account">
+    </select>
+
 
     <a
-        id="loginLink"
         href="login.html"
+        class="login-button"
     >
         Iniciar sessió
     </a>
-
-    <div id="userArea">
-
-        <span id="userEmail"></span>
-
-        <a
-            id="adminLink"
-            href="admin.html"
-        >
-            Administració
-        </a>
-
-        <button
-            id="logoutButton"
-            type="button"
-        >
-            Tancar sessió
-        </button>
-
-    </div>
 
 </div>
 ```
@@ -365,158 +827,426 @@
 <main>
 
 ```
-<div class="hero" id="inici">
+<!-- HERO -->
+
+<section class="hero">
 
     <div class="hero-content">
 
         <h1>
-            HORIZON270+
+            Pel·lícules i sèries
+            sense límits
         </h1>
 
-        <p>
-            Pel·lícules i sèries.
-            Una nova manera de descobrir històries
-            d'arreu del món.
+
+        <div class="hero-subtitle">
+            Històries per descobrir.
+            Un univers per explorar.
+        </div>
+
+
+        <p class="hero-text">
+
+            Gaudeix de pel·lícules i sèries
+            seleccionades per HORIZON270+.
+
+            Crea el teu compte i comença
+            a descobrir el teu proper títol.
+
         </p>
 
-        <a
-            class="button"
-            href="#pellicules"
+
+        <form
+            class="signup-form"
+            id="signupForm"
         >
-            ▶ Començar
-        </a>
 
-    </div>
+            <input
+                type="email"
+                id="signupEmail"
+                placeholder="Correu electrònic"
+                autocomplete="email"
+                required
+            >
 
-</div>
 
+            <button type="submit">
+                Començar →
+            </button>
 
-<section id="pellicules">
-
-    <h2>
-        🔥 Popular
-    </h2>
-
-    <div class="row">
-
-        <div class="card">
-            <div class="card-title">
-                Pel·lícula 1
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-title">
-                Pel·lícula 2
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-title">
-                Pel·lícula 3
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-title">
-                Pel·lícula 4
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-title">
-                Pel·lícula 5
-            </div>
-        </div>
+        </form>
 
     </div>
 
 </section>
 
 
-<section>
+<!-- MOTIUS -->
+
+<section class="section">
 
     <h2>
-        🆕 Novetats
+        Tot el que vols veure, en un sol lloc
     </h2>
 
-    <div class="row">
 
-        <div class="card">
-            <div class="card-title">
-                Títol 1
+    <div class="features">
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                📺
             </div>
+
+            <h3>
+                A la teva televisió
+            </h3>
+
+            <p>
+                Gaudeix de HORIZON270+
+                en pantalles grans
+                i dispositius compatibles.
+            </p>
+
         </div>
 
-        <div class="card">
-            <div class="card-title">
-                Títol 2
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                📱
             </div>
+
+            <h3>
+                A tot arreu
+            </h3>
+
+            <p>
+                Continua veient les teves
+                històries preferides
+                des de qualsevol dispositiu.
+            </p>
+
         </div>
 
-        <div class="card">
-            <div class="card-title">
-                Títol 3
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                ⭐
             </div>
-        </div>
 
-        <div class="card">
-            <div class="card-title">
-                Títol 4
-            </div>
-        </div>
-
-    </div>
-
-</section>
-
-
-<section id="series">
-
-    <h2>
-        📺 Sèries
-    </h2>
-
-    <div class="row">
-
-        <div class="card">
-            <div class="card-title">
-                Sèrie 1
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-title">
-                Sèrie 2
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-title">
-                Sèrie 3
-            </div>
-        </div>
-
-    </div>
-
-</section>
-
-
-<section id="llista">
-
-    <h2>
-        ⭐ La meva llista
-    </h2>
-
-    <div class="row">
-
-        <div class="card">
-            <div class="card-title">
+            <h3>
                 La teva llista
+            </h3>
+
+            <p>
+                Guarda les pel·lícules
+                i sèries que vulguis veure
+                més tard.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-icon">
+                👤
             </div>
+
+            <h3>
+                Perfils
+            </h3>
+
+            <p>
+                Crea perfils diferents
+                perquè cada persona tingui
+                la seva pròpia experiència.
+            </p>
+
         </div>
 
     </div>
+
+</section>
+
+
+<!-- TENDÈNCIES -->
+
+<section class="section">
+
+    <h2>
+        Tendències ara
+    </h2>
+
+
+    <div class="trending">
+
+        <div class="trending-row">
+
+
+            <div class="trend-card">
+
+                <span class="trend-number">
+                    1
+                </span>
+
+                <span class="trend-title">
+                    Properament
+                </span>
+
+            </div>
+
+
+            <div class="trend-card">
+
+                <span class="trend-number">
+                    2
+                </span>
+
+                <span class="trend-title">
+                    Properament
+                </span>
+
+            </div>
+
+
+            <div class="trend-card">
+
+                <span class="trend-number">
+                    3
+                </span>
+
+                <span class="trend-title">
+                    Properament
+                </span>
+
+            </div>
+
+
+            <div class="trend-card">
+
+                <span class="trend-number">
+                    4
+                </span>
+
+                <span class="trend-title">
+                    Properament
+                </span>
+
+            </div>
+
+
+            <div class="trend-card">
+
+                <span class="trend-number">
+                    5
+                </span>
+
+                <span class="trend-title">
+                    Properament
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PLANS -->
+
+<section class="section">
+
+    <h2>
+        Tria com gaudir de HORIZON270+
+    </h2>
+
+
+    <div class="plans">
+
+
+        <div class="plan">
+
+            <h3>
+                Gratuït
+            </h3>
+
+            <div class="plan-price">
+                0 €
+            </div>
+
+            <p>
+                Accés al contingut
+                disponible en aquest pla.
+            </p>
+
+        </div>
+
+
+        <div class="plan">
+
+            <h3>
+                HORIZON270+
+            </h3>
+
+            <div class="plan-price">
+                Properament
+            </div>
+
+            <p>
+                Més contingut,
+                més possibilitats.
+            </p>
+
+        </div>
+
+
+        <div class="plan">
+
+            <h3>
+                Premium
+            </h3>
+
+            <div class="plan-price">
+                Properament
+            </div>
+
+            <p>
+                Una experiència
+                completa de streaming.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FAQ -->
+
+<section class="section">
+
+    <h2>
+        Preguntes freqüents
+    </h2>
+
+
+    <div class="faq">
+
+
+        <details>
+
+            <summary>
+                Què és HORIZON270+?
+            </summary>
+
+            <p>
+                HORIZON270+ és una plataforma
+                de streaming centrada en
+                pel·lícules i sèries.
+            </p>
+
+        </details>
+
+
+        <details>
+
+            <summary>
+                On puc veure HORIZON270+?
+            </summary>
+
+            <p>
+                La plataforma està pensada
+                per funcionar en ordinadors,
+                mòbils, tauletes i televisors
+                compatibles.
+            </p>
+
+        </details>
+
+
+        <details>
+
+            <summary>
+                Puc crear diversos perfils?
+            </summary>
+
+            <p>
+                Sí. Cada compte podrà tenir
+                diferents perfils perquè
+                cadascú tingui la seva experiència.
+            </p>
+
+        </details>
+
+
+        <details>
+
+            <summary>
+                Què puc veure?
+            </summary>
+
+            <p>
+                El catàleg inclourà pel·lícules,
+                sèries, temporades, episodis
+                i trailers.
+            </p>
+
+        </details>
+
+
+        <details>
+
+            <summary>
+                Necessito un compte?
+            </summary>
+
+            <p>
+                Sí. Per entrar al catàleg
+                i utilitzar els perfils
+                hauràs d'iniciar sessió.
+            </p>
+
+        </details>
+
+    </div>
+
+</section>
+
+
+<!-- CTA FINAL -->
+
+<section class="final-cta">
+
+    <h2>
+        Comença a descobrir HORIZON270+
+    </h2>
+
+
+    <form
+        class="signup-form"
+        id="signupFormBottom"
+    >
+
+        <input
+            type="email"
+            id="signupEmailBottom"
+            placeholder="Correu electrònic"
+            required
+        >
+
+
+        <button type="submit">
+            Començar →
+        </button>
+
+    </form>
 
 </section>
 ```
@@ -524,132 +1254,160 @@
 </main>
 
 <footer>
-    © 2026 HORIZON270+
-</footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+```
+<div class="footer-grid">
+
+
+    <div>
+
+        <a href="#">
+            Preguntes freqüents
+        </a>
+
+        <a href="#">
+            Centre d'ajuda
+        </a>
+
+        <a href="#">
+            Contacte
+        </a>
+
+    </div>
+
+
+    <div>
+
+        <a href="#">
+            Privacitat
+        </a>
+
+        <a href="#">
+            Condicions d'ús
+        </a>
+
+        <a href="#">
+            Cookies
+        </a>
+
+    </div>
+
+
+    <div>
+
+        <a href="#">
+            Sobre HORIZON270+
+        </a>
+
+        <a href="#">
+            Informació corporativa
+        </a>
+
+    </div>
+
+
+    <div>
+
+        <a href="#">
+            Idioma
+        </a>
+
+        <a href="#">
+            Accessibilitat
+        </a>
+
+    </div>
+
+</div>
+
+
+<div class="copyright">
+
+    © 2026 HORIZON270+
+
+</div>
+```
+
+</footer>
 
 <script>
 
-const SUPABASE_URL =
-    "https://eftxwdpdweomffgurlgm.supabase.co";
-
-const SUPABASE_KEY =
-    "sb_publishable_DPCJgsTp66cw2s-5S3CqNg_AdJEHKpt";
-
-const supabaseClient =
-    window.supabase.createClient(
-        SUPABASE_URL,
-        SUPABASE_KEY
+const signupForm =
+    document.getElementById(
+        "signupForm"
     );
 
 
-const loginLink =
-    document.getElementById("loginLink");
-
-const userArea =
-    document.getElementById("userArea");
-
-const userEmail =
-    document.getElementById("userEmail");
-
-const adminLink =
-    document.getElementById("adminLink");
-
-const logoutButton =
-    document.getElementById("logoutButton");
+const signupFormBottom =
+    document.getElementById(
+        "signupFormBottom"
+    );
 
 
-async function actualitzarCompte() {
-
-    const {
-        data: sessionData
-    } =
-        await supabaseClient.auth.getSession();
+const signupEmail =
+    document.getElementById(
+        "signupEmail"
+    );
 
 
-    const session =
-        sessionData.session;
+const signupEmailBottom =
+    document.getElementById(
+        "signupEmailBottom"
+    );
 
 
-    if (!session) {
+function anarARegistre(email) {
 
-        loginLink.style.display =
-            "inline-block";
+    const encodedEmail =
+        encodeURIComponent(email);
 
-        userArea.style.display =
-            "none";
-
-        return;
-
-    }
-
-
-    loginLink.style.display =
-        "none";
-
-    userArea.style.display =
-        "flex";
-
-
-    userEmail.textContent =
-        session.user.email;
-
-
-    const {
-        data: profile
-    } =
-        await supabaseClient
-            .from("Profiles")
-            .select("account_type")
-            .eq("id", session.user.id)
-            .maybeSingle();
-
-
-    if (
-        profile &&
-        profile.account_type === "admin"
-    ) {
-
-        adminLink.style.display =
-            "inline-block";
-
-    }
-
-    else {
-
-        adminLink.style.display =
-            "none";
-
-    }
+    window.location.href =
+        "login.html?email=" +
+        encodedEmail +
+        "&mode=register";
 
 }
 
 
-logoutButton.addEventListener(
-    "click",
-    async function () {
+signupForm.addEventListener(
+    "submit",
+    function(event) {
 
-        await supabaseClient.auth.signOut();
+        event.preventDefault();
 
-        window.location.reload();
+        const email =
+            signupEmail.value.trim();
 
-    }
-);
+        if (!email) {
+            return;
+        }
 
-
-supabaseClient.auth.onAuthStateChange(
-    function () {
-
-        actualitzarCompte();
+        anarARegistre(email);
 
     }
 );
 
 
-actualitzarCompte();
+signupFormBottom.addEventListener(
+    "submit",
+    function(event) {
+
+        event.preventDefault();
+
+        const email =
+            signupEmailBottom.value.trim();
+
+        if (!email) {
+            return;
+        }
+
+        anarARegistre(email);
+
+    }
+);
 
 </script>
 
 </body>
+
 </html>
