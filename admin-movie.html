@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>Nova pel·lícula | HORIZON270+</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+    body {
+        margin: 0;
+        background: #050505;
+        color: white;
+        font-family: Arial, sans-serif;
+    }
+
+    .admin-page {
+        max-width: 1100px;
+        margin: auto;
+        padding: 35px;
+    }
+
+    .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 35px;
+    }
+
+    .topbar a {
+        color: #aaa;
+        text-decoration: none;
+    }
+
+    .topbar a:hover {
+        color: white;
+    }
+
+    h1 {
+        margin: 0;
+        font-size: 34px;
+    }
+
+    .subtitle {
+        color: #888;
+        margin-top: 8px;
+    }
+
+    .form-section {
+        background: #0d0d0d;
+        border: 1px solid #222;
+        border-radius: 10px;
+        padding: 25px;
+        margin-bottom: 20px;
+    }
+
+    .form-section h2 {
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+    }
+
+    .full {
+        grid-column: 1 / -1;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 7px;
+        color: #bbb;
+        font-size: 14px;
+    }
+
+    input,
+    textarea,
+    select {
+        width: 100%;
+        padding: 12px;
+        background: #171717;
+        color: white;
+        border: 1px solid #333;
+        border-radius: 6px;
+        font: inherit;
+    }
+
+    textarea {
+        min-height: 130px;
+        resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+        outline: none;
+        border-color: #777;
+    }
+
+    .hint {
+        color: #666;
+        font-size: 12px;
+        margin-top: 6px;
+    }
+
+    .checkbox-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .checkbox-row input {
+        width: auto;
+    }
+
+    .actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 25px;
+    }
+
+    button {
+        padding: 13px 22px;
+        border-radius: 6px;
+        border: 0;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .cancel {
+        background: #222;
+        color: white;
+    }
+
+    .save {
+        background: white;
+        color: black;
+    }
+
+    button:disabled {
+        opacity: .5;
+        cursor: not-allowed;
+    }
+
+    #message {
+        display: none;
+        padding: 15px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+    }
+
+    #message.success {
+        display: block;
+        background: #12351d;
+        border: 1px solid #286b39;
+    }
+
+    #message.error {
+        display: block;
+        background: #351212;
+        border: 1px solid #6b2828;
+    }
+
+    #page {
+        display: none;
+    }
+
+    #loading {
+        text-align: center;
+        padding: 80px 20px;
+        color: #aaa;
+    }
+
+    @media (max-width: 700px) {
+
+        .admin-page {
+            padding: 20px;
+        }
+
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .full {
+            grid-column: auto;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<div id="loading">
+    Comprovant permisos d'administrador...
+</div>
+
+<div id="page">
+
+```
+<main class="admin-page">
+
+    <div class="topbar">
+
+        <div>
+            <h1>Nova pel·lícula</h1>
+
+            <p class="subtitle">
+                Afegeix una pel·lícula al catàleg de HORIZON270+.
+            </p>
+        </div>
+
+        <a href="admin.html">
+            ← Tornar al panell
+        </a>
+
+    </div>
+
+
+    <div id="message"></div>
+
+
+    <form id="movieForm">
+
+        <!-- INFORMACIÓ PRINCIPAL -->
+
+        <section class="form-section">
+
+            <h2>Informació principal</h2>
+
+            <div class="form-grid">
+
+                <div>
+
+                    <label for="title">
+                        Títol *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        required
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label for="originalTitle">
+                        Títol original
+                    </label>
+
+                    <input
+                        type="text"
+                        id="originalTitle"
+                    >
+
+                </div>
+
+
+                <div class="full">
+
+                    <label for="description">
+                        Descripció *
+                    </label>
+
+                    <textarea
+                        id="description"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <div>
+
+                    <label for="releaseDate">
+                        Data d'estrena original
+                    </label>
+
+                    <input
+                        type="date"
+                        id="releaseDate"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label for="duration">
+                        Durada (minuts)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="duration"
+                        min="0"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label for="ageRating">
+                        Classificació d'edat
+                    </label>
+
+                    <select id="ageRating">
+
+                        <option value="">
+                            Selecciona
+                        </option>
+
+                        <option value="TP">
+                            TP
+                        </option>
+
+                        <option value="7">
+                            +7
+                        </option>
+
+                        <option value="12">
+                            +12
+                        </option>
+
+                        <option value="16">
+                            +16
+                        </option>
+
+                        <option value="18">
+                            +18
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div>
+
+                    <label for="director">
+                        Director
+                    </label>
+
+                    <input
+                        type="text"
+                        id="director"
+                    >
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- IMATGES I VÍDEOS -->
+
+        <section class="form-section">
+
+            <h2>Imatges i vídeos</h2>
+
+            <div class="form-grid">
+
+                <div>
+
+                    <label for="thumbnailUrl">
+                        URL del pòster
+                    </label>
+
+                    <input
+                        type="url"
+                        id="thumbnailUrl"
+                        placeholder="https://..."
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label for="backdropUrl">
+                        URL de la portada
+                    </label>
+
+                    <input
+                        type="url"
+                        id="backdropUrl"
+                        placeholder="https://..."
+                    >
+
+                </div>
+
+
+                <div class="full">
+
+                    <label for="videoUrl">
+                        URL de la pel·lícula *
+                    </label>
+
+                    <input
+                        type="url"
+                        id="videoUrl"
+                        placeholder="https://..."
+                        required
+                    >
+
+                    <div class="hint">
+                        Posteriorment ho connectarem amb Storage
+                        perquè puguis pujar el vídeo directament.
+                    </div>
+
+                </div>
+
+
+                <div class="full">
+
+                    <label for="trailerUrl">
+                        URL del trailer
+                    </label>
+
+                    <input
+                        type="url"
+                        id="trailerUrl"
+                        placeholder="https://..."
+                    >
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PUBLICACIÓ -->
+
+        <section class="form-section">
+
+            <h2>Publicació</h2>
+
+            <div class="form-grid">
+
+                <div>
+
+                    <label for="status">
+                        Estat
+                    </label>
+
+                    <select id="status">
+
+                        <option value="draft">
+                            Esborrany
+                        </option>
+
+                        <option value="scheduled">
+                            Programat
+                        </option>
+
+                        <option value="published">
+                            Publicat
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div>
+
+                    <label for="releaseAt">
+                        Data i hora de publicació
+                    </label>
+
+                    <input
+                        type="datetime-local"
+                        id="releaseAt"
+                    >
+
+                </div>
+
+
+                <div class="full">
+
+                    <label class="checkbox-row">
+
+                        <input
+                            type="checkbox"
+                            id="featured"
+                        >
+
+                        <span>
+                            Mostrar com a contingut destacat
+                        </span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <div class="actions">
+
+            <button
+                type="button"
+                class="cancel"
+                onclick="window.location.href='admin.html'"
+            >
+                Cancel·lar
+            </button>
+
+            <button
+                type="submit"
+                class="save"
+                id="saveButton"
+            >
+                Guardar pel·lícula
+            </button>
+
+        </div>
+
+    </form>
+
+</main>
+```
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+
+const SUPABASE_URL =
+    "https://eftxwdpdweomffgurlgm.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_DPCJgsTp66cw2s-5S3CqNg_AdJEHKpt";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+const loading =
+    document.getElementById("loading");
+
+const page =
+    document.getElementById("page");
+
+const form =
+    document.getElementById("movieForm");
+
+const message =
+    document.getElementById("message");
+
+const saveButton =
+    document.getElementById("saveButton");
+
+
+function showMessage(text, type) {
+
+    message.textContent = text;
+
+    message.className = type;
+
+}
+
+
+async function checkAdmin() {
+
+    const {
+        data
+    } =
+        await supabaseClient.auth.getSession();
+
+
+    const session =
+        data.session;
+
+
+    if (!session) {
+
+        window.location.href =
+            "login.html";
+
+        return false;
+    }
+
+
+    const {
+        data: profile,
+        error
+    } =
+        await supabaseClient
+            .from("Profiles")
+            .select("account_type")
+            .eq("id", session.user.id)
+            .maybeSingle();
+
+
+    if (
+        error ||
+        !profile ||
+        profile.account_type !== "admin"
+    ) {
+
+        await supabaseClient.auth.signOut();
+
+        window.location.href =
+            "login.html";
+
+        return false;
+    }
+
+
+    loading.style.display =
+        "none";
+
+    page.style.display =
+        "block";
+
+    return true;
+}
+
+
+form.addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+        message.className = "";
+        message.textContent = "";
+
+        saveButton.disabled =
+            true;
+
+        saveButton.textContent =
+            "Guardant...";
+
+
+        const title =
+            document.getElementById("title").value.trim();
+
+        const originalTitle =
+            document.getElementById("originalTitle").value.trim();
+
+        const description =
+            document.getElementById("description").value.trim();
+
+        const releaseDate =
+            document.getElementById("releaseDate").value || null;
+
+        const duration =
+            document.getElementById("duration").value;
+
+        const ageRating =
+            document.getElementById("ageRating").value || null;
+
+        const director =
+            document.getElementById("director").value.trim();
+
+        const thumbnailUrl =
+            document.getElementById("thumbnailUrl").value.trim() || null;
+
+        const backdropUrl =
+            document.getElementById("backdropUrl").value.trim() || null;
+
+        const videoUrl =
+            document.getElementById("videoUrl").value.trim();
+
+        const trailerUrl =
+            document.getElementById("trailerUrl").value.trim() || null;
+
+        const status =
+            document.getElementById("status").value;
+
+        const releaseAtValue =
+            document.getElementById("releaseAt").value;
+
+        const releaseAt =
+            releaseAtValue
+            ? new Date(releaseAtValue).toISOString()
+            : null;
+
+        const featured =
+            document.getElementById("featured").checked;
+
+
+        try {
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient
+                    .from("content")
+                    .insert({
+
+                        title,
+
+                        description,
+
+                        content_type:
+                            "movie",
+
+                        video_url:
+                            videoUrl,
+
+                        thumbnail_url:
+                            thumbnailUrl,
+
+                        release_date:
+                            releaseDate,
+
+                        age_rating:
+                            ageRating,
+
+                        status,
+
+                        featured,
+
+                        original_title:
+                            originalTitle || null,
+
+                        backdrop_url:
+                            backdropUrl,
+
+                        duration_seconds:
+                            duration
+                            ? Number(duration) * 60
+                            : null,
+
+                        director:
+                            director || null,
+
+                        release_at:
+                            releaseAt,
+
+                        trailer_url:
+                            trailerUrl
+
+                    })
+                    .select()
+                    .single();
+
+
+            if (error) {
+                throw error;
+            }
+
+
+            showMessage(
+                "Pel·lícula guardada correctament.",
+                "success"
+            );
+
+
+            form.reset();
+
+
+            console.log(
+                "Pel·lícula creada:",
+                data
+            );
+
+
+        }
+
+        catch(error) {
+
+            console.error(
+                "Error creant pel·lícula:",
+                error
+            );
+
+
+            showMessage(
+                "No s'ha pogut guardar la pel·lícula: " +
+                error.message,
+                "error"
+            );
+
+        }
+
+        finally {
+
+            saveButton.disabled =
+                false;
+
+            saveButton.textContent =
+                "Guardar pel·lícula";
+        }
+
+    }
+);
+
+
+checkAdmin();
+
+</script>
+
+</body>
+</html>
