@@ -607,8 +607,6 @@
     class="profiles"
 >
 
-    <!-- Els perfils es carregaran aquí -->
-
 </div>
 ```
 
@@ -824,27 +822,31 @@ function showMessage(
     type = ""
 ) {
 
-    message.textContent = text;
+    message.textContent =
+        text;
 
     message.className =
         "message " + type;
 
-    message.hidden = false;
+    message.hidden =
+        false;
 
 }
 
 
 function hideMessage() {
 
-    message.hidden = true;
+    message.hidden =
+        true;
 
-    message.textContent = "";
+    message.textContent =
+        "";
 
 }
 
 
 /* =========================
-   SESSION
+   CHECK SESSION
 ========================= */
 
 async function checkSession() {
@@ -904,7 +906,7 @@ async function loadProfiles() {
         error
     } =
         await supabaseClient
-            .from("profiles")
+            .from("user_profiles")
             .select("*")
             .eq(
                 "user_id",
@@ -920,15 +922,13 @@ async function loadProfiles() {
 
     if (error) {
 
-        console.error(error);
-
-        /*
-         * Si la taula encara no existeix,
-         * ho indiquem sense trencar la pàgina.
-         */
+        console.error(
+            "Error carregant perfils:",
+            error
+        );
 
         showMessage(
-            "La configuració dels perfils encara no està preparada a Supabase.",
+            "No s'han pogut carregar els perfils.",
             "error"
         );
 
@@ -942,7 +942,10 @@ async function loadProfiles() {
     hideMessage();
 
 
-    if (data && data.length > 0) {
+    if (
+        data &&
+        data.length > 0
+    ) {
 
         data.forEach(
             profile => {
@@ -966,7 +969,9 @@ async function loadProfiles() {
    RENDER PROFILE
 ========================= */
 
-function renderProfile(profile) {
+function renderProfile(
+    profile
+) {
 
     const button =
         document.createElement(
@@ -1003,7 +1008,7 @@ function renderProfile(profile) {
         "click",
         function() {
 
-            entrarAlPerfil(
+            enterProfile(
                 profile
             );
 
@@ -1117,6 +1122,12 @@ function closeModal() {
 }
 
 
+cancelButton.addEventListener(
+    "click",
+    closeModal
+);
+
+
 /* =========================
    AVATAR SELECTION
 ========================= */
@@ -1176,8 +1187,9 @@ createButton.addEventListener(
 
         if (!name) {
 
-            alert(
-                "Escriu un nom per al perfil."
+            showMessage(
+                "Escriu un nom per al perfil.",
+                "error"
             );
 
             profileName.focus();
@@ -1200,7 +1212,7 @@ createButton.addEventListener(
                 error
             } =
                 await supabaseClient
-                    .from("profiles")
+                    .from("user_profiles")
                     .insert({
 
                         user_id:
@@ -1216,21 +1228,29 @@ createButton.addEventListener(
 
 
             if (error) {
+
                 throw error;
+
             }
 
 
             closeModal();
 
-
             await loadProfiles();
 
+            showMessage(
+                "Perfil creat correctament.",
+                "success"
+            );
 
         }
 
         catch (error) {
 
-            console.error(error);
+            console.error(
+                "Error creant perfil:",
+                error
+            );
 
             showMessage(
                 "No s'ha pogut crear el perfil.",
@@ -1257,13 +1277,9 @@ createButton.addEventListener(
    ENTER PROFILE
 ========================= */
 
-function entrarAlPerfil(profile) {
-
-    /*
-     * Guardem temporalment el perfil
-     * seleccionat per utilitzar-lo
-     * al catàleg.
-     */
+function enterProfile(
+    profile
+) {
 
     localStorage.setItem(
         "horizon270_selected_profile",
@@ -1287,9 +1303,11 @@ logoutButton.addEventListener(
 
         await supabaseClient.auth.signOut();
 
+
         localStorage.removeItem(
             "horizon270_selected_profile"
         );
+
 
         window.location.href =
             "login.html";
@@ -1302,7 +1320,9 @@ logoutButton.addEventListener(
    ESCAPE HTML
 ========================= */
 
-function escapeHtml(value) {
+function escapeHtml(
+    value
+) {
 
     return String(value)
         .replace(
@@ -1349,18 +1369,11 @@ modal.addEventListener(
 );
 
 
-cancelButton.addEventListener(
-    "click",
-    closeModal
-);
-
-
 /* =========================
    START
 ========================= */
 
 checkSession();
-
 
 </script>
 
