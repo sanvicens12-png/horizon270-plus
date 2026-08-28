@@ -1,199 +1,175 @@
 <!DOCTYPE html>
+
 <html lang="ca">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Iniciar sessió | HORIZON270+</title>
+```
+<title>Iniciar sessió | HORIZON270+</title>
 
-    <meta
-        name="description"
-        content="Inicia sessió o crea el teu compte a HORIZON270+."
-    >
+<meta
+    name="description"
+    content="Inicia sessió o crea el teu compte a HORIZON270+."
+>
 
-    <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css">
+```
+
 </head>
 
 <body class="auth-page">
 
 <main class="auth-container">
 
-    <a href="index.html" class="auth-logo">
-        HORIZON<span>270+</span>
-    </a>
+```
+<a href="index.html" class="auth-logo">
+    HORIZON<span>270+</span>
+</a>
 
+<section class="auth-card">
 
-    <section class="auth-card">
+    <div class="auth-header">
 
-        <div class="auth-header">
+        <span class="section-label">
+            HORIZON270+
+        </span>
 
-            <span class="section-label">
-                HORIZON270+
-            </span>
+        <h1 id="authTitle">
+            Inicia sessió
+        </h1>
 
-            <h1 id="authTitle">
-                Inicia sessió
-            </h1>
+        <p id="authSubtitle">
+            Accedeix al teu compte per continuar.
+        </p>
 
-            <p id="authSubtitle">
-                Accedeix al teu compte per continuar.
-            </p>
+    </div>
+
+    <div
+        id="authMessage"
+        class="auth-message"
+        hidden
+    ></div>
+
+    <form id="authForm">
+
+        <div class="auth-field">
+
+            <label for="email">
+                Correu electrònic
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="tu@exemple.com"
+                autocomplete="email"
+                required
+            >
 
         </div>
 
+        <div class="auth-field">
 
-        <!-- MISSATGE -->
+            <div class="password-label">
 
-        <div
-            id="authMessage"
-            class="auth-message"
-            hidden
-        ></div>
-
-
-        <!-- FORMULARI -->
-
-        <form id="authForm">
-
-            <div class="auth-field">
-
-                <label for="email">
-                    Correu electrònic
+                <label for="password">
+                    Contrasenya
                 </label>
 
+                <button
+                    type="button"
+                    id="forgotPassword"
+                    class="forgot-button"
+                >
+                    He oblidat la contrasenya
+                </button>
+
+            </div>
+
+            <div class="password-input">
+
                 <input
-                    type="email"
-                    id="email"
-                    placeholder="tu@exemple.com"
-                    autocomplete="email"
+                    type="password"
+                    id="password"
+                    placeholder="La teva contrasenya"
+                    autocomplete="current-password"
                     required
                 >
 
-            </div>
-
-
-            <div class="auth-field">
-
-                <div class="password-label">
-
-                    <label for="password">
-                        Contrasenya
-                    </label>
-
-                    <button
-                        type="button"
-                        id="forgotPassword"
-                        class="forgot-button"
-                    >
-                        He oblidat la contrasenya
-                    </button>
-
-                </div>
-
-
-                <div class="password-input">
-
-                    <input
-                        type="password"
-                        id="password"
-                        placeholder="La teva contrasenya"
-                        autocomplete="current-password"
-                        required
-                    >
-
-                    <button
-                        type="button"
-                        id="togglePassword"
-                        class="password-toggle"
-                        aria-label="Mostrar contrasenya"
-                    >
-                        👁
-                    </button>
-
-                </div>
+                <button
+                    type="button"
+                    id="togglePassword"
+                    class="password-toggle"
+                    aria-label="Mostrar contrasenya"
+                >
+                    👁
+                </button>
 
             </div>
 
-
-            <button
-                type="submit"
-                id="emailButton"
-                class="auth-submit"
-            >
-                Iniciar sessió
-            </button>
-
-        </form>
-
-
-        <!-- SEPARADOR -->
-
-        <div class="auth-divider">
-            <span>o continua amb</span>
         </div>
 
+        <button
+            type="submit"
+            id="emailButton"
+            class="auth-submit"
+        >
+            Iniciar sessió
+        </button>
 
-        <!-- GOOGLE -->
+    </form>
+
+    <div class="auth-divider">
+        <span>o continua amb</span>
+    </div>
+
+    <button
+        type="button"
+        id="googleButton"
+        class="google-button"
+    >
+
+        <span class="google-icon">
+            G
+        </span>
+
+        <span>
+            Continuar amb Google
+        </span>
+
+    </button>
+
+    <div class="auth-switch">
+
+        <span id="switchText">
+            No tens compte?
+        </span>
 
         <button
             type="button"
-            id="googleButton"
-            class="google-button"
+            id="switchMode"
         >
-
-            <span class="google-icon">
-                G
-            </span>
-
-            <span>
-                Continuar amb Google
-            </span>
-
+            Crear compte
         </button>
 
+    </div>
 
-        <!-- CANVI LOGIN / REGISTRE -->
+</section>
 
-        <div class="auth-switch">
+<p class="auth-footer">
 
-            <span id="switchText">
-                No tens compte?
-            </span>
+    En continuar, acceptes les condicions
+    d'ús de HORIZON270+.
 
-            <button
-                type="button"
-                id="switchMode"
-            >
-                Crear compte
-            </button>
-
-        </div>
-
-
-    </section>
-
-
-    <p class="auth-footer">
-
-        En continuar, acceptes les condicions
-        d'ús de HORIZON270+.
-
-    </p>
+</p>
+```
 
 </main>
 
-
-
-<!-- SUPABASE -->
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
 <script>
-
-/* =========================
-   SUPABASE
-========================= */
 
 const SUPABASE_URL =
     "https://eftxwdpdweomffgurlgm.supabase.co";
@@ -201,17 +177,12 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
     "sb_publishable_DPCJgsTp66cw2s-5S3CqNg_AdJEHKpt";
 
-
 const supabaseClient =
     window.supabase.createClient(
         SUPABASE_URL,
         SUPABASE_KEY
     );
 
-
-/* =========================
-   ELEMENTS
-========================= */
 
 const authForm =
     document.getElementById("authForm");
@@ -254,39 +225,30 @@ let isRegisterMode = false;
 
 
 /* =========================
-   MESSAGE
+   MISSATGES
 ========================= */
 
-function showMessage(
-    message,
-    type = "error"
-) {
+function showMessage(message, type = "error") {
 
-    authMessage.textContent =
-        message;
+    authMessage.textContent = message;
 
     authMessage.className =
         "auth-message " + type;
 
-    authMessage.hidden =
-        false;
-
+    authMessage.hidden = false;
 }
 
 
 function hideMessage() {
 
-    authMessage.hidden =
-        true;
+    authMessage.hidden = true;
 
-    authMessage.textContent =
-        "";
-
+    authMessage.textContent = "";
 }
 
 
 /* =========================
-   LOGIN / REGISTER MODE
+   LOGIN / REGISTRE
 ========================= */
 
 switchMode.addEventListener(
@@ -297,7 +259,6 @@ switchMode.addEventListener(
             !isRegisterMode;
 
         hideMessage();
-
 
         if (isRegisterMode) {
 
@@ -319,9 +280,7 @@ switchMode.addEventListener(
             passwordInput.autocomplete =
                 "new-password";
 
-        }
-
-        else {
+        } else {
 
             authTitle.textContent =
                 "Inicia sessió";
@@ -340,15 +299,13 @@ switchMode.addEventListener(
 
             passwordInput.autocomplete =
                 "current-password";
-
         }
-
     }
 );
 
 
 /* =========================
-   SHOW PASSWORD
+   MOSTRAR CONTRASENYA
 ========================= */
 
 togglePassword.addEventListener(
@@ -358,20 +315,92 @@ togglePassword.addEventListener(
         const visible =
             passwordInput.type === "text";
 
-
         passwordInput.type =
             visible
             ? "password"
             : "text";
 
-
         togglePassword.textContent =
             visible
             ? "👁"
             : "🙈";
-
     }
 );
+
+
+/* =========================
+   OBTENIR PERFIL
+========================= */
+
+async function obtenirPerfil(userId) {
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+            .from("Profiles")
+            .select("account_type")
+            .eq("id", userId)
+            .maybeSingle();
+
+    if (error) {
+
+        console.error(
+            "Profile error:",
+            error
+        );
+
+        return null;
+    }
+
+    return data;
+}
+
+
+/* =========================
+   REDIRECCIÓ SEGONS COMPTE
+========================= */
+
+async function redirigirSegonsCompte(userId) {
+
+    const profile =
+        await obtenirPerfil(userId);
+
+    if (!profile) {
+
+        window.location.href =
+            "index.html";
+
+        return;
+    }
+
+
+    const accountType =
+        profile.account_type;
+
+
+    if (accountType === "admin") {
+
+        window.location.href =
+            "admin.html";
+
+        return;
+    }
+
+
+    if (accountType === "creator") {
+
+        window.location.href =
+            "creator.html";
+
+        return;
+    }
+
+
+    window.location.href =
+        "index.html";
+}
 
 
 /* =========================
@@ -385,7 +414,6 @@ authForm.addEventListener(
         event.preventDefault();
 
         hideMessage();
-
 
         const email =
             emailInput.value.trim();
@@ -401,12 +429,10 @@ authForm.addEventListener(
             );
 
             return;
-
         }
 
 
-        emailButton.disabled =
-            true;
+        emailButton.disabled = true;
 
         emailButton.textContent =
             isRegisterMode
@@ -445,20 +471,16 @@ authForm.addEventListener(
                         "success"
                     );
 
-                }
-
-                else {
+                } else if (data.user) {
 
                     window.location.href =
                         "index.html";
-
                 }
 
-            }
-
-            else {
+            } else {
 
                 const {
+                    data,
                     error
                 } =
                     await supabaseClient.auth.signInWithPassword({
@@ -474,9 +496,12 @@ authForm.addEventListener(
                 }
 
 
-                window.location.href =
-                    "index.html";
+                if (data.user) {
 
+                    await redirigirSegonsCompte(
+                        data.user.id
+                    );
+                }
             }
 
         }
@@ -487,7 +512,6 @@ authForm.addEventListener(
                 "Authentication error:",
                 error
             );
-
 
             showMessage(
                 convertirError(error)
@@ -504,9 +528,7 @@ authForm.addEventListener(
                 isRegisterMode
                 ? "Crear compte"
                 : "Iniciar sessió";
-
         }
-
     }
 );
 
@@ -520,7 +542,6 @@ googleButton.addEventListener(
     async function () {
 
         hideMessage();
-
 
         googleButton.disabled =
             true;
@@ -543,7 +564,7 @@ googleButton.addEventListener(
 
                         redirectTo:
                             window.location.origin +
-                            "/index.html"
+                            "/login.html"
 
                     }
 
@@ -563,11 +584,9 @@ googleButton.addEventListener(
                 error
             );
 
-
             showMessage(
                 "No s'ha pogut iniciar sessió amb Google."
             );
-
 
             googleButton.disabled =
                 false;
@@ -575,15 +594,13 @@ googleButton.addEventListener(
             googleButton.classList.remove(
                 "loading"
             );
-
         }
-
     }
 );
 
 
 /* =========================
-   PASSWORD RESET
+   RECUPERAR CONTRASENYA
 ========================= */
 
 forgotPassword.addEventListener(
@@ -591,7 +608,6 @@ forgotPassword.addEventListener(
     async function () {
 
         hideMessage();
-
 
         const email =
             emailInput.value.trim();
@@ -606,7 +622,6 @@ forgotPassword.addEventListener(
             emailInput.focus();
 
             return;
-
         }
 
 
@@ -649,7 +664,6 @@ forgotPassword.addEventListener(
                 error
             );
 
-
             showMessage(
                 convertirError(error)
             );
@@ -660,9 +674,7 @@ forgotPassword.addEventListener(
 
             forgotPassword.disabled =
                 false;
-
         }
-
     }
 );
 
@@ -684,7 +696,6 @@ function convertirError(error) {
     ) {
 
         return "El correu o la contrasenya no són correctes.";
-
     }
 
 
@@ -695,7 +706,6 @@ function convertirError(error) {
     ) {
 
         return "Aquest correu ja té un compte.";
-
     }
 
 
@@ -706,7 +716,6 @@ function convertirError(error) {
     ) {
 
         return "La contrasenya és massa curta.";
-
     }
 
 
@@ -717,18 +726,16 @@ function convertirError(error) {
     ) {
 
         return "Has de confirmar el teu correu electrònic abans d'iniciar sessió.";
-
     }
 
 
     return message ||
         "S'ha produït un error. Torna-ho a provar.";
-
 }
 
 
 /* =========================
-   CHECK SESSION
+   COMPROVAR SESSIÓ
 ========================= */
 
 async function comprovarSessio() {
@@ -741,11 +748,10 @@ async function comprovarSessio() {
 
     if (data.session) {
 
-        window.location.href =
-            "index.html";
-
+        await redirigirSegonsCompte(
+            data.session.user.id
+        );
     }
-
 }
 
 
